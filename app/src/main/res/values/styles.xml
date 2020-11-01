@@ -13,7 +13,7 @@
     <!-- tanzim toggle sefid -->
     <style name="DrawerArrowStyle2" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
-        <item name="color">@android:color/white</item>
+        <item name="color">@android:color/holo_blue_dark</item>
     </style>
     <style name="textViewStyleUnfocusedDark">
         <item name="android:textColor">#d2212121</item>

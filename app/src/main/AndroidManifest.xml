@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.atrinfanavaran.kheiriyeh">
+    package="com.atrinfanavaran.school">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -20,7 +20,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity.ActivityDesigner"></activity>
+        <activity android:name=".Activity.New.VideoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"> <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
+        <activity android:name=".Activity.ActivityDesigner" />
         <activity android:name=".Activity.AboutActivity" />
         <activity android:name=".Activity.RememberPasswordActivity" />
         <activity android:name=".Activity.StirActivity" />
@@ -32,16 +39,12 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAI_kveeeGMtMwh0qG1gyTJdJV65FSagv4" />
 
-        <activity android:name=".Activity.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Activity.SplashActivity"></activity>
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.Map2Activity" />
-        <activity android:name=".Activity.MainActivity"></activity>
+        <activity android:name=".Activity.New.MainActivity">
+
+        </activity>
     </application>
 
 </manifest>

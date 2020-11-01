@@ -1,44 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools"
+
     android:id="@+id/buttom_5"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="55dp"
     android:layout_alignParentBottom="true"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:alpha="0.4"
+        android:background="@drawable/gradient"
+        android:visibility="visible" />
 
-        <View
-            android:id="@+id/view"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/background_bottom_corned_blue">
+
+        <TableLayout
+            android:id="@+id/table"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_weight="1"
-            android:alpha="0.4"
-            android:background="@drawable/gradient"
-            android:visibility="visible" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="0.9"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomnav"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bottom_nav_item_bg"
-            android:theme="@style/Widget.BottomNavigationView"
-            app:itemIconTint="@drawable/bottom_nav_item_bg"
-            app:itemTextColor="@drawable/bottom_nav_item_bg"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom2">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            fab:layout_constraintEnd_toEndOf="parent"
+            fab:layout_constraintStart_toStartOf="parent"
+            fab:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
 
-        </com.google.android.material.bottomnavigation.BottomNavigationView>
-    </LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2">
+
+                    <TextView
+                        android:id="@+id/badge1"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="right|end|top"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/item_count"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="center"
+                        android:maxHeight="20dp"
+                        android:minWidth="20dp"
+                        android:text="1"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+
+                        android:visibility="gone"
+                        fab:layout_constraintEnd_toEndOf="@+id/btn1"
+                        fab:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/btn1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        fab:layout_constraintBottom_toBottomOf="parent"
+                        fab:layout_constraintEnd_toEndOf="parent"
+                        fab:layout_constraintStart_toStartOf="parent"
+                        fab:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imagea1"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:tint="@color/white"
+                            app:srcCompat="@mipmap/plus_list" />
+
+                        <TextView
+                            android:id="@+id/texta1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/iransansmedium"
+                            android:gravity="center"
+                            android:text="پروفایل"
+                            android:textColor="@color/white"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2">
+
+                    <TextView
+                        android:id="@+id/badge2"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="right|end|top"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/item_count"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="center"
+                        android:maxHeight="20dp"
+                        android:minWidth="20dp"
+                        android:text="1"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:visibility="gone"
+                        fab:layout_constraintEnd_toEndOf="@+id/btn2"
+                        fab:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/btn2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        fab:layout_constraintBottom_toBottomOf="parent"
+                        fab:layout_constraintEnd_toEndOf="parent"
+                        fab:layout_constraintStart_toStartOf="parent"
+                        fab:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imagea2"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:tint="@color/white"
+                            app:srcCompat="@mipmap/list" />
+
+                        <TextView
+                            android:id="@+id/texta2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/iransansmedium"
+                            android:gravity="center"
+                            android:text="پشتیبانی"
+                            android:textColor="@color/white"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/btn0"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/image10"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:tint="#ffffff"
+                        fab:srcCompat="@mipmap/order96" />
+
+                    <TextView
+                        android:id="@+id/text10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="5dp"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="center"
+                        android:text="صفحه نخست"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2">
+
+                    <TextView
+                        android:id="@+id/badge3"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="right|end|top"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/item_count"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="center"
+                        android:maxHeight="20dp"
+                        android:minWidth="20dp"
+                        android:text="1"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:visibility="gone"
+
+                        fab:layout_constraintEnd_toEndOf="@+id/btn3"
+                        fab:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/btn3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        fab:layout_constraintBottom_toBottomOf="parent"
+                        fab:layout_constraintEnd_toEndOf="parent"
+                        fab:layout_constraintStart_toStartOf="parent"
+                        fab:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imagea3"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:tint="@color/white"
+                            android:visibility="visible"
+                            fab:srcCompat="@mipmap/delivery" />
+
+                        <TextView
+                            android:id="@+id/texta3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/iransansmedium"
+                            android:gravity="center"
+                            android:text="کلیه پست ها"
+                            android:textColor="@color/white"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2">
+
+                    <TextView
+                        android:id="@+id/badge4"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="right|end|top"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/item_count"
+                        android:fontFamily="@font/iransansmedium"
+                        android:gravity="center"
+                        android:maxHeight="20dp"
+                        android:minWidth="20dp"
+                        android:text="1"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+
+                        android:visibility="gone"
+                        fab:layout_constraintEnd_toEndOf="parent"
+                        fab:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/btn4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        fab:layout_constraintBottom_toBottomOf="parent"
+                        fab:layout_constraintEnd_toEndOf="parent"
+                        fab:layout_constraintStart_toStartOf="parent"
+                        fab:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imagea4"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:tint="@color/white"
+                            fab:srcCompat="@mipmap/flag" />
+
+                        <TextView
+                            android:id="@+id/texta4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="5dp"
+                            android:fontFamily="@font/iransansmedium"
+                            android:gravity="center"
+                            android:text="علاقه مندی"
+                            android:textColor="@color/white"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </TableRow>
+
+        </TableLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>
