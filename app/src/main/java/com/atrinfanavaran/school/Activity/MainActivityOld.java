@@ -18,7 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.room.Room;
+
 
 import com.atrinfanavaran.school.Domain.Box;
 import com.atrinfanavaran.school.Domain.BoxIncome;
@@ -35,26 +35,12 @@ import com.atrinfanavaran.school.Fragment.MapBoxFragment;
 import com.atrinfanavaran.school.Fragment.MapFragment;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Fragment.RouteListFragment;
-import com.atrinfanavaran.school.Interface.onCallBackAddBox;
-import com.atrinfanavaran.school.Interface.onCallBackAddBox2;
-import com.atrinfanavaran.school.Interface.onCallBackAddBoxNew;
-import com.atrinfanavaran.school.Interface.onCallBackAddRouteNew;
-import com.atrinfanavaran.school.Interface.onCallBackBoxEdit;
-import com.atrinfanavaran.school.Interface.onCallBackBoxIncome1;
-import com.atrinfanavaran.school.Interface.onCallBackBoxIncome2;
-import com.atrinfanavaran.school.Interface.onCallBackBoxIncomeEdit;
-import com.atrinfanavaran.school.Interface.onCallBackNewDischarge;
-import com.atrinfanavaran.school.Interface.onCallBackQuickList;
-import com.atrinfanavaran.school.Interface.onCallBackRoute1;
-import com.atrinfanavaran.school.Interface.onCallBackRouteEdit;
+
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.school.R;
-import com.atrinfanavaran.school.Room.AppDatabase;
-import com.atrinfanavaran.school.Room.Domian.BoxIncomeR;
-import com.atrinfanavaran.school.Room.Domian.BoxR;
-import com.atrinfanavaran.school.Room.Domian.RouteR;
+
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -69,7 +55,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class MainActivityOld extends BaseActivity implements onCallBackBoxIncome1, onCallBackBoxIncome2, onCallBackQuickList, onCallBackRouteEdit, onCallBackBoxIncomeEdit, onCallBackBoxEdit, onCallBackRoute1, onCallBackAddRouteNew, onCallBackNewDischarge, onCallBackAddBoxNew, onCallBackAddBox, onCallBackAddBox2 {
+public class MainActivityOld extends BaseActivity  {
 
     private static final int Time_Between_Two_Back = 2000;
     private long TimeBackPressed;
@@ -77,7 +63,7 @@ public class MainActivityOld extends BaseActivity implements onCallBackBoxIncome
     private FragmentManager fragmentManager;
     private Fragment fragment;
     private Toolbar my_toolbar;
-    private AppDatabase db;
+
     private ImageView imageView;
     private LinearLayout  filterIcon;
     @Override
@@ -86,8 +72,6 @@ public class MainActivityOld extends BaseActivity implements onCallBackBoxIncome
         setContentView(R.layout.activity_main);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "RoomDb").fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
 //        getApplicationContext().deleteDatabase("RoomDb");
         RunPermissionDownload();
@@ -235,138 +219,7 @@ public class MainActivityOld extends BaseActivity implements onCallBackBoxIncome
     }
 
 
-    @Override
-    public void SaveBoxIncome2(BoxIncome boxIncome, boolean editable) {
-//        Toast.makeText(this, boxIncome.getlat(), Toast.LENGTH_SHORT).show();
-        BoxIncomeR boxIncomeR = new BoxIncomeR();
 
-        boxIncomeR.lat = boxIncome.getlat();
-        boxIncomeR.lon = boxIncome.getlon();
-        boxIncomeR.number = boxIncome.getnumber();
-        boxIncomeR.price = boxIncome.getprice();
-        boxIncomeR.assignmentDate = boxIncome.getassignmentDate();
-        boxIncomeR.status = boxIncome.getstatus();
-
-        if (editable) {
-            db.BoxIncomeDao().update(boxIncome.getlat(), boxIncome.getlon(), boxIncome.getnumber()
-                    , boxIncome.getprice(), boxIncome.getassignmentDate(), boxIncome.getstatus(), boxIncome.getid()
-            );
-            Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-        } else {
-            db.BoxIncomeDao().insertBoxIncome(boxIncomeR);
-            Toast.makeText(this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-        }
-        List<BoxIncomeR> boxIncomes = db.BoxIncomeDao().getAll();
-        for (int i = 0; i < boxIncomes.size(); i++) {
-            Log.i(TAG, "SaveBoxIncome2: " + boxIncomes.get(i).price);
-        }
-        fragment = new BoxIncomeListFragment();
-
-        setFragment();
-    }
-
-
-    @Override
-    public void SaveBoxIncome1(BoxIncome boxIncome, boolean editable) {
-        fragment = new AddBoxIncomeFragment2();
-        Bundle bundle1 = new Bundle();
-        bundle1.putSerializable("BoxIncome", boxIncome);
-        bundle1.putBoolean("editable", editable);
-        fragment.setArguments(bundle1);
-
-        setFragment();
-    }
-
-    @Override
-    public void btnNewDischarge() {
-        fragment = new AddBoxIncomeFragment1();
-        setFragment();
-    }
-
-    @Override
-    public void btnNewBox() {
-        fragment = new AddBoxFragment();
-        setFragment();
-    }
-
-    @Override
-    public void SaveBox(BoxR boxR, boolean editable) {
-
-
-        fragment = new MapBoxFragment();
-        Bundle bundle1 = new Bundle();
-        Box box = new Box();
-        box.setId(boxR.id);
-        box.setNumber(boxR.number);
-        box.setMobile(boxR.mobile);
-        box.setFullName(boxR.fullName);
-        box.setassignmentDate(boxR.assignmentDate);
-        box.setCode(boxR.code);
-        box.setAddress(boxR.address);
-        box.setDischargeRouteId(boxR.dischargeRouteId);
-        box.setBoxId(boxR.boxId);
-
-        bundle1.putSerializable("Box", box);
-        bundle1.putBoolean("editable", editable);
-        fragment.setArguments(bundle1);
-
-        setFragment();
-    }
-
-    @Override
-    public void SaveBox2(BoxR boxR, boolean editable) {
-        if (editable) {
-            db.BoxDao().update(boxR.fullName, boxR.number, boxR.mobile, boxR.code, boxR.assignmentDate, boxR.id, boxR.address, boxR.lat, boxR.lon, boxR.dischargeRouteId);
-            Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-        } else {
-            db.BoxDao().insertBox(boxR);
-            Toast.makeText(this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-        }
-        fragment = new BoxListFragment();
-        setFragment();
-    }
-
-    @Override
-    public void btnNewRoute() {
-        fragment = new AddRouteFragment();
-        setFragment();
-    }
-
-    @Override
-    public void SaveRoute1(RouteR router, boolean editable) {
-        if (editable) {
-            db.RouteDao().update(router.code, router.day, router.address, router.id,router.isNew);
-            Toast.makeText(this, "عملیات ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-        } else {
-            db.RouteDao().insertBox(router);
-            Toast.makeText(this, "عملیات ذخیره با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-        }
-
-        fragment = new RouteListFragment();
-        setFragment();
-    }
-
-
-    @Override
-    public void EditBoxIncome(BoxIncomeR boxIncome) {
-        fragment = new AddBoxIncomeFragment1();
-
-        BoxIncome boxIncome1 = new BoxIncome();
-        boxIncome1.setid(boxIncome.id);
-        boxIncome1.setlat(boxIncome.lat);
-        boxIncome1.setlon(boxIncome.lon);
-        boxIncome1.setnumber(boxIncome.number);
-        boxIncome1.setprice(boxIncome.price);
-        boxIncome1.setassignmentDate(boxIncome.assignmentDate);
-        boxIncome1.setstatus(boxIncome.status);
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("BoxIncome", boxIncome1);
-        bundle.putBoolean("editable", true);
-        fragment.setArguments(bundle);
-
-        setFragment();
-    }
 
 
     private void setFragment() {
@@ -377,72 +230,6 @@ public class MainActivityOld extends BaseActivity implements onCallBackBoxIncome
 
     }
 
-    @Override
-    public void EditBox(BoxR boxR) {
-        fragment = new AddBoxFragment();
-
-        Box box = new Box();
-        box.setassignmentDate(boxR.assignmentDate);
-        box.setCode(boxR.code);
-        box.setFullName(boxR.fullName);
-        box.setMobile(boxR.mobile);
-        box.setNumber(boxR.number);
-        box.setId(boxR.id);
-        box.setAddress(boxR.address);
-        box.setDischargeRouteId(boxR.dischargeRouteId);
-        box.setBoxId(boxR.boxId);
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("Box", box);
-        bundle.putBoolean("editable", true);
-        fragment.setArguments(bundle);
-
-        setFragment();
-    }
-
-    @Override
-    public void EditRoute(RouteR routerR) {
-        fragment = new AddRouteFragment();
-
-        Route route = new Route();
-        route.setaddress(routerR.address);
-        route.setcode(routerR.code);
-        route.setday(routerR.day);
-        route.setid(routerR.id);
-        route.setlat(routerR.lat);
-        route.setlon(routerR.lon);
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("Route", route);
-        bundle.putBoolean("editable", true);
-        fragment.setArguments(bundle);
-
-        setFragment();
-    }
-
-    @Override
-    public void goTo(String page) {
-        switch (page) {
-            case "0": {
-                fragment = new BoxIncomeListFragment();
-                break;
-            }
-            case "1": {
-                fragment = new BoxListFragment();
-                break;
-            }
-            case "2": {
-                fragment = new MapFragment();
-                break;
-            }
-            case "3": {
-                fragment = new RouteListFragment();
-                break;
-            }
-
-        }
-        setFragment();
-    }
 
 
     private void RunPermissionDownload() {

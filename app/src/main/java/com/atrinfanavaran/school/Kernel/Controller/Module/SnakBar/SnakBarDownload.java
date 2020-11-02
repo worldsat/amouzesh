@@ -8,14 +8,15 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Environment;
-
-import com.atrinfanavaran.school.R;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.content.FileProvider;
+
+import com.atrinfanavaran.school.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 
@@ -51,7 +52,38 @@ public class SnakBarDownload {
         snackbar.show();
 
     }
+    public void snakShow(final Context context, String str, final String fileName) {
 
+
+        final Snackbar snackbar = Snackbar.make(((Activity) context).findViewById(android.R.id.content), str, Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction("بازکردن فایل", new View.OnClickListener() {
+            @Override
+            public void onClick(View vv) {
+
+                File root = new File(Environment.getExternalStorageDirectory() + "/makan/"  , fileName);
+
+                try {
+                    openFile(context,root);
+                }
+                catch (ActivityNotFoundException e) {
+                    Log.i("moh3n", "onClick: "+e.toString());
+                }
+            }
+        });
+
+
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = sbView.findViewById(R.id.snackbar_text);
+        TextView action = sbView.findViewById(R.id.snackbar_action);
+        textView.setTextColor(Color.WHITE);
+        action.setTextColor(Color.RED);
+        Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/iransans_m.ttf");
+        textView.setTypeface(font);
+        action.setTypeface(font);
+        snackbar.show();
+
+    }
 
     private void openFile(Context context, File url) {
 
@@ -100,7 +132,7 @@ public class SnakBarDownload {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             context.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
+        } catch (ActivityNotFoundException | IllegalArgumentException e) {
             Log.i("moh3n", "openFile: " + e);
             Toast.makeText(context, "برنامه ای برای باز کردن فایل مورد نظر یافت نشد ", Toast.LENGTH_SHORT).show();
         }

@@ -2,272 +2,312 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    android:background="@drawable/background_bottom_corned_blue"
-    android:paddingTop="5dp">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2">
-
-        <TextView
-            android:id="@+id/badge1"
-
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_gravity="right|end|top"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/item_count"
-            android:fontFamily="@font/iransansmedium"
-            android:gravity="center"
-            android:maxHeight="20dp"
-            android:minWidth="20dp"
-            android:text="1"
-            android:textAlignment="center"
-
-            android:textColor="@color/white"
-            android:textSize="10sp"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/btn1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:orientation="vertical"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/imagea1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:tint="@color/white"
-                app:srcCompat="@mipmap/plus_list" />
-
-            <TextView
-                android:id="@+id/texta1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/iransansmedium"
-                android:gravity="center"
-                android:text="پروفایل"
-                android:textColor="@color/white"
-                android:textSize="11sp" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2">
-
-        <TextView
-            android:id="@+id/badge2"
-
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_gravity="right|end|top"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/item_count"
-            android:fontFamily="@font/iransansmedium"
-            android:gravity="center"
-            android:maxHeight="20dp"
-            android:minWidth="20dp"
-            android:text="1"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="10sp"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/btn2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:orientation="vertical"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/imagea2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:tint="@color/white"
-                app:srcCompat="@mipmap/list" />
-
-            <TextView
-                android:id="@+id/texta2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/iransansmedium"
-                android:gravity="center"
-                android:text="پشتیبانی"
-                android:textColor="@color/white"
-                android:textSize="11sp" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout
-        android:id="@+id/btn0"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/image10"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:id="@+id/image2"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
+            android:background="@color/blue_grey_200"
             android:tint="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@mipmap/order96" />
 
-        <TextView
-            android:id="@+id/text10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/iransansmedium"
-            android:gravity="center"
-            android:text="صفحه نخست"
-            android:textColor="@color/white"
-            android:textSize="11sp" />
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2">
-
-        <TextView
-            android:id="@+id/badge3"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_gravity="right|end|top"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/item_count"
-            android:fontFamily="@font/iransansmedium"
-            android:gravity="center"
-            android:maxHeight="20dp"
-            android:minWidth="20dp"
-            android:text="1"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="10sp"
-            android:visibility="gone"
-
-            app:layout_constraintEnd_toEndOf="@+id/btn3"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <LinearLayout
-            android:id="@+id/btn3"
-            android:layout_width="0dp"
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:orientation="vertical"
-
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/background_bottom_corned_blue"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_weight="0.2">
 
-            <ImageView
-                android:id="@+id/imagea3"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:tint="@color/white"
-                android:visibility="visible"
-                app:srcCompat="@mipmap/delivery" />
+                <TextView
+                    android:id="@+id/badge1"
 
-            <TextView
-                android:id="@+id/texta3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/iransansmedium"
-                android:gravity="center"
-                android:text="کلیه پست ها"
-                android:textColor="@color/white"
-                android:textSize="11sp" />
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="right|end|top"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/item_count"
+                    android:fontFamily="@font/iransansmedium"
+                    android:gravity="center"
+                    android:maxHeight="20dp"
+                    android:minWidth="20dp"
+                    android:text="1"
+                    android:textAlignment="center"
+
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/btn1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.2"
+
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imagea1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:tint="@color/white"
+                        app:srcCompat="@mipmap/bottom4" />
+
+                    <TextView
+                        android:id="@+id/texta1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="5dp"
+                        android:fontFamily="@font/iransanslight"
+                        android:gravity="center"
+                        android:text="پروفایل"
+                        android:textColor="@color/white"
+                        android:textSize="9sp" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_weight="0.2">
+
+                <TextView
+                    android:id="@+id/badge2"
+
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="right|end|top"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/item_count"
+                    android:fontFamily="@font/iransansmedium"
+                    android:gravity="center"
+                    android:maxHeight="20dp"
+                    android:minWidth="20dp"
+                    android:text="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/btn2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.2"
+
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imagea2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:tint="@color/white"
+                        app:srcCompat="@mipmap/bottom1" />
+
+                    <TextView
+                        android:id="@+id/texta2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="5dp"
+                        android:fontFamily="@font/iransanslight"
+                        android:gravity="center"
+                        android:text="پشتیبانی"
+                        android:textColor="@color/white"
+                        android:textSize="9sp" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/btn0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/image10"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:tint="#ffffff"
+                    app:srcCompat="@mipmap/bottom5" />
+
+                <TextView
+                    android:id="@+id/text10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/iransanslight"
+                    android:gravity="center"
+                    android:text="صفحه نخست"
+                    android:textColor="@color/white"
+                    android:textSize="9sp" />
+            </LinearLayout>
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_weight="0.2">
+
+                <TextView
+                    android:id="@+id/badge3"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="right|end|top"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/item_count"
+                    android:fontFamily="@font/iransansmedium"
+                    android:gravity="center"
+                    android:maxHeight="20dp"
+                    android:minWidth="20dp"
+                    android:text="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:visibility="gone"
+
+                    app:layout_constraintEnd_toEndOf="@+id/btn3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/btn3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.2"
+
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/bottom3"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:tint="@color/white"
+                        android:visibility="visible"
+                        app:srcCompat="@mipmap/bottom3" />
+
+                    <TextView
+                        android:id="@+id/texta3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="5dp"
+                        android:fontFamily="@font/iransanslight"
+                        android:gravity="center"
+                        android:text="کلیه پست ها"
+                        android:textColor="@color/white"
+                        android:textSize="9sp" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2">
+
+                <TextView
+                    android:id="@+id/badge4"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="right|end|top"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/item_count"
+                    android:fontFamily="@font/iransansmedium"
+                    android:gravity="center"
+                    android:maxHeight="20dp"
+                    android:minWidth="20dp"
+                    android:text="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/btn4"
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.2"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imagea4"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:tint="@color/white"
+                        app:srcCompat="@mipmap/bottom2" />
+
+                    <TextView
+                        android:id="@+id/texta4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="5dp"
+                        android:fontFamily="@font/iransanslight"
+                        android:gravity="center"
+                        android:text="علاقه مندی"
+                        android:textColor="@color/white"
+                        android:textSize="9sp" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2">
-
-        <TextView
-            android:id="@+id/badge4"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_gravity="right|end|top"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/item_count"
-            android:fontFamily="@font/iransansmedium"
-            android:gravity="center"
-            android:maxHeight="20dp"
-            android:minWidth="20dp"
-            android:text="1"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="10sp"
-
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/btn4"
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/imagea4"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:tint="@color/white"
-                app:srcCompat="@mipmap/flag" />
-
-            <TextView
-                android:id="@+id/texta4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/iransansmedium"
-                android:gravity="center"
-                android:text="علاقه مندی"
-                android:textColor="@color/white"
-                android:textSize="11sp" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

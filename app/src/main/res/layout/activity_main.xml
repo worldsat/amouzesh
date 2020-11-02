@@ -149,7 +149,7 @@
                                     android:layout_marginStart="10dp"
                                     android:layout_weight="1"
                                     android:fontFamily="@font/casablanca"
-                                    android:text="ویرایش اطلاعیه"
+                                    android:text="ذخیره اطلاعیه"
                                     android:textColor="@color/black"
                                     android:textSize="12sp" />
 
@@ -159,7 +159,7 @@
                                     android:layout_height="20dp"
                                     android:layout_margin="10dp"
                                     android:tint="@color/blue_900"
-                                    app:srcCompat="@mipmap/delivery" />
+                                    app:srcCompat="@mipmap/edit_icon" />
 
                             </LinearLayout>
 

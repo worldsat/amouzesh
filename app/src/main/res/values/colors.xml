@@ -28,4 +28,5 @@
     <color name="unSeen">#f7ead1</color>
     <color name="color_backgroud_widget">@color/grey_200</color>
     <color name="blue_2">#172681</color>
+    <color name="half_black">#C9000000</color>
 </resources>

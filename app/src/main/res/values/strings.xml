@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">قاصدک</string>
+    <string name="app_name">آموزشی</string>
     <string name="waiting">لطفا منتظر بمانيد&#8230;</string>
     <string name="warning">توجه!!!</string>
     <string name="ok">بله</string>
@@ -78,7 +78,7 @@
 
 
     <string name="archiveTitle">انتخاب فولدر بایگانی</string>
-    <string name="saveDone">فایل با موفقیت در پوشه Makan بارگذاری شد</string>
+    <string name="saveDone">فایل با موفقیت بارگذاری شد</string>
     <string name="title_activity_graph_dashboard">GraphDashboardActivity</string>
 
 

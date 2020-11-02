@@ -106,12 +106,12 @@
                                                 android:layout_marginEnd="8dp"
                                                 android:layout_marginBottom="8dp"
                                                 android:padding="10dp"
-                                                android:tint="@color/deep_orange_900"
+                                                android:tint="@color/deep_orange_700"
                                                 app:layout_constraintBottom_toBottomOf="parent"
                                                 app:layout_constraintEnd_toEndOf="parent"
                                                 app:layout_constraintStart_toStartOf="parent"
                                                 app:layout_constraintTop_toTopOf="parent"
-                                                app:srcCompat="@mipmap/write" />
+                                                app:srcCompat="@mipmap/layer7" />
                                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                                         <TextView
@@ -154,7 +154,7 @@
                                                 app:layout_constraintEnd_toEndOf="parent"
                                                 app:layout_constraintStart_toStartOf="parent"
                                                 app:layout_constraintTop_toTopOf="parent"
-                                                app:srcCompat="@mipmap/write" />
+                                                app:srcCompat="@mipmap/layer3" />
                                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                                         <TextView
@@ -197,7 +197,7 @@
                                                 app:layout_constraintEnd_toEndOf="parent"
                                                 app:layout_constraintStart_toStartOf="parent"
                                                 app:layout_constraintTop_toTopOf="parent"
-                                                app:srcCompat="@mipmap/write" />
+                                                app:srcCompat="@mipmap/layer6" />
                                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                                         <TextView
@@ -239,7 +239,7 @@
                                                 app:layout_constraintEnd_toEndOf="parent"
                                                 app:layout_constraintStart_toStartOf="parent"
                                                 app:layout_constraintTop_toTopOf="parent"
-                                                app:srcCompat="@mipmap/write" />
+                                                app:srcCompat="@mipmap/layer5" />
                                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                                         <TextView
