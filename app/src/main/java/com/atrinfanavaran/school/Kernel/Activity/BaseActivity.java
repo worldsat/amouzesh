@@ -3,9 +3,10 @@ package com.atrinfanavaran.school.Kernel.Activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.school.Kernel.Bll.FnValidColumnListBll;
@@ -19,6 +20,7 @@ import com.atrinfanavaran.school.Kernel.Helper.ExceptionHandler;
 import com.atrinfanavaran.school.Kernel.Helper.ListBuilder;
 import com.atrinfanavaran.school.R;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -86,6 +88,9 @@ public class BaseActivity extends AppCompatActivity {
         return new Controller(BaseActivity.this);
     }
 
+    public Gson gson() {
+        return new Gson();
+    }
 
     public ListBuilder listBuilder() {
         return new ListBuilder(BaseActivity.this);

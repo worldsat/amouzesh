@@ -11,39 +11,48 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.atrinfanavaran.school.Domain.New.AttachFile;
+import com.atrinfanavaran.school.Domain.New.DropdownList;
 import com.atrinfanavaran.school.R;
 
 import java.util.ArrayList;
 
-public class AttachAdapter extends RecyclerView.Adapter<AttachAdapter.ViewHolder> {
+public class DastresiAdapter extends RecyclerView.Adapter<DastresiAdapter.ViewHolder> {
 
-    private final ArrayList<AttachFile> array_object;
+    private final ArrayList<DropdownList> array_object;
     private Context context;
     int delayAnimate = 300; //global variable
     int delayAnimate2 = 0; //global variable
     private boolean exit = false;
     private boolean endStart = false;
     private boolean endExit = false;
-    private deleteAttachCallBack deleteAttachCallBack;
+    private SelectCallBack selectCallBack;
+    private int oldPosition;
 
-    public AttachAdapter(ArrayList<AttachFile> result, deleteAttachCallBack deleteAttachCallBack) {
+    public DastresiAdapter(ArrayList<DropdownList> result, SelectCallBack selectCallBack) {
         this.array_object = result;
-        this.deleteAttachCallBack = deleteAttachCallBack;
+        this.selectCallBack = selectCallBack;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_attach, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_dropdown, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         context = holder.itemView.getContext();
-        String[] fileName = array_object.get(position).getAttachName().split("/");
+        String[] fileName = array_object.get(position).getListName().split("/");
+
+        if (array_object.get(position).isTick()) {
+            holder.icon.setImageResource(R.mipmap.tick128);
+            holder.icon.setVisibility(View.VISIBLE);
+            oldPosition = position;
+        } else {
+            holder.icon.setVisibility(View.INVISIBLE);
+        }
 
         int nSplite = fileName.length;
         String name = "---";
@@ -56,41 +65,19 @@ public class AttachAdapter extends RecyclerView.Adapter<AttachAdapter.ViewHolder
         }
 
         holder.title.setText(name);
-        holder.deleteIcon.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                array_object.remove(position);
+
+                array_object.get(position).setTick(true);
+                array_object.get(oldPosition).setTick(false);
                 notifyDataSetChanged();
-                deleteAttachCallBack.position(position);
+                holder.icon.setImageResource(R.mipmap.tick128);
+
+                selectCallBack.Id(array_object.get(position).getListId());
             }
         });
 
-//        setbackground(position, holder.card, holder.icon_background, holder.title);
-//        holder.card.setVisibility(View.INVISIBLE);
-
-//
-//        if (exit) {
-//            holder.itemView.setVisibility(View.VISIBLE);
-//
-//        } else {
-//            if (!endStart) {
-//
-//            } else {
-//                holder.itemView.setVisibility(View.VISIBLE);
-//            }
-//        }
-
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (!endExit) {
-//                    holder.itemView.setVisibility(View.VISIBLE);
-//                    exit = true;
-//                    notifyDataSetChanged();
-//                }
-//
-//            }
-//        });
         if (array_object.size() == (position + 1)) {
             endStart = true;
         }
@@ -128,7 +115,7 @@ public class AttachAdapter extends RecyclerView.Adapter<AttachAdapter.ViewHolder
         }
     }
 
-    public interface deleteAttachCallBack {
-        void position(int num);
+    public interface SelectCallBack {
+        void Id(int num);
     }
 }

@@ -63,9 +63,9 @@ public class ShowPostMediaAdapter extends RecyclerView.Adapter<ShowPostMediaAdap
         holder.time.setText(array_object.get(position).getTime());
         holder.size.setText(array_object.get(position).getSize());
 
-        if (array_object.get(position).getType().equals("2")) {
+        if (array_object.get(position).getType().equals("3")) {
             holder.icon.setImageResource(R.mipmap.play_video_media);
-        } else if (array_object.get(position).getType().equals("3")) {
+        } else if (array_object.get(position).getType().equals("4")) {
             holder.icon.setImageResource(R.mipmap.play_sound_media);
         }
 
@@ -73,12 +73,12 @@ public class ShowPostMediaAdapter extends RecyclerView.Adapter<ShowPostMediaAdap
             @Override
             public void onClick(View v) {
 
-                if (array_object.get(position).getType().equals("2")) {
+                if (array_object.get(position).getType().equals("3")) {
                     Intent intent = new Intent(context, VideoActivity.class);
                     intent.putExtra("object", array_object.get(position));
                     context.startActivity(intent);
 
-                } else if (array_object.get(position).getType().equals("3")) {
+                } else if (array_object.get(position).getType().equals("4")) {
 
                     holder.progressBarSound.setVisibility(View.VISIBLE);
                     media(medPlayer, holder.seekBar, holder.timeTxt, holder.playBtn, array_object.get(position), holder.progressBarSound, holder.soundPlayerLayout);

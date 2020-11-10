@@ -47,7 +47,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:fontFamily="@font/iransansmedium"
+            android:fontFamily="@font/iranyekanmedium"
             android:gravity="center_vertical"
             android:paddingStart="10dp"
             android:text="گزینه 1"

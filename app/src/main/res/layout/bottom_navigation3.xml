@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -39,6 +40,21 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:layout_weight="0.2">
 
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:visibility="visible" />
+
                 <TextView
                     android:id="@+id/badge1"
 
@@ -47,7 +63,7 @@
                     android:layout_gravity="right|end|top"
                     android:layout_marginEnd="4dp"
                     android:background="@drawable/item_count"
-                    android:fontFamily="@font/iransansmedium"
+                    android:fontFamily="@font/iranyekanmedium"
                     android:gravity="center"
                     android:maxHeight="20dp"
                     android:minWidth="20dp"
@@ -85,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="5dp"
-                        android:fontFamily="@font/iransanslight"
+                        android:fontFamily="@font/iranyekan"
                         android:gravity="center"
                         android:text="پروفایل"
                         android:textColor="@color/white"
@@ -99,6 +115,20 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:layout_weight="0.2">
 
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:visibility="visible" />
                 <TextView
                     android:id="@+id/badge2"
 
@@ -107,7 +137,7 @@
                     android:layout_gravity="right|end|top"
                     android:layout_marginEnd="4dp"
                     android:background="@drawable/item_count"
-                    android:fontFamily="@font/iransansmedium"
+                    android:fontFamily="@font/iranyekanmedium"
                     android:gravity="center"
                     android:maxHeight="20dp"
                     android:minWidth="20dp"
@@ -144,7 +174,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="5dp"
-                        android:fontFamily="@font/iransanslight"
+                        android:fontFamily="@font/iranyekan"
                         android:gravity="center"
                         android:text="پشتیبانی"
                         android:textColor="@color/white"
@@ -153,7 +183,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                android:id="@+id/btn0"
+                android:id="@+id/btn3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
@@ -176,11 +206,26 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/iransanslight"
+                    android:fontFamily="@font/iranyekan"
                     android:gravity="center"
                     android:text="صفحه نخست"
                     android:textColor="@color/white"
                     android:textSize="9sp" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:visibility="visible" />
             </LinearLayout>
 
 
@@ -191,6 +236,20 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:layout_weight="0.2">
 
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:visibility="visible" />
                 <TextView
                     android:id="@+id/badge3"
                     android:layout_width="18dp"
@@ -198,7 +257,7 @@
                     android:layout_gravity="right|end|top"
                     android:layout_marginEnd="4dp"
                     android:background="@drawable/item_count"
-                    android:fontFamily="@font/iransansmedium"
+                    android:fontFamily="@font/iranyekanmedium"
                     android:gravity="center"
                     android:maxHeight="20dp"
                     android:minWidth="20dp"
@@ -212,7 +271,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
-                    android:id="@+id/btn3"
+                    android:id="@+id/btn4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -239,7 +298,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="5dp"
-                        android:fontFamily="@font/iransanslight"
+                        android:fontFamily="@font/iranyekan"
                         android:gravity="center"
                         android:text="کلیه پست ها"
                         android:textColor="@color/white"
@@ -252,6 +311,20 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.2">
 
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/btn5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:visibility="visible" />
                 <TextView
                     android:id="@+id/badge4"
                     android:layout_width="18dp"
@@ -259,7 +332,7 @@
                     android:layout_gravity="right|end|top"
                     android:layout_marginEnd="4dp"
                     android:background="@drawable/item_count"
-                    android:fontFamily="@font/iransansmedium"
+                    android:fontFamily="@font/iranyekanmedium"
                     android:gravity="center"
                     android:maxHeight="20dp"
                     android:minWidth="20dp"
@@ -273,13 +346,14 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
-                    android:id="@+id/btn4"
+                    android:id="@+id/btn5"
 
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_weight="0.2"
                     android:orientation="vertical"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -299,11 +373,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="5dp"
-                        android:fontFamily="@font/iransanslight"
+                        android:fontFamily="@font/iranyekan"
                         android:gravity="center"
                         android:text="علاقه مندی"
                         android:textColor="@color/white"
-                        android:textSize="9sp" />
+                        android:textSize="9sp"
+                        android:visibility="visible" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

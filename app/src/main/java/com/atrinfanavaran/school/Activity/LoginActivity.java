@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.atrinfanavaran.school.Activity.New.MainActivity;
+import com.atrinfanavaran.school.Activity.New.SendPostActivity;
 import com.atrinfanavaran.school.Domain.AndroidVersion;
 import com.atrinfanavaran.school.Domain.Login;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
@@ -85,11 +85,11 @@ public class LoginActivity extends BaseActivity {
                     e.printStackTrace();
                 }
 
-                controller().LoginApi(this, MainActivity.class, new Login().getApiAddress(), loginObject.toString(), new CallbackOperation() {
+                controller().LoginApi(this, SendPostActivity.class, new Login().getApiAddress(), loginObject.toString(), new CallbackOperation() {
                     @Override
                     public void onSuccess(String result) {
                         settingsBll.setLoging(true);
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        startActivity(new Intent(LoginActivity.this, SendPostActivity.class));
                         waitingProgressbar.setVisibility(View.GONE);
                     }
 

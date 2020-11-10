@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/page"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout12"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/blue_grey_50"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view6">
+
+
+                <TextView
+                    android:id="@+id/warninTxt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view14"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/iransans"
+                    android:text="@string/noData"
+                    android:textColor="@color/gray"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/View"
+                    app:layout_constraintEnd_toEndOf="@+id/View"
+                    app:layout_constraintHorizontal_bias="0.486"
+                    app:layout_constraintStart_toStartOf="@+id/View"
+                    app:layout_constraintTop_toBottomOf="@+id/view14"
+                    app:layout_constraintVertical_bias="0.56" />
+
+                <View
+                    android:id="@+id/view14"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@drawable/gradient_small"
+                    android:visibility="gone" />
+
+                <ProgressBar
+                    android:id="@+id/progressBarRow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:indeterminateDrawable="@drawable/progress_bar_states"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view14" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/View"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="32dp"
+                    android:layoutDirection="rtl"
+                    android:scrollbars="none"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/view14" />
+
+                <com.github.clans.fab.FloatingActionMenu
+                    android:id="@+id/material_design_android_floating_action_menu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+
+                    android:layout_marginBottom="60dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+
+                    app:menu_labels_colorNormal="@color/amber_900"
+                    app:menu_labels_cornerRadius="10dp"
+                    fab:menu_animationDelayPerItem="55"
+
+                    fab:menu_backgroundColor="@android:color/transparent"
+                    fab:menu_buttonSpacing="0dp"
+                    fab:menu_colorNormal="#da3c2f"
+                    fab:menu_colorPressed="#dc4b3f"
+                    fab:menu_colorRipple="#99d4d4d4"
+                    fab:menu_fab_label=""
+                    fab:menu_fab_size="normal"
+                    fab:menu_icon="@mipmap/plus2"
+                    fab:menu_labels_colorPressed="#444"
+                    fab:menu_labels_colorRipple="#66efecec"
+                    fab:menu_labels_ellipsize="none"
+                    fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+                    fab:menu_labels_margin="0dp"
+                    fab:menu_labels_maxLines="-1"
+                    fab:menu_labels_padding="8dp"
+                    fab:menu_labels_position="left"
+                    fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+                    fab:menu_labels_showShadow="true"
+                    fab:menu_labels_singleLine="false"
+                    fab:menu_labels_textColor="#f2f1f1"
+                    fab:menu_labels_textSize="15sp"
+                    fab:menu_openDirection="up"
+                    fab:menu_shadowColor="#66aff198"
+                    fab:menu_shadowRadius="4dp"
+                    fab:menu_shadowXOffset="1dp"
+                    fab:menu_shadowYOffset="4dp"
+                    fab:menu_showShadow="true"
+                    tools:visibility="visible">
+
+                    <com.github.clans.fab.FloatingActionButton
+                        android:id="@+id/material_design_floating_action_menu_item1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/done4"
+
+                        app:fab_colorNormal="@color/amber_900"
+                        app:fab_size="mini"
+                        fab:fab_label="جدید"
+
+                        tools:visibility="visible" />
+
+                </com.github.clans.fab.FloatingActionMenu>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include
+                android:id="@+id/toolbar"
+
+                layout="@layout/app_bar_list"
+                app:layout_constraintBottom_toTopOf="@+id/include2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/include2"
+                layout="@layout/bottom_navigation3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view6"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <View
+                android:id="@+id/view6"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="55dp"
+                android:background="@drawable/gradient_small"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <fragment
+            android:id="@+id/fragment_navigation_drawer"
+            android:name="com.atrinfanavaran.school.Fragment.NavigationDrawerFragment"
+            android:layout_width="270dp"
+
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:layout="@layout/fragment_navigation_drawer" />
+    </androidx.drawerlayout.widget.DrawerLayout>
+</RelativeLayout>

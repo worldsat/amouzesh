@@ -29,7 +29,7 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:fontFamily="@font/iransansmedium"
+            android:fontFamily="@font/iranyekanmedium"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/black"

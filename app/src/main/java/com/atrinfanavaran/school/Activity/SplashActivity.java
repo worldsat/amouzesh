@@ -9,7 +9,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.atrinfanavaran.school.Activity.New.MainActivity;
+import com.atrinfanavaran.school.Activity.New.SendPostActivity;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.R;
@@ -105,7 +105,7 @@ public class SplashActivity extends BaseActivity {
                 SharedPreferences sp = getApplicationContext().getSharedPreferences("Settings", 0);
                 if (sp != null) {
                     if (settingsBll.getLoging()) {
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        startActivity(new Intent(SplashActivity.this, SendPostActivity.class));
                     } else {
                         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(intent);

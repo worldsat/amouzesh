@@ -4,11 +4,13 @@ import com.atrinfanavaran.school.Kernel.Controller.Domain.BaseDomain;
 
 public class DropdownList extends BaseDomain {
     private String ListName;
-    private String ListId;
+    private int ListId;
+    private boolean tick;
 
-    public DropdownList(String listName, String listId) {
+    public DropdownList(String listName, int listId, boolean tick) {
         ListName = listName;
         ListId = listId;
+        this.tick = tick;
     }
 
     public String getListName() {
@@ -19,11 +21,19 @@ public class DropdownList extends BaseDomain {
         ListName = listName;
     }
 
-    public String getListId() {
+    public int getListId() {
         return ListId;
     }
 
-    public void setListId(String listId) {
+    public void setListId(int listId) {
         ListId = listId;
+    }
+
+    public boolean isTick() {
+        return tick;
+    }
+
+    public void setTick(boolean tick) {
+        this.tick = tick;
     }
 }

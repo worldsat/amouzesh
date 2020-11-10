@@ -10,58 +10,61 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >  <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:background="@color/red_700"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
-                app:srcCompat="@mipmap/profile_pic2" />
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:background="@color/red_700"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:text="-"
-                    android:textColor="@color/white"
-                    android:textDirection="rtl"
-                    android:textSize="18sp" />
+                    android:layout_margin="10dp"
+                    app:srcCompat="@mipmap/profile_pic2" />
 
-                <TextView
-                    android:id="@+id/code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="-"
-                    android:textColor="@color/white"
-                    android:textDirection="rtl"
-                    android:textSize="12sp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        android:textDirection="rtl"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        android:textDirection="rtl"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
             </LinearLayout>
-
-        </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/getData"
@@ -344,7 +347,8 @@
                 android:text="اپلیکیشن قاصدک نسخه 1"
                 android:textAlignment="center"
                 android:textSize="10sp"
-                android:visibility="visible" /></LinearLayout>
+                android:visibility="visible" />
+        </LinearLayout>
     </ScrollView>
 
 

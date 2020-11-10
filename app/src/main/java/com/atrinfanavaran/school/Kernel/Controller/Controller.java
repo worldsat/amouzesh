@@ -31,6 +31,7 @@ import com.atrinfanavaran.school.Kernel.Helper.DataBaseHelper;
 import com.atrinfanavaran.school.Kernel.Helper.DateConverter;
 import com.atrinfanavaran.school.Kernel.Helper.SHA2;
 import com.atrinfanavaran.school.Kernel.Helper.UploadFile;
+import com.atrinfanavaran.school.Kernel.Interface.PercentUploadCallback;
 import com.atrinfanavaran.school.R;
 import com.bumptech.glide.Glide;
 import com.google.common.collect.Lists;
@@ -47,7 +48,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -677,132 +677,7 @@ public class Controller {
     }
 
 
-    //    public void uploadFile(Context context, String ApiAddress, final File selectedFile, Map<String, Object> params, IOnResponseListener resonse) {
-    public void uploadFile(Context context, String ApiAddress, final File selectedFile, Map<String, Object> params, IOnResponseListener resonse) {
 
-//        String Address = URL + ":" + PORT + "/" + ApiAddress;
-        String Address = URL + "/" + ApiAddress;
-
-//        dialog = new ProgressDialog(context);
-//        dialog.setCancelable(false);
-//        dialog.setMessage("در حال آپلود...");
-//        dialog.setIndeterminate(false);
-//        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-//        //dialog.setMax(imagesSize + 1);
-//        dialog.setProgress(0);
-//        dialog.show();
-        // dialog = ProgressDialog.show(context, "", "در حال بارگذاری فایل...", true);
-        Log.i("moh3n", "uploadFile: " + Address);
-        //set progress dialog
-        MaterialDialog progress_dialog = new MaterialDialog.Builder(context)
-                .customView(R.layout.alert_progress_dialog, false)
-                .autoDismiss(false)
-                .backgroundColor(Color.parseColor("#01000000"))
-                .build();
-        RoundCornerProgressBar progressBar = (RoundCornerProgressBar) progress_dialog.findViewById(R.id.progressBar);
-        TextView percent = (TextView) progress_dialog.findViewById(R.id.percent);
-        ImageView iView = (ImageView) progress_dialog.findViewById(R.id.loading);
-        Glide.with(context)
-                .load(R.mipmap.loading_processmaker)
-                .into(iView);
-        TextView warning_message = (TextView) progress_dialog.findViewById(R.id.warning_alert);
-        warning_message.setText("در حال ارسال...");
-
-        progress_dialog.show();
-
-//        if (!selectedFile.isFile()) {
-//            progress_dialog.dismiss();
-//
-//            Toast.makeText(context, "فایل قابل انتقال نمی باشد", Toast.LENGTH_SHORT).show();
-//
-//        } else {
-        try {
-
-
-            Log.i("moh3n", "params: " + params.toString());
-            UploadFile ws = new UploadFile(context);
-            ws.post(params, Address, settingsBll.getTicket(), () -> {
-
-                        Log.i("moh3n", "onResponse: UploadOk");
-                        percent.setText(100 + "%");
-                        progressBar.setProgress(100);
-                        progress_dialog.dismiss();
-
-                        resonse.onResponse();
-
-                        Toast.makeText(context, "اتمام فرایند بارگذاری", Toast.LENGTH_SHORT).show();
-                    }
-            );
-        } catch (Exception e) {
-
-            Log.i("moh3n", "uploadFileCatch: " + e);
-        }
-
-//        }
-
-    }
-
-
-    public void uploadFile(Context context, String ApiAddress, final File selectedFile, HashMap<String, Object> key) {
-
-        String Address = URL + ":" + PORT + "/" + ApiAddress;
-
-//        dialog = new ProgressDialog(context);
-//        dialog.setCancelable(false);
-//        dialog.setMessage("در حال آپلود...");
-//        dialog.setIndeterminate(false);
-//        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-//        //dialog.setMax(imagesSize + 1);
-//        dialog.setProgress(0);
-//        dialog.show();
-        // dialog = ProgressDialog.show(context, "", "در حال بارگذاری فایل...", true);
-
-        //set progress dialog
-        MaterialDialog progress_dialog = new MaterialDialog.Builder(context)
-                .customView(R.layout.alert_progress_dialog, false)
-                .autoDismiss(false)
-                .backgroundColor(Color.parseColor("#01000000"))
-                .build();
-        RoundCornerProgressBar progressBar = (RoundCornerProgressBar) progress_dialog.findViewById(R.id.progressBar);
-        TextView percent = (TextView) progress_dialog.findViewById(R.id.percent);
-        ImageView iView = (ImageView) progress_dialog.findViewById(R.id.loading);
-        Glide.with(context)
-                .load(R.mipmap.loading_processmaker)
-                .into(iView);
-        TextView warning_message = (TextView) progress_dialog.findViewById(R.id.warning_alert);
-        warning_message.setText("در حال ارسال...");
-
-        progress_dialog.show();
-
-        if (!selectedFile.isFile()) {
-            progress_dialog.dismiss();
-
-            Toast.makeText(context, "فایل قابل انتقال نمی باشد", Toast.LENGTH_SHORT).show();
-
-        } else {
-            try {
-
-                key.put("uploaded_file", selectedFile);
-                UploadFile ws = new UploadFile(context);
-                ws.post(key, Address, settingsBll.getTicket(), () -> {
-
-                            Log.i("moh3n", "onResponse: UploadOk");
-                            percent.setText(100 + "%");
-                            progressBar.setProgress(100);
-                            progress_dialog.dismiss();
-
-                            SnakBar snakBar = new SnakBar();
-                            snakBar.snakShow(context, "اتمام فرایند بارگذاری");
-                        }
-                );
-            } catch (Exception e) {
-
-                Log.i("moh3n", "uploadFileCatch: " + e);
-            }
-
-        }
-
-    }
 
 
     public void loginDatabase(String userName, String password, CallbackOperation callbackOperation) {
@@ -879,5 +754,81 @@ public class Controller {
 
 
         return success;
+    }
+    public void uploadFileNew(Context context, String ApiAddress, final File selectedFile, Map<String, Object> key, IOnResponseListener iOnResponseListener) {
+
+        String Address = URL + "/" + ApiAddress;
+
+        MaterialDialog progress_dialog = new MaterialDialog.Builder(context)
+                .customView(R.layout.alert_progress_dialog, false)
+                .autoDismiss(false)
+                .canceledOnTouchOutside(false)
+                .backgroundColor(Color.parseColor("#01000000"))
+                .build();
+        RoundCornerProgressBar progressBar = (RoundCornerProgressBar) progress_dialog.findViewById(R.id.progressBar);
+        TextView percentTxt = (TextView) progress_dialog.findViewById(R.id.percent);
+        TextView cancel = (TextView) progress_dialog.findViewById(R.id.cancel);
+        TextView sizeTxt = (TextView) progress_dialog.findViewById(R.id.size);
+        TextView speedTxt = (TextView) progress_dialog.findViewById(R.id.speed);
+        ImageView iView = (ImageView) progress_dialog.findViewById(R.id.loading);
+
+        Glide.with(context)
+                .load(R.mipmap.loading_processmaker)
+                .into(iView);
+        TextView warning_message = (TextView) progress_dialog.findViewById(R.id.warning_alert);
+        warning_message.setText("در حال ارسال...");
+        cancel.setOnClickListener(v -> progress_dialog.dismiss());
+
+        progress_dialog.show();
+
+        if (selectedFile != null) {
+            if (!selectedFile.isFile()) {
+                progress_dialog.dismiss();
+                Toast.makeText(context, "فایل قابل انتقال نمی باشد", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                key.put("uploaded_file", selectedFile);
+            }
+        }
+
+        try {
+
+            UploadFile ws = new UploadFile(context);
+
+            ws.post2(key, Address, settingsBll.getTicket(), cancel, new IOnResponseListener() {
+                @Override
+                public void onResponse() {
+                    Log.i("moh3n", "onResponse: UploadOk");
+                    progress_dialog.dismiss();
+                    iOnResponseListener.onResponse();
+                }
+
+                @Override
+                public void onError() {
+                    Log.i("moh3n", "onResponse: Error");
+                    progress_dialog.dismiss();
+                    iOnResponseListener.onError();
+                }
+
+            }, new PercentUploadCallback() {
+                @Override
+                public void percent(long totalSize, long sendSize, float percent, float speed, boolean canceled) {
+                    if (!canceled) {
+
+                        percentTxt.setText(String.format("%.01f", (100 * percent)) + "%");
+                        progressBar.setProgress(100 * percent);
+                        sizeTxt.setText("حجم فایل: KB " + (sendSize / 1024) + "/" + (totalSize / 1024));
+                        speedTxt.setText("سرعت ارسال: KB/S " + String.format("%.00f", speed));
+                    } else {
+                        progress_dialog.dismiss();
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Log.i("moh3n", "uploadFileCatch: " + e);
+        }
+
+//        }
+
     }
 }

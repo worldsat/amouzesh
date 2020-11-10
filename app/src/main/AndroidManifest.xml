@@ -20,13 +20,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity.New.SoundActivity"> </activity>
+        <activity android:name=".Activity.New.ListPostActivity">  </activity>
+        <activity android:name=".Activity.New.Main1Activity" />
+        <activity android:name=".Activity.New.Main2Activity" />
+        <activity android:name=".Activity.New.Main4Activity" />
+        <activity android:name=".Activity.New.Main5Activity" />
+        <activity android:name=".Activity.New.Main3Activity"> <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
+        <activity android:name=".Activity.New.SoundActivity" />
         <activity
             android:name=".Activity.New.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity android:name=".Activity.ActivityDesigner" />
         <activity android:name=".Activity.AboutActivity" />
         <activity android:name=".Activity.RememberPasswordActivity" />
@@ -42,12 +50,11 @@
         <activity android:name=".Activity.SplashActivity" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.Map2Activity" />
-        <activity android:name=".Activity.New.MainActivity"></activity>
-        <activity android:name=".Activity.New.ShowPostActivity"> <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".Activity.New.SendPostActivity"></activity>
+        <activity android:name=".Activity.New.ShowPostActivity">
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -64,7 +71,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
 

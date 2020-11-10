@@ -3,9 +3,11 @@ package com.atrinfanavaran.school.Kernel.Helper;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atrinfanavaran.school.Kernel.Controller.Interface.IOnResponseListener;
+import com.atrinfanavaran.school.Kernel.Interface.PercentUploadCallback;
 
 import org.json.JSONObject;
 
@@ -25,6 +27,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import io.github.lizhangqu.coreprogress.ProgressHelper;
+import io.github.lizhangqu.coreprogress.ProgressUIListener;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.CipherSuite;
@@ -305,5 +309,68 @@ public class UploadFile {
                 }
             }
         };
+    }
+
+    public void post2(Map<String, Object> params, String Link, String ticket, TextView cancel_button, IOnResponseListener onResponseListener, PercentUploadCallback percentUploadCallback) {
+        try {
+
+            HttpUrl url = HttpUrl.parse(Link);
+            MultipartBody.Builder b = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM);
+
+            if (params != null) {
+                Object[] keys = params.keySet().toArray();
+                Object[] values = params.values().toArray();
+                for (int i = 0; i < params.size(); i++) {
+                    Object key = keys[i];
+                    Object value = values[i];
+                    if (value instanceof File) {
+                        File f = (File) value;
+                        b.addFormDataPart(key.toString().replaceAll("<<.*>>", ""), f.getName(), RequestBody.create(null, f));
+                    } else
+                        b.addFormDataPart(key.toString(), value.toString());
+                }
+            }
+
+            MultipartBody body2 = b.build();
+//            RequestBody body = b.build();
+
+            RequestBody body = ProgressHelper.withProgress(body2, new ProgressUIListener() {
+                @Override
+                public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
+                    Log.e("moh3n", "=============start===============");
+                    Log.e("moh3n", "numBytes:" + numBytes);
+                    Log.e("moh3n", "totalBytes:" + totalBytes);
+                    Log.e("moh3n", "percent:" + percent);
+                    Log.e("moh3n", "speed:" + speed);
+                    Log.e("moh3n", "============= end ===============");
+                    percentUploadCallback.percent(totalBytes, numBytes, percent, speed, false);
+                }
+            });
+
+            Request req = new Request.Builder()
+                    .tag(System.currentTimeMillis())
+                    .url(url)
+                    .addHeader("Authority", ticket)
+                    .post(body)
+                    .build();
+
+
+            client.newCall(req).enqueue(onResponse(onResponseListener));
+
+            if (cancel_button != null) {
+                cancel_button.setOnClickListener(v -> {
+                    client.dispatcher().cancelAll();
+                    percentUploadCallback.percent(0, 0, 0, 0, true);
+                });
+
+            }
+        } catch (
+                Exception e) {
+
+            Log.i("moh3n", "post: " + e);
+
+        }
+
     }
 }
