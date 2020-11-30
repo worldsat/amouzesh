@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.atrinfanavaran.school.Domain.New.DropdownList;
+import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
 import com.atrinfanavaran.school.R;
 
 import java.util.ArrayList;
@@ -27,10 +28,14 @@ public class DastresiAdapter extends RecyclerView.Adapter<DastresiAdapter.ViewHo
     private boolean endExit = false;
     private SelectCallBack selectCallBack;
     private int oldPosition;
+    private EducationPostGetAll.Data object;
+    private String kind;
 
-    public DastresiAdapter(ArrayList<DropdownList> result, SelectCallBack selectCallBack) {
+    public DastresiAdapter(String kind, ArrayList<DropdownList> result, EducationPostGetAll.Data object, SelectCallBack selectCallBack) {
         this.array_object = result;
         this.selectCallBack = selectCallBack;
+        this.object = object;
+        this.kind = kind;
     }
 
     @NonNull
@@ -46,6 +51,27 @@ public class DastresiAdapter extends RecyclerView.Adapter<DastresiAdapter.ViewHo
         context = holder.itemView.getContext();
         String[] fileName = array_object.get(position).getListName().split("/");
 
+//        int kindList = 0;
+//        if (object != null) {
+//            if (kind.equals("Category")) {
+//                kindList = object.getCategory();
+//            } else if (kind.equals("accessType")) {
+//                kindList = object.getAccessType();
+//            }
+//        }
+//
+//        if (object != null && kindList == array_object.get(position).getListId()) {
+//
+//            for (int i = 0; i < array_object.size(); i++) {
+//                if (array_object.get(i).getListId() == array_object.get(position).getListId()) {
+//                    array_object.get(i).setTick(true);
+//                } else {
+//                    array_object.get(i).setTick(false);
+//                }
+//            }
+//        } else if (object != null) {
+//            array_object.get(position).setTick(false);
+//        }
         if (array_object.get(position).isTick()) {
             holder.icon.setImageResource(R.mipmap.tick128);
             holder.icon.setVisibility(View.VISIBLE);

@@ -182,8 +182,26 @@ public class EducationPost {
             private int id;
             private String title;
             private String url;
+            private String lenght;
+            private String durationTime;
             private int educationPostId;
             private int mediaType;
+
+            public String getLenght() {
+                return lenght;
+            }
+
+            public void setLenght(String lenght) {
+                this.lenght = lenght;
+            }
+
+            public String getDurationTime() {
+                return durationTime;
+            }
+
+            public void setDurationTime(String durationTime) {
+                this.durationTime = durationTime;
+            }
 
             public int getId() {
                 return id;

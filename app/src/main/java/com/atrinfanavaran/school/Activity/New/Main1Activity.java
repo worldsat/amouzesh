@@ -7,21 +7,33 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.R;
 
 public class Main1Activity extends AppCompatActivity {
     private static final int Time_Between_Two_Back = 2000;
     private long TimeBackPressed;
-
+    private Toolbar my_toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         bottomView();
+        NavigationDrawer();
+    }
+    private void NavigationDrawer() {
+        my_toolbar = findViewById(R.id.toolbar);
+        NavigationDrawerFragment my_nav = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+
+        my_nav.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), my_toolbar);
+
     }
     @Override
     public void onBackPressed() {
@@ -86,7 +98,7 @@ public class Main1Activity extends AppCompatActivity {
             overridePendingTransition(0,0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(Main1Activity.this, Main4Activity.class);
+            Intent intent = new Intent(Main1Activity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0,0); //0 for no animation

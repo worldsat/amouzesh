@@ -24,6 +24,7 @@ import com.atrinfanavaran.school.Adapter.New.AttachAdapter;
 import com.atrinfanavaran.school.Adapter.New.DastresiAdapter;
 import com.atrinfanavaran.school.Domain.New.AttachFile;
 import com.atrinfanavaran.school.Domain.New.DropdownList;
+import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
@@ -48,6 +49,8 @@ import java.util.List;
 import java.util.Locale;
 
 import top.defaults.colorpicker.ColorPickerPopup;
+
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeHtml4;
 
 public class SendPostActivity extends BaseActivity {
 
@@ -79,34 +82,60 @@ public class SendPostActivity extends BaseActivity {
     private Editor editor;
     private LinearLayout categoryBtn, dastresiBtn, iconBtn;
     private ImageView toggle_category, toggle_dastresi, toggle_icon;
+    private EducationPostGetAll.Data object;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_send_post);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
 
         RunPermissionDownload();
         initView();
-
+        EditorWYSIWYG();
+        getBundle();
         NavigationDrawer();
         setVariable();
 
-        attachFiles = attach1();
+        attachFiles.addAll(attach1());
         DastresiList = DastresiList();
         CategoryList = CategoryList();
 
         getDataApi2(attachFiles, DastresiList, CategoryList, false);
-        EditorWYSIWYG();
+
         sendData();
         defaultValue();
         bottomView();
+        NavigationDrawer();
+    }
+
+    private void getBundle() {
+        object = (EducationPostGetAll.Data) getIntent().getSerializableExtra("object");
+        if (object != null) {
+            titlePostEdt.setText(object.getTitle());
+            String escaped = unescapeHtml4("<html><body > <head></head>" + java.net.URLDecoder.decode(object.getDescription().replace("null", "-")) + "  </body><html>");
+
+            editor.render(escaped);
+            pinnedSwitch.setChecked(object.isPin());
+            if (object.getMedias() != null) {
+
+                ArrayList<EducationPostGetAll.Data.Medias> res = object.getMedias();
+                for (int i = 0; i < res.size(); i++) {
+
+                    attachFiles.add(new AttachFile(res.get(i).getTitle(), String.valueOf(res.get(i).getId()), ""));
+                }
+            }
+        }
     }
 
     private void defaultValue() {
         params.put("accessType", 0);
         params.put("Category", 0);
+
+        if (object != null) {
+            params.put("id", object.getId());
+        }
     }
 
     private void sendData() {
@@ -132,20 +161,20 @@ public class SendPostActivity extends BaseActivity {
 
                 Controller controller = new Controller(SendPostActivity.this);
                 SettingsBll settingsBll = new SettingsBll(SendPostActivity.this);
-                settingsBll.setTicket("rewrwerewrrsggeetsdgffdgfdgfdgf");
+//                settingsBll.setTicket("rewrwerewrrsggeetsdgffdgfdgfdgf");
 
                 Log.i(TAG, "onActivityResult22: " + params.toString().replaceAll("<<.*>>", ""));
 
                 controller.uploadFileNew(SendPostActivity.this, "api/EducationPost/Add", null, params, new IOnResponseListener() {
                     @Override
-                    public void onResponse() {
-                        Toast.makeText(SendPostActivity.this, "ok", Toast.LENGTH_SHORT).show();
+                    public void onResponse(String response) {
+//                        Toast.makeText(SendPostActivity.this, "ok", Toast.LENGTH_SHORT).show();
 //                waiting.dismiss();
 
-//                finish();
-//                Intent intent = new Intent(PersonelTaskAttach_ManageActivity.this, PersonelTaskAttachListActivity.class);
+                finish();
+                Intent intent = new Intent(SendPostActivity.this, ListPostActivity.class);
 //                intent.putExtra("PersonelTaskId", PersonelTaskId);
-//                startActivity(intent);
+                startActivity(intent);
                     }
 
                     @Override
@@ -452,7 +481,16 @@ public class SendPostActivity extends BaseActivity {
 
 
         //for dastresi
-        adapterDastresi = new DastresiAdapter(array_objectDastresi, new DastresiAdapter.SelectCallBack() {
+        if (object != null) {
+            for (int i = 0; i < array_objectDastresi.size(); i++) {
+                if (array_objectDastresi.get(i).getListId() == object.getAccessType()) {
+                    array_objectDastresi.get(i).setTick(true);
+                } else {
+                    array_objectDastresi.get(i).setTick(false);
+                }
+            }
+        }
+        adapterDastresi = new DastresiAdapter("accessType", array_objectDastresi, object, new DastresiAdapter.SelectCallBack() {
             @Override
             public void Id(int num) {
                 params.put("accessType", num);
@@ -462,7 +500,16 @@ public class SendPostActivity extends BaseActivity {
 
 
         //for category
-        adapterCategory = new DastresiAdapter(array_objectCategory, new DastresiAdapter.SelectCallBack() {
+        if (object != null) {
+            for (int i = 0; i < array_objectCategory.size(); i++) {
+                if (array_objectCategory.get(i).getListId() == object.getCategory()) {
+                    array_objectCategory.get(i).setTick(true);
+                } else {
+                    array_objectCategory.get(i).setTick(false);
+                }
+            }
+        }
+        adapterCategory = new DastresiAdapter("Category", array_objectCategory, object, new DastresiAdapter.SelectCallBack() {
             @Override
             public void Id(int num) {
                 params.put("Category", num);
@@ -480,7 +527,7 @@ public class SendPostActivity extends BaseActivity {
             Uri selectedImage = data.getData();
 
             selectedFilePath = FilePath.getPath(this, selectedImage);
-            attachFiles.add(new AttachFile(selectedFilePath, "1", "1"));
+            attachFiles.add(new AttachFile(selectedFilePath, "null", "1"));
             adapterAttach.notifyDataSetChanged();
             params.put("file<<" + attachFiles.size() + ">>", new File(selectedFilePath));
 
@@ -492,7 +539,7 @@ public class SendPostActivity extends BaseActivity {
             Uri selectedImage = data.getData();
 
             selectedFilePath = FilePath.getPath(this, selectedImage);
-            attachFiles.add(new AttachFile(selectedFilePath, "1", "1"));
+            attachFiles.add(new AttachFile(selectedFilePath, "null", "1"));
             adapterAttach.notifyDataSetChanged();
             params.put("Icon", new File(selectedFilePath));
             toggle_icon.setImageResource(R.mipmap.tick128);
@@ -625,7 +672,7 @@ public class SendPostActivity extends BaseActivity {
         View view4 = findViewById(R.id.view4);
         View view5 = findViewById(R.id.view5);
 
-        view3.setVisibility(View.VISIBLE);
+        view4.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
             Intent intent = new Intent(SendPostActivity.this, Main1Activity.class);
@@ -646,7 +693,7 @@ public class SendPostActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(SendPostActivity.this, Main4Activity.class);
+            Intent intent = new Intent(SendPostActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

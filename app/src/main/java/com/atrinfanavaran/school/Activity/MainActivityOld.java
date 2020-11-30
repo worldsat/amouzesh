@@ -5,7 +5,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +19,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import com.atrinfanavaran.school.Domain.Box;
-import com.atrinfanavaran.school.Domain.BoxIncome;
-import com.atrinfanavaran.school.Domain.Route;
 import com.atrinfanavaran.school.Domain.Setting;
-import com.atrinfanavaran.school.Fragment.AddBoxFragment;
-import com.atrinfanavaran.school.Fragment.AddBoxIncomeFragment1;
-import com.atrinfanavaran.school.Fragment.AddBoxIncomeFragment2;
-import com.atrinfanavaran.school.Fragment.AddRouteFragment;
 import com.atrinfanavaran.school.Fragment.BoxIncomeListFragment;
 import com.atrinfanavaran.school.Fragment.BoxListFragment;
 import com.atrinfanavaran.school.Fragment.FirstFragment;
-import com.atrinfanavaran.school.Fragment.MapBoxFragment;
 import com.atrinfanavaran.school.Fragment.MapFragment;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Fragment.RouteListFragment;
@@ -69,7 +60,7 @@ public class MainActivityOld extends BaseActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_send_post);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
 

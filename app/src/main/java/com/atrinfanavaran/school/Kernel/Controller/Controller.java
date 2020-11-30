@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.atrinfanavaran.school.Domain.New.ManageDomain;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.Kernel.Controller.Domain.ApiResponse;
 import com.atrinfanavaran.school.Kernel.Controller.Domain.DomainInfo;
@@ -237,7 +238,6 @@ public class Controller {
                                 int take, int skip, boolean allData, CallbackGet callbackGet) throws JSONException {
 
 
-
         Gson gson = new Gson();
         String filterStr = "[]";
 
@@ -276,7 +276,7 @@ public class Controller {
                     JSONArray array = jsonRootObject.optJSONArray("data");
                     Method[] declaredMethods = domain.getDeclaredMethods();
 
-                    if (array!=null && array.length() > 0) {
+                    if (array != null && array.length() > 0) {
 
                         for (int i = 0; i < array.length(); i++) {
 
@@ -410,18 +410,18 @@ public class Controller {
                 Gson gson = new Gson();
                 ApiResponse apiResponse = gson.fromJson(response, ApiResponse.class);
 
-                if (!apiResponse.isError) {
+                if (apiResponse.isSuccess()) {
 
                     try {
 
-                        callback.onSuccess(apiResponse.message);
-                        Log.i("moh3n", "Message: " + apiResponse.message);
+                        callback.onSuccess(apiResponse.getMessage());
+                        Log.i("moh3n", "Message: " + apiResponse.getMessage());
                     } catch (Exception e) {
 
                         Log.i("moh3n", e.toString());
                     }
 
-                } else callback.onError(apiResponse.message);
+                } else callback.onError(apiResponse.getMessage());
 
             }
 
@@ -455,17 +455,17 @@ public class Controller {
                     Gson gson = new Gson();
                     ApiResponse apiResponse = gson.fromJson(result, ApiResponse.class);
 
-                    if (!apiResponse.isError) {
+                    if (apiResponse.isSuccess()) {
 
                         try {
-                            callback.onSuccess(apiResponse.message);
-                            Log.i("moh3n", "Message: " + apiResponse.message);
+                            callback.onSuccess(apiResponse.getMessage());
+                            Log.i("moh3n", "Message: " + apiResponse.getMessage());
                         } catch (Exception e) {
 
                             Log.i("moh3n", e.toString());
                         }
 
-                    } else callback.onError(apiResponse.message);
+                    } else callback.onError(apiResponse.getMessage());
                 } catch (Exception e) {
 
                     Log.i("moh3n", "errorPostBody: " + e.toString());
@@ -616,29 +616,21 @@ public class Controller {
                 Gson gson = new Gson();
                 ApiResponse apiResponse = gson.fromJson(response, ApiResponse.class);
 
-                if (!apiResponse.isError && apiResponse.getmessage().equals("")) {
-
-
-                    try {
-
-                        String token = new JSONObject(response).getString("token");
-                        String fullName = new JSONObject(response).getString("fullName");
-                        String UserId = new JSONObject(response).getString("code");
+                if (apiResponse.isSuccess()) {
+//                        String token = new JSONObject(response).getString("token");
+//                        String fullName = new JSONObject(response).getString("fullName");
+//                        String UserId = new JSONObject(response).getString("code");
 //                        Log.i("moh3n", "onSuccessResponse: " + token);
-                        settingsBll.setTicket(token);
-                        settingsBll.setName(fullName);
-                        settingsBll.setUserId(UserId);
+                    settingsBll.setTicket(apiResponse.getData().get(0).getApiToken());
+                    settingsBll.setName(apiResponse.getData().get(0).getFullName());
+                    settingsBll.setLogoAddress(apiResponse.getData().get(0).getUrl());
+//                        settingsBll.setUserId(UserId);
 
-                        callbackOperation.onSuccess(response);
+                    callbackOperation.onSuccess(response);
 //                        context.startActivity(new Intent(context, IntentClass));
 
-                    } catch (JSONException e) {
 
-                        Log.i("moh3n", e.toString());
-                    }
-
-
-                } else callbackOperation.onError(apiResponse.message);
+                } else callbackOperation.onError(apiResponse.getMessage());
 
 
             }
@@ -662,11 +654,11 @@ public class Controller {
                 Gson gson = new Gson();
                 ApiResponse apiResponse = gson.fromJson(response, ApiResponse.class);
 
-                if (!apiResponse.isError && apiResponse.getmessage() == null) {
+                if (!apiResponse.isSuccess()) {
 
-                    callbackOperation.onSuccess(apiResponse.message);
+                    callbackOperation.onSuccess(apiResponse.getMessage());
 
-                } else callbackOperation.onError(apiResponse.message);
+                } else callbackOperation.onError(apiResponse.getMessage());
             }
 
             @Override
@@ -675,9 +667,6 @@ public class Controller {
             }
         });
     }
-
-
-
 
 
     public void loginDatabase(String userName, String password, CallbackOperation callbackOperation) {
@@ -755,6 +744,7 @@ public class Controller {
 
         return success;
     }
+
     public void uploadFileNew(Context context, String ApiAddress, final File selectedFile, Map<String, Object> key, IOnResponseListener iOnResponseListener) {
 
         String Address = URL + "/" + ApiAddress;
@@ -795,35 +785,38 @@ public class Controller {
 
             UploadFile ws = new UploadFile(context);
 
-            ws.post2(key, Address, settingsBll.getTicket(), cancel, new IOnResponseListener() {
-                @Override
-                public void onResponse() {
-                    Log.i("moh3n", "onResponse: UploadOk");
-                    progress_dialog.dismiss();
-                    iOnResponseListener.onResponse();
-                }
+            ws.post2(key, Address, settingsBll.getTicket(), cancel,
+                    new IOnResponseListener() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.i("moh3n", "onResponse: UploadOk");
+                            ManageDomain manageDomain = gson.fromJson(response, ManageDomain.class);
+                            Toast.makeText(context, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
+                            progress_dialog.dismiss();
+                            iOnResponseListener.onResponse(response);
+                        }
 
-                @Override
-                public void onError() {
-                    Log.i("moh3n", "onResponse: Error");
-                    progress_dialog.dismiss();
-                    iOnResponseListener.onError();
-                }
+                        @Override
+                        public void onError() {
+                            Log.i("moh3n", "onResponse: Error");
+                            progress_dialog.dismiss();
+                            iOnResponseListener.onError();
+                        }
 
-            }, new PercentUploadCallback() {
-                @Override
-                public void percent(long totalSize, long sendSize, float percent, float speed, boolean canceled) {
-                    if (!canceled) {
+                    }, new PercentUploadCallback() {
+                        @Override
+                        public void percent(long totalSize, long sendSize, float percent, float speed, boolean canceled) {
+                            if (!canceled) {
 
-                        percentTxt.setText(String.format("%.01f", (100 * percent)) + "%");
-                        progressBar.setProgress(100 * percent);
-                        sizeTxt.setText("حجم فایل: KB " + (sendSize / 1024) + "/" + (totalSize / 1024));
-                        speedTxt.setText("سرعت ارسال: KB/S " + String.format("%.00f", speed));
-                    } else {
-                        progress_dialog.dismiss();
-                    }
-                }
-            });
+                                percentTxt.setText(String.format("%.01f", (100 * percent)) + "%");
+                                progressBar.setProgress(100 * percent);
+                                sizeTxt.setText("حجم فایل: KB " + (sendSize / 1024) + "/" + (totalSize / 1024));
+                                speedTxt.setText("سرعت ارسال: KB/S " + String.format("%.00f", speed));
+                            } else {
+                                progress_dialog.dismiss();
+                            }
+                        }
+                    });
         } catch (Exception e) {
             Log.i("moh3n", "uploadFileCatch: " + e);
         }

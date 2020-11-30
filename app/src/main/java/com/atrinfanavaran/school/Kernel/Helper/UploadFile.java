@@ -292,7 +292,7 @@ public class UploadFile {
 
                                     Log.i("moh3n", "upload:" + res);
 
-                                    onResponseListener.onResponse();
+                                    onResponseListener.onResponse(res);
 
 
                                 } catch (Exception e) {

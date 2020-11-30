@@ -34,6 +34,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeHtml4;
 
@@ -123,11 +124,22 @@ public class ShowPostActivity extends BaseActivity {
 
                         for (int i = 0; i < res.size(); i++) {
                             if (res.get(i).getMediaType() == 4) {
-                                array_object.add(new ShowPost(res.get(i).getTitle(), "4", "--:--", "- MB", settingsBll.getUrlAddress() + res.get(i).getUrl().replace("../", "/"), null));
+                                String durationTime = "--:--";
+                                if (res.get(i).getDurationTime() != null) {
+                                    if (res.get(i).getDurationTime().contains(".")) {
+                                        String[] split = res.get(i).getDurationTime().split(Pattern.quote("."));
+                                        if (split.length > 0) {
+                                            durationTime = split[0];
+                                        }
+                                    } else {
+                                        durationTime = res.get(i).getDurationTime();
+                                    }
+                                }
+                                array_object.add(new ShowPost(res.get(i).getTitle(), "4", durationTime, res.get(i).getLenght(), settingsBll.getUrlAddress() + res.get(i).getUrl().replace("../", "/"), null));
                             } else if (res.get(i).getMediaType() == 3) {
-                                array_object.add(new ShowPost(res.get(i).getTitle(), "3", "--:--", "- MB", settingsBll.getUrlAddress() + res.get(i).getUrl().replace("../", "/"), null));
+                                array_object.add(new ShowPost(res.get(i).getTitle(), "3", "", res.get(i).getLenght(), settingsBll.getUrlAddress() + res.get(i).getUrl().replace("../", "/"), null));
                             } else {
-                                array_object.add(new ShowPost(res.get(i).getTitle(), "2", null, "- MB", settingsBll.getUrlAddress() + res.get(i).getUrl().replace("../", "/"), res.get(i).getTitle()));
+                                array_object.add(new ShowPost(res.get(i).getTitle(), "2", null, res.get(i).getLenght(), settingsBll.getUrlAddress() + res.get(i).getUrl().replace("../", "/"), res.get(i).getTitle()));
                             }
                         }
                     }
@@ -257,7 +269,7 @@ public class ShowPostActivity extends BaseActivity {
         View view4 = findViewById(R.id.view4);
         View view5 = findViewById(R.id.view5);
 
-        view3.setVisibility(View.VISIBLE);
+        view4.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
             Intent intent = new Intent(ShowPostActivity.this, Main1Activity.class);
@@ -278,7 +290,7 @@ public class ShowPostActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ShowPostActivity.this, Main4Activity.class);
+            Intent intent = new Intent(ShowPostActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

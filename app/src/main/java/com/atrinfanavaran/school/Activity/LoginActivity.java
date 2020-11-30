@@ -15,9 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.atrinfanavaran.school.Activity.New.Main3Activity;
 import com.atrinfanavaran.school.Activity.New.SendPostActivity;
 import com.atrinfanavaran.school.Domain.AndroidVersion;
-import com.atrinfanavaran.school.Domain.Login;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.Kernel.Controller.Controller;
@@ -38,6 +38,7 @@ public class LoginActivity extends BaseActivity {
     private SettingsBll settingsBll;
     private static final int Time_Between_Two_Back = 2000;
     private long TimeBackPressed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,10 @@ public class LoginActivity extends BaseActivity {
 
             waitingProgressbar.setVisibility(View.VISIBLE);
 
-            if (passEdt.getText().toString().isEmpty()) {
+            if (userEdt.getText().toString().isEmpty()) {
+                SnakBar("لطفا نام کاربری را وارد نمائید");
+                waitingProgressbar.setVisibility(View.GONE);
+            }else if (passEdt.getText().toString().isEmpty()) {
 
                 SnakBar("لطفا رمز عبور را وارد نمائید");
                 waitingProgressbar.setVisibility(View.GONE);
@@ -77,19 +81,19 @@ public class LoginActivity extends BaseActivity {
                 JSONObject loginObject = null;
                 try {
                     loginObject = new JSONObject();
-                    loginObject.put("userName", userEdt.getText().toString());
-                    loginObject.put("password", passEdt.getText().toString());
+                    loginObject.put("UserName", userEdt.getText().toString());
+                    loginObject.put("Password", passEdt.getText().toString());
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                controller().LoginApi(this, SendPostActivity.class, new Login().getApiAddress(), loginObject.toString(), new CallbackOperation() {
+                controller().LoginApi(this, SendPostActivity.class, "api/Teacher/Login", loginObject.toString(), new CallbackOperation() {
                     @Override
                     public void onSuccess(String result) {
                         settingsBll.setLoging(true);
-                        startActivity(new Intent(LoginActivity.this, SendPostActivity.class));
+                        startActivity(new Intent(LoginActivity.this, Main3Activity.class));
                         waitingProgressbar.setVisibility(View.GONE);
                     }
 

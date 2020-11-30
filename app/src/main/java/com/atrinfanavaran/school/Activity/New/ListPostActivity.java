@@ -2,17 +2,21 @@ package com.atrinfanavaran.school.Activity.New;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.atrinfanavaran.school.Adapter.New.EducationPostListAdapter;
 import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
+import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.school.R;
@@ -26,6 +30,7 @@ public class ListPostActivity extends BaseActivity {
     private FloatingActionMenu floatingActionMenu;
     private ProgressBar progressBar;
     private TextView warningTxt;
+    private Toolbar my_toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,16 @@ public class ListPostActivity extends BaseActivity {
         setVariable();
         getData();
         bottomView();
+        NavigationDrawer();
+    }
+
+    private void NavigationDrawer() {
+
+        NavigationDrawerFragment my_nav = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+
+        my_nav.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), my_toolbar);
+
     }
 
     private void getData() {
@@ -47,20 +62,23 @@ public class ListPostActivity extends BaseActivity {
         controller().GetFromApi2("api/EducationPost/GetAll?Id=1", new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
+                try {
+                    EducationPostGetAll educationPostGetAll = gson().fromJson(resultStr, EducationPostGetAll.class);
 
-                EducationPostGetAll educationPostGetAll = gson().fromJson(resultStr, EducationPostGetAll.class);
+                    if (educationPostGetAll.getData().size() > 0) {
+                        warningTxt.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
+                        recyclerViewlistPost.setVisibility(View.VISIBLE);
 
-                if (educationPostGetAll.getData().size() > 0) {
-                    warningTxt.setVisibility(View.GONE);
-                    progressBar.setVisibility(View.GONE);
-                    recyclerViewlistPost.setVisibility(View.VISIBLE);
-
-                    adapter = new EducationPostListAdapter(educationPostGetAll.getData());
-                    recyclerViewlistPost.setAdapter(adapter);
-                } else {
-                    warningTxt.setVisibility(View.VISIBLE);
-                    progressBar.setVisibility(View.GONE);
-                    recyclerViewlistPost.setVisibility(View.GONE);
+                        adapter = new EducationPostListAdapter(educationPostGetAll.getData());
+                        recyclerViewlistPost.setAdapter(adapter);
+                    } else {
+                        warningTxt.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        recyclerViewlistPost.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+                    Log.i(TAG, "onSuccessException: " + e);
                 }
             }
 
@@ -87,6 +105,7 @@ public class ListPostActivity extends BaseActivity {
         floatingActionButton1 = findViewById(R.id.material_design_floating_action_menu_item1);
         progressBar = findViewById(R.id.progressBarRow);
         warningTxt = findViewById(R.id.warninTxt1);
+        my_toolbar = findViewById(R.id.toolbar);
     }
 
     private void bottomView() {
@@ -101,7 +120,7 @@ public class ListPostActivity extends BaseActivity {
         View view4 = findViewById(R.id.view4);
         View view5 = findViewById(R.id.view5);
 
-        view3.setVisibility(View.VISIBLE);
+        view4.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
             Intent intent = new Intent(ListPostActivity.this, Main1Activity.class);
@@ -122,7 +141,7 @@ public class ListPostActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, Main4Activity.class);
+            Intent intent = new Intent(ListPostActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
