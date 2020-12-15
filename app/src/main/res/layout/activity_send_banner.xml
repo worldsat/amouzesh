@@ -147,7 +147,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/casablanca"
-                            android:text="پست جدید"
+                            android:text="بنر جدید"
                             android:textColor="@color/blue_900"
                             android:textSize="18sp" />
 
@@ -166,27 +166,11 @@
 
                     </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/titlePostEdt"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="15dp"
-                        android:background="@drawable/background_insert_ads"
-                        android:ems="10"
-                        android:fontFamily="@font/iranyekanmedium"
-                        android:hint="عنوان"
-                        android:inputType="textPersonName"
-                        android:padding="5dp"
-                        android:textDirection="rtl"
-                        android:textSize="12sp" />
-
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/background_insert_ads">
 
@@ -248,11 +232,27 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <EditText
+                        android:id="@+id/socialEdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/background_insert_ads"
+                        android:ems="10"
+                        android:fontFamily="@font/iranyekanmedium"
+                        android:hint="لینک به شبکه های اجتماعی"
+                        android:inputType="textPersonName"
+                        android:padding="5dp"
+                        android:textDirection="rtl"
+                        android:textSize="12sp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="10dp"
                         android:orientation="vertical">
@@ -304,6 +304,272 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="0.5"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:id="@+id/positionBtn"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@drawable/background_button_message_orange2"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/textView23"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/casablanca"
+                                    android:text="جایگاه بنر"
+                                    android:textColor="#ffffff"
+                                    android:textSize="16sp" />
+
+                                <View
+                                    android:id="@+id/view8"
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:alpha="0.7"
+                                    android:background="#ffffff"
+                                    android:visibility="visible"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageView
+                                    android:id="@+id/sub_toggle_button_position"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_alignTop="@+id/defect_checkBox"
+                                    android:layout_alignBottom="@+id/defect_checkBox"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginBottom="11dp"
+                                    android:visibility="visible"
+                                    app:srcCompat="@drawable/ic_expand_less" />
+
+                            </LinearLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/viewPostion"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:visibility="gone"
+                                tools:visibility="visible" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="0.5"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:id="@+id/timeBtn"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@drawable/background_button_message_orange2"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/textView23"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/casablanca"
+                                    android:text="زمان نمایش"
+                                    android:textColor="#ffffff"
+                                    android:textSize="16sp" />
+
+                                <View
+                                    android:id="@+id/view8"
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:alpha="0.7"
+                                    android:background="#ffffff"
+                                    android:visibility="visible"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <ImageView
+                                    android:id="@+id/sub_toggle_button_time"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_alignTop="@+id/defect_checkBox"
+                                    android:layout_alignBottom="@+id/defect_checkBox"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginBottom="11dp"
+                                    android:visibility="visible"
+                                    app:srcCompat="@drawable/ic_expand_less" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layoutShowTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="10dp"
+                                android:orientation="vertical"
+                                android:visibility="gone"
+                                tools:visibility="visible">
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/item"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/background_item_orange_border"
+                                    android:visibility="visible">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="40dp"
+                                        android:orientation="horizontal"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+
+                                        <TextView
+                                            android:id="@+id/title2"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginStart="5dp"
+                                            android:fontFamily="@font/iranyekanmedium"
+                                            android:gravity="center_vertical"
+                                            android:text="شروع نمایش:"
+                                            android:textColor="@color/blue_900"
+                                            android:textDirection="rtl"
+                                            android:textSize="10sp" />
+
+                                        <TextView
+                                            android:id="@+id/dateShowTime"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:fontFamily="@font/iranyekanmedium"
+                                            android:gravity="center_vertical"
+                                            android:text="-"
+                                            android:textColor="@color/black"
+                                            android:textDirection="rtl"
+                                            android:textSize="10sp" />
+
+                                        <androidx.constraintlayout.widget.ConstraintLayout
+                                            android:id="@+id/icon_background"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent">
+
+                                            <ImageView
+                                                android:id="@+id/icon"
+                                                android:layout_width="30dp"
+                                                android:layout_height="30dp"
+                                                android:layout_marginStart="4dp"
+                                                android:layout_marginEnd="4dp"
+                                                android:visibility="visible"
+                                                app:layout_constraintBottom_toBottomOf="parent"
+                                                app:layout_constraintEnd_toEndOf="parent"
+                                                app:layout_constraintStart_toStartOf="parent"
+                                                app:layout_constraintTop_toTopOf="parent"
+                                                app:srcCompat="@mipmap/calender" />
+                                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                    </LinearLayout>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/item"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/background_item_orange_border"
+                                    android:visibility="visible">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="40dp"
+                                        android:orientation="horizontal"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent">
+
+                                        <TextView
+                                            android:id="@+id/title"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:fontFamily="@font/iranyekanmedium"
+                                            android:gravity="center_vertical"
+                                            android:paddingStart="5dp"
+                                            android:text="تعداد روز نمایش:"
+                                            android:textColor="@color/blue_900"
+                                            android:textDirection="rtl"
+                                            android:textSize="10sp" />
+
+                                        <EditText
+                                            android:id="@+id/dayShowBanner"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_marginTop="1dp"
+                                            android:layout_marginEnd="5dp"
+                                            android:layout_marginBottom="1dp"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/background_insert_ads"
+                                            android:digits="1234567890"
+                                            android:ems="10"
+                                            android:fontFamily="@font/iranyekanmedium"
+                                            android:hint="تایپ نمائید..."
+                                            android:inputType="number"
+                                            android:padding="5dp"
+                                            android:textAlignment="center"
+                                            android:textDirection="rtl"
+                                            android:textSize="12sp" />
+
+                                    </LinearLayout>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
 
@@ -330,7 +596,7 @@
                                     android:layout_marginStart="10dp"
                                     android:layout_weight="1"
                                     android:fontFamily="@font/casablanca"
-                                    android:text="دسترسی"
+                                    android:text="لینک به پست"
                                     android:textColor="#ffffff"
                                     android:textSize="16sp" />
 
@@ -373,6 +639,13 @@
 
                         </LinearLayout>
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -396,12 +669,12 @@
                                     android:layout_marginStart="10dp"
                                     android:layout_weight="1"
                                     android:fontFamily="@font/casablanca"
-                                    android:text="دسته بندی"
+                                    android:text="لینک به دسته بندی"
                                     android:textColor="#ffffff"
                                     android:textSize="16sp" />
 
                                 <View
-                                    android:id="@+id/view10"
+                                    android:id="@+id/view8"
                                     android:layout_width="1dp"
                                     android:layout_height="match_parent"
                                     android:layout_marginStart="5dp"
@@ -431,136 +704,6 @@
                             </LinearLayout>
 
                             <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/viewPostion"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="10dp"
-                                android:visibility="gone" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="10dp"
-                            android:layout_weight="0.5"
-                            android:orientation="vertical"
-                            android:visibility="visible">
-
-                            <LinearLayout
-                                android:id="@+id/iconBtn"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:background="@drawable/background_button_message_orange2"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/textView23"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/casablanca"
-                                    android:text="آیکون"
-                                    android:textColor="#ffffff"
-                                    android:textSize="16sp" />
-
-                                <View
-                                    android:id="@+id/view8"
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginStart="5dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginEnd="5dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:alpha="0.7"
-                                    android:background="#ffffff"
-                                    android:visibility="visible"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <ImageView
-                                    android:id="@+id/sub_toggle_button_icon"
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:layout_alignTop="@+id/defect_checkBox"
-                                    android:layout_alignBottom="@+id/defect_checkBox"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:layout_marginBottom="11dp"
-                                    android:visibility="visible" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="10dp"
-                            android:layout_weight="0.5"
-                            android:orientation="vertical"
-                            android:visibility="visible">
-
-                            <LinearLayout
-                                android:id="@+id/postBtn"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:background="@drawable/background_button_message_orange2"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/textView23"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/casablanca"
-                                    android:text="شماره پست"
-                                    android:textColor="#ffffff"
-                                    android:textSize="16sp" />
-
-                                <View
-                                    android:id="@+id/view8"
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginStart="5dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginEnd="5dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:alpha="0.7"
-                                    android:background="#ffffff"
-                                    android:visibility="visible"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <ImageView
-                                    android:id="@+id/sub_toggle_button_category2"
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:layout_alignTop="@+id/defect_checkBox"
-                                    android:layout_alignBottom="@+id/defect_checkBox"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:layout_marginBottom="11dp"
-                                    android:visibility="visible"
-                                    app:srcCompat="@drawable/ic_expand_less" />
-
-                            </LinearLayout>
-
-                            <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/viewCategory"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -568,6 +711,7 @@
                                 android:visibility="gone" />
 
                         </LinearLayout>
+
                     </LinearLayout>
 
                     <View
@@ -599,7 +743,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/iranyekanmedium"
-                            android:text="پین شود"
+                            android:text="نمایش در صفحه اصلی"
                             android:textColor="@color/grey_600" />
 
                         <Switch

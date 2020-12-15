@@ -4,18 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
+import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.R;
 
-public class Main2Activity extends AppCompatActivity {
+public class Main2Activity extends BaseActivity {
     private static final int Time_Between_Two_Back = 2000;
     private long TimeBackPressed;
     private Toolbar my_toolbar;
@@ -26,6 +27,11 @@ public class Main2Activity extends AppCompatActivity {
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         bottomView();
         NavigationDrawer();
+        setToolbar();
+    }
+    private void setToolbar() {
+        TextView titleToolbar=findViewById(R.id.titleToolbar);
+        titleToolbar.setText(settingsBll().getSchoolName());
     }
     private void NavigationDrawer() {
         my_toolbar = findViewById(R.id.toolbar);

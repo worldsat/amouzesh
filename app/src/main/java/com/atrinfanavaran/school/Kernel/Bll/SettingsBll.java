@@ -67,14 +67,20 @@ public class SettingsBll {
         preferences.edit().putString("Token", token).apply();
     }
 
-    public String getUserId() {
+    public String getApplicationUserId() {
         return preferences.getString("UserId", null);
     }
 
-    public void setUserId(String token) {
+    public void setApplicationUserId(String token) {
         preferences.edit().putString("UserId", token).apply();
     }
+    public String getSchoolName() {
+        return preferences.getString("SchoolName", "-");
+    }
 
+    public void setSchoolName(String token) {
+        preferences.edit().putString("SchoolName", token).apply();
+    }
     public void logout() {
         preferences.edit().putString("Token", null).apply();
         setLoging(false);
@@ -109,10 +115,10 @@ public class SettingsBll {
         return UserPost;
     }
 
-    public boolean getUserId(String userPostId) {
+    public boolean getApplicationUserId(String userPostId) {
 
         boolean UserId = false;
-        String[] userIds = getUserId().split(",");
+        String[] userIds = getApplicationUserId().split(",");
 
         for (int i = 0; i < userIds.length; i++) {
             if (userIds[i].equals(userPostId)) {

@@ -11,13 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.atrinfanavaran.school.Domain.New.BannerGetAll;
 import com.atrinfanavaran.school.Domain.New.DropdownList;
-import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
 import com.atrinfanavaran.school.R;
 
 import java.util.ArrayList;
 
-public class DastresiAdapter extends RecyclerView.Adapter<DastresiAdapter.ViewHolder> {
+public class PostMiniListAdapter extends RecyclerView.Adapter<PostMiniListAdapter.ViewHolder> {
 
     private final ArrayList<DropdownList> array_object;
     private Context context;
@@ -27,15 +27,15 @@ public class DastresiAdapter extends RecyclerView.Adapter<DastresiAdapter.ViewHo
     private boolean endStart = false;
     private boolean endExit = false;
     private SelectCallBack selectCallBack;
-    private int oldPosition=0;
-    private EducationPostGetAll.Data object;
-    private String kind;
+    private int oldPosition = 0;
+    private BannerGetAll.Data object;
 
-    public DastresiAdapter(String kind, ArrayList<DropdownList> result, EducationPostGetAll.Data object, SelectCallBack selectCallBack) {
+
+    public PostMiniListAdapter(ArrayList<DropdownList> result, BannerGetAll.Data object, SelectCallBack selectCallBack) {
         this.array_object = result;
         this.selectCallBack = selectCallBack;
         this.object = object;
-        this.kind = kind;
+
     }
 
     @NonNull
@@ -95,12 +95,19 @@ public class DastresiAdapter extends RecyclerView.Adapter<DastresiAdapter.ViewHo
             @Override
             public void onClick(View v) {
 
-                array_object.get(oldPosition).setTick(false);
-                array_object.get(position).setTick(true);
+//                array_object.get(oldPosition).setTick(false);
+                if (array_object.get(position).isTick()) {
+                    array_object.get(position).setTick(false);
 
-                notifyDataSetChanged();
-                holder.icon.setImageResource(R.mipmap.tick128);
+                    notifyDataSetChanged();
+                    holder.icon.setVisibility(View.INVISIBLE);
+                } else {
+                    array_object.get(position).setTick(true);
 
+                    notifyDataSetChanged();
+                    holder.icon.setVisibility(View.VISIBLE);
+                    holder.icon.setImageResource(R.mipmap.tick128);
+                }
                 selectCallBack.Id(array_object.get(position).getListId());
             }
         });

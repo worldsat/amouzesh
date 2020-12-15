@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class AttachAdapter extends RecyclerView.Adapter<AttachAdapter.ViewHolder> {
+public class AttachBannerAdapter extends RecyclerView.Adapter<AttachBannerAdapter.ViewHolder> {
 
     private final ArrayList<AttachFile> array_object;
     private Context context;
@@ -34,7 +34,7 @@ public class AttachAdapter extends RecyclerView.Adapter<AttachAdapter.ViewHolder
     private boolean endExit = false;
     private deleteAttachCallBack deleteAttachCallBack;
 
-    public AttachAdapter(ArrayList<AttachFile> result, deleteAttachCallBack deleteAttachCallBack) {
+    public AttachBannerAdapter(ArrayList<AttachFile> result, deleteAttachCallBack deleteAttachCallBack) {
         this.array_object = result;
         this.deleteAttachCallBack = deleteAttachCallBack;
     }
@@ -102,7 +102,7 @@ public class AttachAdapter extends RecyclerView.Adapter<AttachAdapter.ViewHolder
 
     }
 
-    private void alertQuestionDeleteFile(Context context, AttachAdapter.ViewHolder holder) {
+    private void alertQuestionDeleteFile(Context context, AttachBannerAdapter.ViewHolder holder) {
         MaterialDialog question_dialog = new MaterialDialog.Builder(context)
                 .customView(R.layout.alert_question, false)
                 .autoDismiss(false)
@@ -120,7 +120,7 @@ public class AttachAdapter extends RecyclerView.Adapter<AttachAdapter.ViewHolder
             public void onClick(View v) {
                 question_dialog.dismiss();
                 Controller controller = new Controller(context);
-                controller.GetFromApi2("api/EducationPost/RemoveFile?Id=" + array_object.get(holder.getAdapterPosition()).getAttachId(), new CallbackGetString() {
+                controller.GetFromApi2("api/Banner/RemoveFile?Id=" + array_object.get(holder.getAdapterPosition()).getAttachId(), new CallbackGetString() {
                     @Override
                     public void onSuccess(String resultStr) {
                         try {

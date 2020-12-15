@@ -78,8 +78,12 @@ public class ShowPostActivity extends BaseActivity {
         setVariable();
         attach1();
         bottomView();
+        setToolbar();
     }
-
+    private void setToolbar() {
+        TextView titleToolbar=findViewById(R.id.titleToolbar);
+        titleToolbar.setText(settingsBll().getSchoolName());
+    }
     private void getBundle() {
         id = getIntent().getIntExtra("Id", 0);
     }

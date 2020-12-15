@@ -14,8 +14,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.atrinfanavaran.school.Adapter.New.EducationPostListAdapter;
-import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
+import com.atrinfanavaran.school.Adapter.New.BannerListAdapter;
+import com.atrinfanavaran.school.Domain.New.BannerGetAll;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
@@ -23,7 +23,7 @@ import com.atrinfanavaran.school.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-public class ListPostActivity extends BaseActivity {
+public class ListBannerActivity extends BaseActivity {
     private RecyclerView recyclerViewlistPost;
     private RecyclerView.Adapter adapter;
     private FloatingActionButton floatingActionButton1;
@@ -31,7 +31,8 @@ public class ListPostActivity extends BaseActivity {
     private ProgressBar progressBar;
     private TextView warningTxt;
     private Toolbar my_toolbar;
-private TextView titleTxt;
+    private TextView titleTxt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +46,12 @@ private TextView titleTxt;
         NavigationDrawer();
         setToolbar();
     }
+
     private void setToolbar() {
         TextView titleToolbar=findViewById(R.id.titleToolbar);
         titleToolbar.setText(settingsBll().getSchoolName());
     }
+
     private void NavigationDrawer() {
 
         NavigationDrawerFragment my_nav = (NavigationDrawerFragment)
@@ -63,18 +66,18 @@ private TextView titleTxt;
         recyclerViewlistPost.setVisibility(View.GONE);
         warningTxt.setVisibility(View.GONE);
 
-        controller().GetFromApi2("api/EducationPost/GetAll?Id=" + settingsBll().getApplicationUserId(), new CallbackGetString() {
+        controller().GetFromApi2("api/Banner/GetAll?Id=" + settingsBll().getApplicationUserId(), new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
                 try {
-                    EducationPostGetAll educationPostGetAll = gson().fromJson(resultStr, EducationPostGetAll.class);
+                    BannerGetAll result = gson().fromJson(resultStr, BannerGetAll.class);
 
-                    if (educationPostGetAll.getData().size() > 0) {
+                    if (result.getData().size() > 0) {
                         warningTxt.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                         recyclerViewlistPost.setVisibility(View.VISIBLE);
 
-                        adapter = new EducationPostListAdapter(educationPostGetAll.getData());
+                        adapter = new BannerListAdapter(result.getData());
                         recyclerViewlistPost.setAdapter(adapter);
                     } else {
                         warningTxt.setVisibility(View.VISIBLE);
@@ -88,19 +91,19 @@ private TextView titleTxt;
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListPostActivity.this, error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListBannerActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void setVariable() {
-        titleTxt.setText("کلیه پست ها");
+        titleTxt.setText("بنرهای من");
         recyclerViewlistPost.setLayoutManager(new LinearLayoutManager(this));
 
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ListPostActivity.this, SendPostActivity.class));
+                startActivity(new Intent(ListBannerActivity.this, SendBannerActivity.class));
             }
         });
     }
@@ -126,34 +129,34 @@ private TextView titleTxt;
         View view4 = findViewById(R.id.view4);
         View view5 = findViewById(R.id.view5);
 
-        view4.setVisibility(View.VISIBLE);
+        view3.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, Main1Activity.class);
+            Intent intent = new Intent(ListBannerActivity.this, Main1Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn2.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, Main2Activity.class);
+            Intent intent = new Intent(ListBannerActivity.this, Main2Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn3.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, Main3Activity.class);
+            Intent intent = new Intent(ListBannerActivity.this, Main3Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, ListPostActivity.class);
+            Intent intent = new Intent(ListBannerActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, Main5Activity.class);
+            Intent intent = new Intent(ListBannerActivity.this, Main5Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

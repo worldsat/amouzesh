@@ -1,22 +1,21 @@
-package com.atrinfanavaran.school.Activity;
+package com.atrinfanavaran.school.Activity.New;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.atrinfanavaran.school.Activity.New.Main3Activity;
-import com.atrinfanavaran.school.Activity.New.SendPostActivity;
 import com.atrinfanavaran.school.Domain.AndroidVersion;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
@@ -33,11 +32,12 @@ import java.util.ArrayList;
 public class LoginActivity extends BaseActivity {
     private EditText userEdt, passEdt;
     private ProgressBar waitingProgressbar;
-    private Button loginBtn;
+    private LinearLayout loginBtn;
     private TextView rulesBtn, rememberPassBtn;
     private SettingsBll settingsBll;
     private static final int Time_Between_Two_Back = 2000;
     private long TimeBackPressed;
+    private TextView rememberBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +48,13 @@ public class LoginActivity extends BaseActivity {
         initView();
         setVariable();
         checkVersion();
+//        setToolbar();
     }
 
+    private void setToolbar() {
+        TextView titleToolbar = findViewById(R.id.titleToolbar);
+        titleToolbar.setText("");
+    }
 
     @Override
     public void onBackPressed() {
@@ -64,6 +69,13 @@ public class LoginActivity extends BaseActivity {
 
     private void setVariable() {
         settingsBll = new SettingsBll(this);
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("Settings", 0);
+        if (sp != null) {
+            if (settingsBll.getLoging()) {
+                startActivity(new Intent(LoginActivity.this, Main3Activity.class));
+            }
+        }
+
 
         loginBtn.setOnClickListener(v -> {
 
@@ -72,7 +84,7 @@ public class LoginActivity extends BaseActivity {
             if (userEdt.getText().toString().isEmpty()) {
                 SnakBar("لطفا نام کاربری را وارد نمائید");
                 waitingProgressbar.setVisibility(View.GONE);
-            }else if (passEdt.getText().toString().isEmpty()) {
+            } else if (passEdt.getText().toString().isEmpty()) {
 
                 SnakBar("لطفا رمز عبور را وارد نمائید");
                 waitingProgressbar.setVisibility(View.GONE);
@@ -89,7 +101,7 @@ public class LoginActivity extends BaseActivity {
                     e.printStackTrace();
                 }
 
-                controller().LoginApi(this, SendPostActivity.class, "api/Teacher/Login", loginObject.toString(), new CallbackOperation() {
+                controller().LoginApi(this, SendPostActivity.class, "api/User/Login", loginObject.toString(), new CallbackOperation() {
                     @Override
                     public void onSuccess(String result) {
                         settingsBll.setLoging(true);
@@ -106,7 +118,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        rulesBtn.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RulesActivity.class)));
+
         rememberPassBtn.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RememberPasswordActivity.class)));
     }
 
@@ -115,7 +127,8 @@ public class LoginActivity extends BaseActivity {
         passEdt = findViewById(R.id.passEdt);
         loginBtn = findViewById(R.id.loginBtn);
         waitingProgressbar = findViewById(R.id.progressBar3);
-        rulesBtn = findViewById(R.id.rules);
+
+
         rememberPassBtn = findViewById(R.id.remember);
 
     }

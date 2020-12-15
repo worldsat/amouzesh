@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.atrinfanavaran.school.Activity.New.LoginActivity;
 import com.atrinfanavaran.school.Activity.New.SendPostActivity;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;

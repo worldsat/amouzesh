@@ -1,19 +1,11 @@
 package com.atrinfanavaran.school.Fragment;
 
 
-import androidx.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +14,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.room.Room;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.atrinfanavaran.school.Activity.AboutActivity;
-import com.atrinfanavaran.school.Activity.ActivityDesigner;
-import com.atrinfanavaran.school.Activity.ContactUsActivity;
-import com.atrinfanavaran.school.Activity.LoginActivity;
-import com.atrinfanavaran.school.Activity.RulesActivity;
-import com.atrinfanavaran.school.Activity.StirActivity;
+import com.atrinfanavaran.school.Activity.New.ListPostActivity;
+import com.atrinfanavaran.school.Activity.New.LoginActivity;
+import com.atrinfanavaran.school.Activity.New.ListBannerActivity;
 import com.atrinfanavaran.school.BuildConfig;
 import com.atrinfanavaran.school.Domain.BoxApi;
 import com.atrinfanavaran.school.Domain.BoxIncomeApi;
@@ -59,9 +56,9 @@ public class NavigationDrawerFragment extends Fragment {
     public static final String PREF_FILE_NAME = "testpref";
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private ImageView drawer_pic1;
-    private TextView drawer1, drawer2;
+    private TextView drawer1, drawer2, exitBtn, btn1;
     private ActionBarDrawerToggle drawer_toggle;
-    private LinearLayout btn1, btn2, btn3, btn4, btn5, btn6;
+    private LinearLayout btn2, btn3, btn4, btn5, btn6;
     private boolean m_userLearnedDrawer;
     private boolean m_fromSavedInstanceState;
     private AppDatabase db;
@@ -127,56 +124,43 @@ public class NavigationDrawerFragment extends Fragment {
 
         TextView name = view.findViewById(R.id.name);
         TextView code = view.findViewById(R.id.code);
-        name.setText(settingsBll.getName());
-        code.setText("کد: " + settingsBll.getUserId());
+//        name.setText(settingsBll.getName());
+//        code.setText("کد: " + settingsBll.getApplicationUserId());
 
         drawer1 = (TextView) view.findViewById(R.id.exit_drawer);
         drawer2 = (TextView) view.findViewById(R.id.getDataBtn);
-        btn1 = view.findViewById(R.id.btn1);
+        btn1 = view.findViewById(R.id.Banners);
         btn2 = view.findViewById(R.id.btn2);
         btn3 = view.findViewById(R.id.btn3);
         btn4 = view.findViewById(R.id.btn4);
-        btn5 = view.findViewById(R.id.btn5);
-        btn6 = view.findViewById(R.id.btn6);
-        imageView = view.findViewById(R.id.logo);
+        exitBtn = view.findViewById(R.id.exit_btn);
+
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), StirActivity.class);
+            Intent intent = new Intent(getActivity(), ListBannerActivity.class);
             startActivity(intent);
         });
-        btn2.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), RulesActivity.class);
+        drawer1.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ListPostActivity.class);
             startActivity(intent);
         });
-        btn3.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), ContactUsActivity.class);
-            startActivity(intent);
-        });
-        btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), AboutActivity.class);
-            startActivity(intent);
-        });
-        btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), ActivityDesigner.class);
-            startActivity(intent);
-        });
-        btn6.setOnClickListener(v -> {
+
+        exitBtn.setOnClickListener(v -> {
             settingsBll.logout();
             getActivity().finish();
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         });
 
-
-        drawer1.setOnClickListener(v -> sendDischargeRoute());
-        drawer2.setOnClickListener(v -> getRoutes());
+//        drawer1.setOnClickListener(v -> sendDischargeRoute());
+//        drawer2.setOnClickListener(v -> getRoutes());
 
         TextView version = view.findViewById(R.id.version);
         String versionName = BuildConfig.VERSION_NAME;
-        version.setText("اپلیکیشن قاصدک نسخه " + versionName);
+        version.setText(" نسخه " + versionName);
 
 
-        setLogo();
+//        setLogo();
     }
 
 
@@ -298,7 +282,7 @@ public class NavigationDrawerFragment extends Fragment {
 
                 params2.put(params);
             } catch (Exception e) {
-                Log.i("moh3n", "sendBox: "+e);
+                Log.i("moh3n", "sendBox: " + e);
                 Toast.makeText(baseActivity, "خطا در پارامتر های ارسالی اطلاعات صندوق ها", Toast.LENGTH_SHORT).show();
             }
         }

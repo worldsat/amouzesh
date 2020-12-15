@@ -11,13 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.atrinfanavaran.school.Domain.New.BannerGetAll;
 import com.atrinfanavaran.school.Domain.New.DropdownList;
-import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
 import com.atrinfanavaran.school.R;
 
 import java.util.ArrayList;
 
-public class DastresiAdapter extends RecyclerView.Adapter<DastresiAdapter.ViewHolder> {
+public class PositionAdapter extends RecyclerView.Adapter<PositionAdapter.ViewHolder> {
 
     private final ArrayList<DropdownList> array_object;
     private Context context;
@@ -28,10 +28,10 @@ public class DastresiAdapter extends RecyclerView.Adapter<DastresiAdapter.ViewHo
     private boolean endExit = false;
     private SelectCallBack selectCallBack;
     private int oldPosition=0;
-    private EducationPostGetAll.Data object;
+    private BannerGetAll.Data object;
     private String kind;
 
-    public DastresiAdapter(String kind, ArrayList<DropdownList> result, EducationPostGetAll.Data object, SelectCallBack selectCallBack) {
+    public PositionAdapter(String kind, ArrayList<DropdownList> result, BannerGetAll.Data object, SelectCallBack selectCallBack) {
         this.array_object = result;
         this.selectCallBack = selectCallBack;
         this.object = object;

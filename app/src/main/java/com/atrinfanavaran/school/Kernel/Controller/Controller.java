@@ -621,9 +621,11 @@ public class Controller {
 //                        String fullName = new JSONObject(response).getString("fullName");
 //                        String UserId = new JSONObject(response).getString("code");
 //                        Log.i("moh3n", "onSuccessResponse: " + token);
-                    settingsBll.setTicket(apiResponse.getData().get(0).getApiToken());
-                    settingsBll.setName(apiResponse.getData().get(0).getFullName());
-                    settingsBll.setLogoAddress(apiResponse.getData().get(0).getUrl());
+//                    settingsBll.setTicket(apiResponse.getData().get(0).getApiToken());
+                    settingsBll.setName(apiResponse.getData().getUser().getFullName());
+                    settingsBll.setLogoAddress(apiResponse.getData().getUser().getUrl());
+                    settingsBll.setApplicationUserId(apiResponse.getData().getUser().getId());
+                    settingsBll.setSchoolName(apiResponse.getData().getSchool());
 //                        settingsBll.setUserId(UserId);
 
                     callbackOperation.onSuccess(response);

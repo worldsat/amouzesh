@@ -88,6 +88,10 @@ public class BaseActivity extends AppCompatActivity {
         return new Controller(BaseActivity.this);
     }
 
+    public SettingsBll settingsBll() {
+        return new SettingsBll(BaseActivity.this);
+    }
+
     public Gson gson() {
         return new Gson();
     }

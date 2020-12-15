@@ -1,355 +1,259 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    android:background="#e9e9eb"
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
 
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/back_navi" />
+
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:background="@color/red_700"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="10dp"
-                    app:srcCompat="@mipmap/profile_pic2" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
-                        android:text="-"
-                        android:textColor="@color/white"
-                        android:textDirection="rtl"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/code"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_vertical"
-                        android:text="-"
-                        android:textColor="@color/white"
-                        android:textDirection="rtl"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/getData"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="2dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="0.1"
-                    android:alpha="0.8"
-                    android:visibility="invisible"
-                    app:srcCompat="@mipmap/exit_drawer" />
-
-                <TextView
-                    android:id="@+id/getDataBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.9"
-                    android:fontFamily="@font/behdad"
-                    android:gravity="center_vertical"
-                    android:text="دریافت اطلاعات"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/exit_"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="0.1"
-                    android:alpha="0.8"
-                    android:visibility="invisible"
-                    app:srcCompat="@mipmap/exit_drawer" />
-
-                <TextView
-                    android:id="@+id/exit_drawer"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.9"
-                    android:fontFamily="@font/behdad"
-                    android:gravity="center_vertical"
-                    android:text="ارسال اطلاعات"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/btn1"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="0.1"
-                    android:alpha="0.8"
-                    android:visibility="invisible"
-                    app:srcCompat="@mipmap/exit_drawer" />
-
-                <TextView
-                    android:id="@+id/exit_drawer"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.9"
-                    android:fontFamily="@font/behdad"
-                    android:gravity="center_vertical"
-                    android:text="نحوه فعالیت"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/btn2"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="0.1"
-                    android:alpha="0.8"
-                    android:visibility="invisible"
-                    app:srcCompat="@mipmap/exit_drawer" />
-
-                <TextView
-                    android:id="@+id/exit_drawer"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.9"
-                    android:fontFamily="@font/behdad"
-                    android:gravity="center_vertical"
-                    android:text="قوانین و مقررات"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/btn3"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="0.1"
-                    android:alpha="0.8"
-                    android:visibility="invisible"
-                    app:srcCompat="@mipmap/exit_drawer" />
-
-                <TextView
-                    android:id="@+id/exit_drawer"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.9"
-                    android:fontFamily="@font/behdad"
-                    android:gravity="center_vertical"
-                    android:text="تماس با ما"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/btn4"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="0.1"
-                    android:alpha="0.8"
-                    android:visibility="invisible"
-                    app:srcCompat="@mipmap/exit_drawer" />
-
-                <TextView
-                    android:id="@+id/exit_drawer"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.9"
-                    android:fontFamily="@font/behdad"
-                    android:gravity="center_vertical"
-                    android:text="درباره ما"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/btn5"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="0.1"
-                    android:alpha="0.8"
-                    android:visibility="invisible"
-                    app:srcCompat="@mipmap/exit_drawer" />
-
-                <TextView
-                    android:id="@+id/exit_drawer"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.9"
-                    android:fontFamily="@font/behdad"
-                    android:gravity="center_vertical"
-                    android:text="درباره سازنده"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/btn6"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="0.1"
-                    android:alpha="0.8"
-                    android:visibility="invisible"
-                    app:srcCompat="@mipmap/exit_drawer" />
-
-                <TextView
-                    android:id="@+id/exit_drawer"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.9"
-                    android:fontFamily="@font/behdad"
-                    android:gravity="center_vertical"
-                    android:text="خروج از حساب کاربری"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/Banners"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lalehzar"
+                android:gravity="center_vertical"
+                android:text="بنر ها"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
 
             <ImageView
-                android:id="@+id/logo"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center_horizontal"
-                android:scaleType="centerCrop"
-                app:srcCompat="@mipmap/logo3" />
+                android:id="@+id/imageView11"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:alpha="0.7"
+                android:visibility="visible"
+                app:srcCompat="@drawable/gradient_line" />
+
+            <TextView
+                android:id="@+id/exit_drawer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lalehzar"
+                android:gravity="center_vertical"
+                android:text="پست های من"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:alpha="0.8"
+                android:visibility="visible"
+                app:srcCompat="@drawable/gradient_line" />
+
+            <TextView
+                android:id="@+id/exit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lalehzar"
+                android:gravity="center_vertical"
+                android:text="خروج از حساب کاربری"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.8"
+                android:visibility="gone"
+                app:srcCompat="@mipmap/exit_drawer" />
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.8"
+                android:visibility="gone"
+                app:srcCompat="@mipmap/exit_drawer" />
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.8"
+                android:visibility="gone"
+                app:srcCompat="@mipmap/exit_drawer" />
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.8"
+                android:visibility="gone"
+                app:srcCompat="@mipmap/exit_drawer" />
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.8"
+                android:visibility="gone"
+                app:srcCompat="@mipmap/exit_drawer" />
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.8"
+                android:visibility="gone"
+                app:srcCompat="@mipmap/exit_drawer" />
+
+            <TextView
+                android:id="@+id/exit_drawer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/behdad"
+                android:gravity="center_vertical"
+                android:text="اعلان های من"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/exit_drawer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/behdad"
+                android:gravity="center_vertical"
+                android:text="خروج از حساب کاربری"
+                android:textSize="13sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/version"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/behdad"
                 android:gravity="bottom"
                 android:text="اپلیکیشن قاصدک نسخه 1"
                 android:textAlignment="center"
                 android:textSize="10sp"
-                android:visibility="visible" />
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/exit_drawer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/behdad"
+                android:gravity="center_vertical"
+                android:text="درباره ما"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/exit_drawer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/behdad"
+                android:gravity="center_vertical"
+                android:text="نحوه فعالیت"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/exit_drawer2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/behdad"
+                android:gravity="center_vertical"
+                android:text="درباره ما"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/getDataBtn2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/behdad"
+                android:gravity="center_vertical"
+                android:text="دریافت اطلاعات"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/exit_drawer3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/behdad"
+                android:gravity="center_vertical"
+                android:text="نحوه فعالیت"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/version2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/behdad"
+                android:gravity="bottom"
+                android:text="اپلیکیشن قاصدک نسخه 1"
+                android:textAlignment="center"
+                android:textSize="10sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/exit_drawer4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/behdad"
+                android:gravity="center_vertical"
+                android:text="خروج از حساب کاربری"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/exit_drawer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/behdad"
+                android:gravity="center_vertical"
+                android:text="درباره سازنده"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/getDataBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/behdad"
+                android:gravity="center_vertical"
+                android:text="دریافت اطلاعات"
+                android:textSize="13sp"
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

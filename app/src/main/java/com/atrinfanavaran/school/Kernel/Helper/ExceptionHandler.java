@@ -1,7 +1,6 @@
 package com.atrinfanavaran.school.Kernel.Helper;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
@@ -33,7 +32,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 
 //            saveTodatebase(Log.getStackTraceString(throwable));
 
-            File root = new File(Environment.getExternalStorageDirectory() + "/Ghasedak", "log");
+            File root = new File(Environment.getExternalStorageDirectory() + "/Amoozesh", "log");
             if (!root.exists()) {
                 root.setReadable(true);
                 root.setWritable(true);
@@ -41,7 +40,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 
             }
 
-            File f = new File(Environment.getExternalStoragePublicDirectory("Ghasedak")
+            File f = new File(Environment.getExternalStoragePublicDirectory("Amoozesh")
                     , "log/" + dateFormat.format(today) + "_" + UUID.randomUUID().toString()
                     + ".log");
 

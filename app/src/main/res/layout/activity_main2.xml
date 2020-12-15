@@ -160,7 +160,7 @@
                                             android:textAlignment="center"
                                             android:textColor="@color/blue_2"
                                             android:textSize="10sp"
-                                            android:visibility="visible" />
+                                            android:visibility="gone" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -203,7 +203,7 @@
                                             android:textAlignment="center"
                                             android:textColor="@color/blue_2"
                                             android:textSize="10sp"
-                                            android:visibility="visible" />
+                                            android:visibility="gone" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -246,7 +246,7 @@
                                             android:textAlignment="center"
                                             android:textColor="@color/blue_2"
                                             android:textSize="10sp"
-                                            android:visibility="visible" />
+                                            android:visibility="gone" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -288,7 +288,7 @@
                                             android:textAlignment="center"
                                             android:textColor="@color/blue_2"
                                             android:textSize="10sp"
-                                            android:visibility="visible" />
+                                            android:visibility="gone" />
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -304,8 +304,8 @@
                             app:layout_constraintTop_toTopOf="@+id/constraintLayout4"
                             app:layout_constraintVertical_bias="0.42000002">
 
-                            <ImageView
-                                android:id="@+id/imageView20"
+                            <com.daimajia.slider.library.SliderLayout
+                                android:id="@+id/banner1"
                                 android:layout_width="0dp"
                                 android:layout_height="170dp"
                                 android:scaleType="centerCrop"
@@ -313,7 +313,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@mipmap/banner_1" />
+                                tools:srcCompat="@mipmap/banner_1" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -321,34 +321,36 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_marginTop="10dp">
 
-                        <ImageView
-                            android:id="@+id/imageView16"
+                        <com.daimajia.slider.library.SliderLayout
+                            android:id="@+id/banner2"
                             android:layout_width="0dp"
-                            android:layout_height="140dp"
+                            android:layout_height="170dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
                             android:scaleType="fitXY"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@mipmap/banner_2" />
+                            tools:srcCompat="@mipmap/banner_2"
+                            tools:visibility="visible" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/imageView16"
+                            android:id="@+id/notificationImage"
                             android:layout_width="0dp"
                             android:layout_height="110dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:scaleType="fitXY"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -367,6 +369,7 @@
                             android:layout_width="0dp"
                             android:layout_height="210dp"
                             android:scaleType="fitXY"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"

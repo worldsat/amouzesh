@@ -54,7 +54,7 @@ public class BoxIncomeListAdapter extends RecyclerView.Adapter<BoxIncomeListAdap
         }
         holder.assignmentDate.setText(array_object.get(position).assignmentDate);
         holder.name.setText(settingsBll.getName());
-        holder.codeUser.setText("کد: " + settingsBll.getUserId());
+        holder.codeUser.setText("کد: " + settingsBll.getApplicationUserId());
 
         String statusStr = "";
         if (array_object.get(position).status != null) {

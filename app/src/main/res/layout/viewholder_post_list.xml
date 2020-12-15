@@ -71,10 +71,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/casablanca"
+                    android:fontFamily="@font/iranyekanwebregular"
                     android:text="ویرایش"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:id="@+id/imageView9"
@@ -101,10 +101,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/casablanca"
+                    android:fontFamily="@font/iranyekanwebregular"
                     android:text="حذف "
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:id="@+id/imageView9"

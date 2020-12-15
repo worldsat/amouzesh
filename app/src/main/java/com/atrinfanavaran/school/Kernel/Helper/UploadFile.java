@@ -204,7 +204,7 @@ public class UploadFile {
 
         } catch (Exception e) {
 
-            Log.i("moh3n", "post: " + e);
+            Log.i("moh3n", "post1: " + e);
             throw new RuntimeException(e);
         }
     }
@@ -244,7 +244,7 @@ public class UploadFile {
 
         } catch (Exception e) {
 
-            Log.i("moh3n", "post: " + e);
+            Log.i("moh3n", "post2: " + e);
             throw new RuntimeException(e);
         }
     }
@@ -351,7 +351,7 @@ public class UploadFile {
             Request req = new Request.Builder()
                     .tag(System.currentTimeMillis())
                     .url(url)
-                    .addHeader("Authority", ticket)
+//                    .addHeader("Authority", ticket)
                     .post(body)
                     .build();
 
@@ -368,8 +368,10 @@ public class UploadFile {
         } catch (
                 Exception e) {
 
-            Log.i("moh3n", "post: " + e);
-
+            Log.i("moh3n", "post3: " + e);
+            Toast.makeText(mActivity, e.toString(), Toast.LENGTH_SHORT).show();
+            client.dispatcher().cancelAll();
+            percentUploadCallback.percent(0, 0, 0, 0, true);
         }
 
     }

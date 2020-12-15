@@ -13,13 +13,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.R;
 
 import java.util.concurrent.TimeUnit;
 
-public class SoundActivity extends AppCompatActivity {
+public class SoundActivity extends BaseActivity {
 
 
     private int position, List;
@@ -44,7 +43,10 @@ public class SoundActivity extends AppCompatActivity {
         media();
         timing();
     }
-
+    private void setToolbar() {
+        TextView titleToolbar=findViewById(R.id.titleToolbar);
+        titleToolbar.setText(settingsBll().getSchoolName());
+    }
     private void setVariable() {
 //        SettingBtn.setOnClickListener(view -> startActivity(new Intent(SoundActivity.this, SettingsActivity.class)));
     }
