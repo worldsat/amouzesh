@@ -7,7 +7,7 @@ public class SettingsBll {
 
     private final Context context;
     private final SharedPreferences preferences;
-    private final String DEFAULT_URL = "http://185.4.31.137";
+    private final String DEFAULT_URL = "http://193.105.234.98";
     private final String DEFAULT_PORT = "0";
     private final String DEFAULT_PORT2 = "0";
     private String logoAddress;

@@ -1,21 +1,31 @@
 package com.atrinfanavaran.school.Adapter.New;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.school.Domain.New.DropdownList;
 import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
+import com.atrinfanavaran.school.Domain.New.ManageDomain;
+import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
+import com.atrinfanavaran.school.Kernel.Controller.Controller;
+import com.atrinfanavaran.school.Kernel.Controller.Interface.IOnResponseListener;
 import com.atrinfanavaran.school.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DastresiAdapter extends RecyclerView.Adapter<DastresiAdapter.ViewHolder> {
 
@@ -27,7 +37,7 @@ public class DastresiAdapter extends RecyclerView.Adapter<DastresiAdapter.ViewHo
     private boolean endStart = false;
     private boolean endExit = false;
     private SelectCallBack selectCallBack;
-    private int oldPosition=0;
+    private int oldPosition = 0;
     private EducationPostGetAll.Data object;
     private String kind;
 
@@ -94,20 +104,97 @@ public class DastresiAdapter extends RecyclerView.Adapter<DastresiAdapter.ViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (kind.equals("Category")) {
+                    if (array_object.get(position).getListId() == 0) {
+                        alertNewCategory(holder.itemView.getContext());
+                    } else {
+                        array_object.get(oldPosition).setTick(false);
+                        array_object.get(position).setTick(true);
 
-                array_object.get(oldPosition).setTick(false);
-                array_object.get(position).setTick(true);
+                        notifyDataSetChanged();
+                        holder.icon.setImageResource(R.mipmap.tick128);
 
-                notifyDataSetChanged();
-                holder.icon.setImageResource(R.mipmap.tick128);
+                        selectCallBack.Id(array_object.get(position).getListId());
+                    }
+                } else {
+                    array_object.get(oldPosition).setTick(false);
+                    array_object.get(position).setTick(true);
 
-                selectCallBack.Id(array_object.get(position).getListId());
+                    notifyDataSetChanged();
+                    holder.icon.setImageResource(R.mipmap.tick128);
+
+                    selectCallBack.Id(array_object.get(position).getListId());
+                }
+
             }
         });
 
         if (array_object.size() == (position + 1)) {
             endStart = true;
         }
+    }
+
+    private void alertNewCategory(Context context) {
+        MaterialDialog question_dialog = new MaterialDialog.Builder(context)
+                .customView(R.layout.alert_category_new, false)
+                .autoDismiss(false)
+                .backgroundColor(Color.parseColor("#01000000"))
+                .show();
+
+        TextView ok_btn = (TextView) question_dialog.findViewById(R.id.ok);
+        TextView cancel_btn = (TextView) question_dialog.findViewById(R.id.cancel);
+        EditText warningTxt = (EditText) question_dialog.findViewById(R.id.warning_alert);
+
+
+        ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String categoryStr = warningTxt.getText().toString().trim();
+                if (warningTxt.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(context, "نام دسته بندی را وارد نمایید", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+
+                    SettingsBll settingsBll = new SettingsBll(context);
+                    HashMap<String, Object> params = new HashMap<>();
+                    params.put("ApplicationUserId", settingsBll.getApplicationUserId());
+                    params.put("Name", categoryStr);
+                    question_dialog.dismiss();
+                    Controller controller = new Controller(context);
+
+                    controller.uploadFileNew(context, "api/Category/Add", null, params, new IOnResponseListener() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                Gson gson = new Gson();
+                                ManageDomain manageDomain = gson.fromJson(response, ManageDomain.class);
+                                Toast.makeText(context, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                if (manageDomain.isSuccess()) {
+                                    selectCallBack.refresh();
+                                }
+
+                            } catch (Exception e) {
+                                Toast.makeText(context, "" + e.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
+
+                }
+            }
+        });
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                question_dialog.dismiss();
+            }
+        });
+
     }
 
     @Override
@@ -144,5 +231,7 @@ public class DastresiAdapter extends RecyclerView.Adapter<DastresiAdapter.ViewHo
 
     public interface SelectCallBack {
         void Id(int num);
+
+        void refresh();
     }
 }

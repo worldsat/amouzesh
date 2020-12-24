@@ -24,12 +24,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.atrinfanavaran.school.Adapter.New.AttachPostAdapter;
 import com.atrinfanavaran.school.Adapter.New.DastresiAdapter;
 import com.atrinfanavaran.school.Domain.New.AttachFile;
+import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
 import com.atrinfanavaran.school.Domain.New.DropdownList;
 import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.Kernel.Controller.Controller;
+import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.IOnResponseListener;
 import com.atrinfanavaran.school.Kernel.Helper.FilePath;
 import com.atrinfanavaran.school.R;
@@ -111,10 +113,12 @@ public class SendPostActivity extends BaseActivity {
         NavigationDrawer();
         setToolbar();
     }
+
     private void setToolbar() {
-        TextView titleToolbar=findViewById(R.id.titleToolbar);
+        TextView titleToolbar = findViewById(R.id.titleToolbar);
         titleToolbar.setText(settingsBll().getSchoolName());
     }
+
     private void getBundle() {
         object = (EducationPostGetAll.Data) getIntent().getSerializableExtra("object");
         if (object != null) {
@@ -162,7 +166,7 @@ public class SendPostActivity extends BaseActivity {
                 }
                 SettingsBll settingsBll = new SettingsBll(SendPostActivity.this);
                 params.put("Description", StringEscapeUtils.escapeHtml4(editor.getContentAsHTML()));
-                params.put("ApplicationUserId",settingsBll.getApplicationUserId());
+                params.put("ApplicationUserId", settingsBll.getApplicationUserId());
 
                 Controller controller = new Controller(SendPostActivity.this);
 
@@ -176,10 +180,10 @@ public class SendPostActivity extends BaseActivity {
 //                        Toast.makeText(SendPostActivity.this, "ok", Toast.LENGTH_SHORT).show();
 //                waiting.dismiss();
 
-                finish();
-                Intent intent = new Intent(SendPostActivity.this, ListPostActivity.class);
+                        finish();
+                        Intent intent = new Intent(SendPostActivity.this, ListPostActivity.class);
 //                intent.putExtra("PersonelTaskId", PersonelTaskId);
-                startActivity(intent);
+                        startActivity(intent);
                     }
 
                     @Override
@@ -327,13 +331,38 @@ public class SendPostActivity extends BaseActivity {
     }
 
     private ArrayList<DropdownList> CategoryList() {
-
+        if (CategoryList.size() > 0) {
+            CategoryList.clear();
+        }
         ArrayList<DropdownList> array_object = new ArrayList<>();
-        array_object.add(new DropdownList("ریاضی", 0, true));
-        array_object.add(new DropdownList("علوم پایه", 1, false));
-        array_object.add(new DropdownList("جغرافیا", 2, false));
-        array_object.add(new DropdownList("زیست", 3, false));
+//        array_object.add(new DropdownList("ریاضی", 0, true));
+//        array_object.add(new DropdownList("علوم پایه", 1, false));
+//        array_object.add(new DropdownList("جغرافیا", 2, false));
+//        array_object.add(new DropdownList("زیست", 3, false));
 
+        String address = "api/Category/GetAll?Id=" + settingsBll().getApplicationUserId();
+
+
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                CategoryGetAll categoryGetAll = gson().fromJson(resultStr, CategoryGetAll.class);
+
+                if (categoryGetAll.getData().size() > 0) {
+                    boolean tick = false;
+                    for (int i = 0; i < categoryGetAll.getData().size(); i++) {
+                        if (i == 0) tick = true;
+                        array_object.add(new DropdownList(categoryGetAll.getData().get(i).getTitle(), categoryGetAll.getData().get(i).getId(), tick));
+                    }
+                }
+                array_object.add(new DropdownList("اضافه کردن دسته بندی جدید", 0, false));
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
         return array_object;
     }
 
@@ -500,6 +529,11 @@ public class SendPostActivity extends BaseActivity {
             public void Id(int num) {
                 params.put("accessType", num);
             }
+
+            @Override
+            public void refresh() {
+
+            }
         });
         recyclerViewlistDastresi.setAdapter(adapterDastresi);
 
@@ -514,10 +548,15 @@ public class SendPostActivity extends BaseActivity {
                 }
             }
         }
-        adapterCategory = new DastresiAdapter("Category", array_objectCategory, object, new DastresiAdapter.SelectCallBack() {
+        adapterCategory = new DastresiAdapter("Category", CategoryList, object, new DastresiAdapter.SelectCallBack() {
             @Override
             public void Id(int num) {
                 params.put("Category", num);
+            }
+
+            @Override
+            public void refresh() {
+                CategoryList = CategoryList();
             }
         });
         recyclerViewlistCategory.setAdapter(adapterCategory);
