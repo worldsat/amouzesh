@@ -81,6 +81,13 @@ public class SettingsBll {
     public void setSchoolName(String token) {
         preferences.edit().putString("SchoolName", token).apply();
     }
+    public int getUserType() {
+        return preferences.getInt("UserType", 2);
+    }
+
+    public void setUserType(int token) {
+        preferences.edit().putInt("UserType", token).apply();
+    }
     public void logout() {
         preferences.edit().putString("Token", null).apply();
         setLoging(false);

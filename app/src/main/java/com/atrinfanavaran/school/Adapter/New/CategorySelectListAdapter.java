@@ -45,12 +45,12 @@ public class CategorySelectListAdapter extends RecyclerView.Adapter<CategorySele
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         context = holder.itemView.getContext();
-        holder.title.setText(array_object.get(position).getTitle());
+        holder.title.setText(array_object.get(position).getName());
         holder.rowNumber.setText("" + (position + 1));
 
 
         SettingsBll settingsBll = new SettingsBll(context);
-        String Url = settingsBll.getUrlAddress() + array_object.get(position).getIconUrl();
+        String Url = settingsBll.getUrlAddress() + array_object.get(position).getUrl();
 //
 //        RequestOptions requestOptions = new RequestOptions();
 //        requestOptions.placeholder(R.mipmap.logo);

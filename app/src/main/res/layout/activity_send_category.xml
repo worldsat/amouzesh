@@ -167,28 +167,80 @@
                     </LinearLayout>
 
                     <EditText
-                        android:id="@+id/titlePostEdt"
+                        android:id="@+id/edt1"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="15dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/background_insert_ads"
                         android:ems="10"
                         android:fontFamily="@font/iranyekanmedium"
                         android:hint="نام دسته"
                         android:inputType="textPersonName"
                         android:padding="5dp"
+                        android:singleLine="true"
                         android:textDirection="rtl"
                         android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:id="@+id/iconBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/background_button_message_orange2"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView233"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/casablanca"
+                            android:text="انتخاب آیکون دسته بندی"
+                            android:textColor="#ffffff"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:id="@+id/view8"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:alpha="0.7"
+                            android:background="#ffffff"
+                            android:visibility="visible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/sub_toggle_button_icon"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_alignTop="@+id/defect_checkBox"
+                            android:layout_alignBottom="@+id/defect_checkBox"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="11dp"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/sendBtn"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/background_button_gradiunt_blue"
@@ -218,201 +270,6 @@
                             android:textColor="@color/light_green_A400"
                             android:textSize="18sp" />
                     </LinearLayout>
-
-                    <View
-                        android:id="@+id/view9"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@color/blue_grey_500"
-                        android:visibility="visible"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="10dp"
-                            android:layout_weight="0.5"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <LinearLayout
-                                android:id="@+id/dastresiBtn"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:background="@drawable/background_button_message_orange2"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/textView23"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/casablanca"
-                                    android:text="وضعیت ورودی"
-                                    android:textColor="#ffffff"
-                                    android:textSize="16sp" />
-
-                                <View
-                                    android:id="@+id/view8"
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginStart="5dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginEnd="5dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:alpha="0.7"
-                                    android:background="#ffffff"
-                                    android:visibility="visible"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <ImageView
-                                    android:id="@+id/sub_toggle_button_dastresi"
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:layout_alignTop="@+id/defect_checkBox"
-                                    android:layout_alignBottom="@+id/defect_checkBox"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:layout_marginBottom="11dp"
-                                    android:visibility="visible"
-                                    app:srcCompat="@drawable/ic_expand_less" />
-
-                            </LinearLayout>
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/viewDastresi"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="10dp"
-                                android:visibility="gone"
-                                tools:visibility="visible" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="10dp"
-                            android:layout_weight="0.5"
-                            android:orientation="vertical"
-                            android:visibility="visible">
-
-                            <LinearLayout
-                                android:id="@+id/categoryBtn"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:background="@drawable/background_edittext_gray"
-                                android:orientation="horizontal">
-
-                                <EditText
-                                    android:id="@+id/textView23"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_weight="1"
-                                    android:background="#cacaca"
-                                    android:fontFamily="@font/casablanca"
-                                    android:text="جستجو"
-                                    android:textColor="#ffffff"
-                                    android:textSize="16sp" />
-
-                                <ImageView
-                                    android:id="@+id/sub_toggle_button_category"
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    android:layout_alignTop="@+id/defect_checkBox"
-                                    android:layout_alignBottom="@+id/defect_checkBox"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginTop="7dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:layout_marginBottom="11dp"
-                                    android:visibility="visible"
-                                    app:srcCompat="?android:attr/actionModeWebSearchDrawable"
-                                    tools:ignore="NewApi" />
-
-                            </LinearLayout>
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/viewPostion"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="10dp"
-                                android:visibility="gone"
-                                tools:visibility="gone" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/warninTxt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/view14"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:fontFamily="@font/iransans"
-                            android:text="@string/noData"
-                            android:textColor="@color/gray"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="@+id/viewAttach"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.486"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/viewAttach" />
-
-                        <ProgressBar
-                            android:id="@+id/progressBarRow4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:indeterminateDrawable="@drawable/progress_bar_states"
-                            android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/viewAttach" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/viewAttach"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:visibility="visible" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 </LinearLayout>

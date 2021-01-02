@@ -1,6 +1,7 @@
 package com.atrinfanavaran.school.Adapter.New;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -16,12 +17,15 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.atrinfanavaran.school.Activity.New.SendCategoryActivity;
 import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
 import com.atrinfanavaran.school.Domain.New.ManageDomain;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.Kernel.Controller.Controller;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.school.R;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -52,31 +56,30 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         context = holder.itemView.getContext();
-        holder.title.setText(array_object.get(position).getTitle());
-        holder.rowNumber.setText("" + (position + 1));
+        holder.title.setText(array_object.get(position).getName());
 
 
         SettingsBll settingsBll = new SettingsBll(context);
-        String Url = settingsBll.getUrlAddress() + array_object.get(position).getIconUrl();
+        String Url = settingsBll.getUrlAddress() + array_object.get(position).getUrl();
 //
-//        RequestOptions requestOptions = new RequestOptions();
-//        requestOptions.placeholder(R.mipmap.logo);
-//        requestOptions.error(R.mipmap.logo);
-//
-//
-//        Glide.with(holder.itemView.getContext())
-//                .setDefaultRequestOptions(requestOptions)
-//                .load(Url)
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.mipmap.logo);
+        requestOptions.error(R.mipmap.logo);
+
+
+        Glide.with(holder.itemView.getContext())
+                .setDefaultRequestOptions(requestOptions)
+                .load(Url)
 //                .apply(RequestOptions.circleCropTransform())
-//                .into(holder.icon);
+                .into(holder.icon);
 
         holder.deleteBtn.setOnClickListener(v -> alertQuestion(context, holder));
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(context, SendPostActivity.class);
-//                intent.putExtra("object", array_object.get(position));
-//                context.startActivity(intent);
+                Intent intent = new Intent(context, SendCategoryActivity.class);
+                intent.putExtra("object", array_object.get(position));
+                context.startActivity(intent);
             }
         });
     }
@@ -153,7 +156,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, rowNumber, size;
+        TextView title, size;
         ConstraintLayout card, deleteIcon;
         ImageView icon;
         LinearLayout deleteBtn, editBtn;
@@ -162,8 +165,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             super(itemView);
 
             title = itemView.findViewById(R.id.title);
-            rowNumber = itemView.findViewById(R.id.rowNumber);
-
             card = itemView.findViewById(R.id.item);
             deleteIcon = itemView.findViewById(R.id.icon_background);
             icon = itemView.findViewById(R.id.icon);

@@ -9,13 +9,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.atrinfanavaran.school.Kernel.Bll.FnValidColumnListBll;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.Kernel.Controller.Controller;
-import com.atrinfanavaran.school.Kernel.Controller.Domain.Filter;
-import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGet;
 import com.atrinfanavaran.school.Kernel.Controller.Module.SnakBar.SnakBar;
-import com.atrinfanavaran.school.Kernel.Domain.FnValidColumnList;
 import com.atrinfanavaran.school.Kernel.Helper.ExceptionHandler;
 import com.atrinfanavaran.school.Kernel.Helper.ListBuilder;
 import com.atrinfanavaran.school.R;
@@ -24,8 +20,6 @@ import com.google.gson.Gson;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -33,6 +27,7 @@ public class BaseActivity extends AppCompatActivity {
 
     {
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -106,37 +101,6 @@ public class BaseActivity extends AppCompatActivity {
         return settingsBll.isOnline();
     }
 
-    public void getFnValidColumnList(String SchemaName, String TableName, String UserId, CallbackGet callbackGet) {
-
-        FnValidColumnListBll fnValidColumnListBll = new FnValidColumnListBll(this);
-        ArrayList<String> fnValidColumnListsInsertion = new ArrayList<>();
-        ArrayList<FnValidColumnList> fnValidColumnLists = new ArrayList<>();
-        ArrayList<Filter> filter = new ArrayList<>();
-        filter.add(new Filter("SchemaName", SchemaName));
-        filter.add(new Filter("TableName", TableName));
-        filter.add(new Filter("UserId", UserId));
-
-//        warningTxt.setVisibility(View.GONE);
-        fnValidColumnListBll.Get(filter, 0, 0, true, new CallbackGet() {
-            @Override
-            public <T> void onSuccess(ArrayList<T> result, int count) {
-
-                fnValidColumnLists.addAll((Collection<? extends FnValidColumnList>) result);
-
-                for (int i = 0; i < fnValidColumnLists.size(); i++) {
-                    if (fnValidColumnLists.get(i).getSoftwareOperationId().equals("1")) {
-                        fnValidColumnListsInsertion.add(fnValidColumnLists.get(i).getColumnName());
-                    }
-                }
-                callbackGet.onSuccess(fnValidColumnListsInsertion, fnValidColumnListsInsertion.size());
-            }
-
-            @Override
-            public void onError(String error) {
-
-            }
-        });
-    }
 
     public String changeNumber(String num) {
         num = num.replaceAll("۰", "0");

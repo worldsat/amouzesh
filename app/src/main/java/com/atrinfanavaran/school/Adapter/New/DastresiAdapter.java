@@ -159,6 +159,7 @@ public class DastresiAdapter extends RecyclerView.Adapter<DastresiAdapter.ViewHo
                     HashMap<String, Object> params = new HashMap<>();
                     params.put("ApplicationUserId", settingsBll.getApplicationUserId());
                     params.put("Name", categoryStr);
+                    params.put("file", "");
                     question_dialog.dismiss();
                     Controller controller = new Controller(context);
 

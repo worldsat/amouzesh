@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,10 +24,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.atrinfanavaran.school.Adapter.New.AttachPostAdapter;
 import com.atrinfanavaran.school.Adapter.New.DastresiAdapter;
+import com.atrinfanavaran.school.Adapter.New.PostMiniListAdapter;
 import com.atrinfanavaran.school.Domain.New.AttachFile;
 import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
 import com.atrinfanavaran.school.Domain.New.DropdownList;
 import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
+import com.atrinfanavaran.school.Domain.New.GetRelatedUsers;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
@@ -71,21 +74,26 @@ public class SendPostActivity extends BaseActivity {
     private RecyclerView recyclerViewlistAttach;
     private RecyclerView recyclerViewlistDastresi;
     private RecyclerView recyclerViewlistCategory;
+    private RecyclerView recyclerViewlisttakhsis;
     private RecyclerView.Adapter adapterAttach;
     private RecyclerView.Adapter adapterDastresi;
     private RecyclerView.Adapter adapterCategory;
+    private RecyclerView.Adapter adaptertakhsis;
     private ArrayList<AttachFile> attachFiles = new ArrayList<>();
     private ArrayList<DropdownList> DastresiList = new ArrayList<>();
     private ArrayList<DropdownList> CategoryList = new ArrayList<>();
+    private ArrayList<DropdownList> takhsisList = new ArrayList<>();
     private LinearLayout addAttachFile;
     private HashMap<String, Object> params = new HashMap<>();
     private LinearLayout sendBtn;
     private Switch pinnedSwitch;
     private EditText titlePostEdt;
     private Editor editor;
-    private LinearLayout categoryBtn, dastresiBtn, iconBtn;
-    private ImageView toggle_category, toggle_dastresi, toggle_icon;
+    private LinearLayout categoryBtn, dastresiBtn, iconBtn, takhsisBtn;
+    private ImageView toggle_category, toggle_dastresi, toggle_icon, toggle_takhsis;
     private EducationPostGetAll.Data object;
+    private ProgressBar progressBarRowCategory;
+    private ProgressBar progressBarRowtakhsis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +111,8 @@ public class SendPostActivity extends BaseActivity {
 
         attachFiles.addAll(attach1());
         DastresiList = DastresiList();
-        CategoryList = CategoryList();
+        CategoryList = CategoryList(false);
+        takhsisList = takhsisList(false);
 
         getDataApi2(attachFiles, DastresiList, CategoryList, false);
 
@@ -140,7 +149,7 @@ public class SendPostActivity extends BaseActivity {
 
     private void defaultValue() {
         params.put("accessType", 0);
-        params.put("Category", 0);
+        params.put("CategoryId", 0);
 
         if (object != null) {
             params.put("id", object.getId());
@@ -208,6 +217,8 @@ public class SendPostActivity extends BaseActivity {
         recyclerViewlistCategory.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewlistCategory.setNestedScrollingEnabled(false);
 
+        recyclerViewlisttakhsis.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewlisttakhsis.setNestedScrollingEnabled(false);
         addAttachFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -308,6 +319,15 @@ public class SendPostActivity extends BaseActivity {
                 toggle_dastresi.setImageResource(R.drawable.ic_expand_more);
             }
         });
+        takhsisBtn.setOnClickListener(v -> {
+            if (recyclerViewlisttakhsis.getVisibility() == (View.VISIBLE)) {
+                recyclerViewlisttakhsis.setVisibility(View.GONE);
+                toggle_takhsis.setImageResource(R.drawable.ic_expand_less);
+            } else {
+                recyclerViewlisttakhsis.setVisibility(View.VISIBLE);
+                toggle_takhsis.setImageResource(R.drawable.ic_expand_more);
+            }
+        });
     }
 
     private ArrayList<AttachFile> attach1() {
@@ -330,32 +350,134 @@ public class SendPostActivity extends BaseActivity {
         return array_object;
     }
 
-    private ArrayList<DropdownList> CategoryList() {
-        if (CategoryList.size() > 0) {
-            CategoryList.clear();
-        }
+    private ArrayList<DropdownList> CategoryList(boolean notify) {
+
         ArrayList<DropdownList> array_object = new ArrayList<>();
 //        array_object.add(new DropdownList("ریاضی", 0, true));
 //        array_object.add(new DropdownList("علوم پایه", 1, false));
 //        array_object.add(new DropdownList("جغرافیا", 2, false));
 //        array_object.add(new DropdownList("زیست", 3, false));
 
-        String address = "api/Category/GetAll?Id=" + settingsBll().getApplicationUserId();
+        String address = "api/Category/GetAll?UserId=" + settingsBll().getApplicationUserId();
 
-
+        progressBarRowCategory.setVisibility(View.VISIBLE);
         controller().GetFromApi2(address, new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
+                Log.i(TAG, "category: " + resultStr);
                 CategoryGetAll categoryGetAll = gson().fromJson(resultStr, CategoryGetAll.class);
-
+                if (CategoryList.size() > 0) {
+                    CategoryList.clear();
+                }
                 if (categoryGetAll.getData().size() > 0) {
                     boolean tick = false;
                     for (int i = 0; i < categoryGetAll.getData().size(); i++) {
-                        if (i == 0) tick = true;
-                        array_object.add(new DropdownList(categoryGetAll.getData().get(i).getTitle(), categoryGetAll.getData().get(i).getId(), tick));
+                        if (i == 0) {
+                            params.put("CategoryId", categoryGetAll.getData().get(0).getId());
+                        }
+                        if (object != null) {
+                            if (object.getCategoryId() == categoryGetAll.getData().get(i).getId()) {
+                                tick = true;
+                                params.put("CategoryId", categoryGetAll.getData().get(i).getId());
+                            } else {
+                                tick = false;
+
+                            }
+                        } else {
+                            if (i == 0) {
+                                tick = true;
+                            } else {
+                                tick = false;
+                            }
+                        }
+                        array_object.add(new DropdownList(categoryGetAll.getData().get(i).getName(), categoryGetAll.getData().get(i).getId(), tick));
                     }
                 }
-                array_object.add(new DropdownList("اضافه کردن دسته بندی جدید", 0, false));
+                array_object.add(new DropdownList("دسته بندی جدید", 0, false));
+//                if (notify) {
+//                    CategoryList = array_object;
+//                    adapterCategory.notifyDataSetChanged();
+//
+//                }
+
+                adapterCategory = new DastresiAdapter("Category", array_object, object, new DastresiAdapter.SelectCallBack() {
+                    @Override
+                    public void Id(int num) {
+                        params.put("CategoryId", num);
+                    }
+
+                    @Override
+                    public void refresh() {
+                        CategoryList(true);
+                    }
+                });
+                recyclerViewlistCategory.setAdapter(adapterCategory);
+                progressBarRowCategory.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+        return array_object;
+    }
+
+    private ArrayList<DropdownList> takhsisList(boolean notify) {
+
+        ArrayList<DropdownList> array_object = new ArrayList<>();
+//        array_object.add(new DropdownList("ریاضی", 0, true));
+//        array_object.add(new DropdownList("علوم پایه", 1, false));
+//        array_object.add(new DropdownList("جغرافیا", 2, false));
+//        array_object.add(new DropdownList("زیست", 3, false));
+
+        String address = "api/User/GetRelatedUsers?Id=" + settingsBll().getApplicationUserId();
+
+        progressBarRowtakhsis.setVisibility(View.VISIBLE);
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                Log.i(TAG, "takhsis: " + resultStr);
+                GetRelatedUsers getRelatedUsers = gson().fromJson(resultStr, GetRelatedUsers.class);
+                if (takhsisList.size() > 0) {
+                    takhsisList.clear();
+                }
+                if (getRelatedUsers.getData().getStudents().size() > 0) {
+                    boolean tick = false;
+                    for (int i = 0; i < getRelatedUsers.getData().getStudents().size(); i++) {
+                        if (object != null) {
+                            if (object.getCategoryId() == getRelatedUsers.getData().getStudents().get(i).getId()) {
+                                tick = true;
+                            } else {
+                                tick = false;
+                            }
+                        } else {
+                            if (i == 0) {
+                                tick = true;
+                            } else {
+                                tick = false;
+                            }
+                        }
+                        array_object.add(new DropdownList(getRelatedUsers.getData().getStudents().get(i).getFullName(), getRelatedUsers.getData().getStudents().get(i).getId(), tick));
+                    }
+                }
+
+//                if (notify) {
+//                    CategoryList = array_object;
+//                    adapterCategory.notifyDataSetChanged();
+//
+//                }
+
+                adaptertakhsis = new PostMiniListAdapter(array_object, null, new PostMiniListAdapter.SelectCallBack() {
+                    @Override
+                    public void Id(int num) {
+                        params.put("takhsis", num);
+                    }
+
+
+                });
+                recyclerViewlisttakhsis.setAdapter(adaptertakhsis);
+                progressBarRowtakhsis.setVisibility(View.GONE);
             }
 
             @Override
@@ -374,15 +496,20 @@ public class SendPostActivity extends BaseActivity {
         recyclerViewlistAttach = findViewById(R.id.viewAttach);
         recyclerViewlistDastresi = findViewById(R.id.viewDastresi);
         recyclerViewlistCategory = findViewById(R.id.viewPostion);
+        recyclerViewlisttakhsis = findViewById(R.id.viewtakhsis);
         sendBtn = findViewById(R.id.sendBtn);
         pinnedSwitch = findViewById(R.id.switch10);
         titlePostEdt = findViewById(R.id.titlePostEdt);
         categoryBtn = findViewById(R.id.categoryBtn);
         dastresiBtn = findViewById(R.id.dastresiBtn);
+        takhsisBtn = findViewById(R.id.takhsisBtn);
         toggle_category = findViewById(R.id.sub_toggle_button_category);
         toggle_dastresi = findViewById(R.id.sub_toggle_button_dastresi);
+        toggle_takhsis = findViewById(R.id.sub_toggle_button_takhsis);
         toggle_icon = findViewById(R.id.sub_toggle_button_icon);
         iconBtn = findViewById(R.id.iconBtn);
+        progressBarRowCategory = findViewById(R.id.progressBarRow1);
+        progressBarRowtakhsis = findViewById(R.id.progressBarRow2);
     }
 
     private void NavigationDrawer() {
@@ -400,6 +527,7 @@ public class SendPostActivity extends BaseActivity {
         Dexter.withActivity(getActivity())
                 .withPermissions(
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        , Manifest.permission.READ_EXTERNAL_STORAGE
 
 
                 )
@@ -425,6 +553,7 @@ public class SendPostActivity extends BaseActivity {
 
     private void checkRunTimePermission() {
         String[] permissionArrays = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
+                , Manifest.permission.READ_EXTERNAL_STORAGE
                 , Manifest.permission.ACCESS_NETWORK_STATE
                 , Manifest.permission.ACCESS_FINE_LOCATION
                 , Manifest.permission.ACCESS_COARSE_LOCATION
@@ -541,25 +670,14 @@ public class SendPostActivity extends BaseActivity {
         //for category
         if (object != null) {
             for (int i = 0; i < array_objectCategory.size(); i++) {
-                if (array_objectCategory.get(i).getListId() == object.getCategory()) {
+                if (array_objectCategory.get(i).getListId() == object.getCategoryId()) {
                     array_objectCategory.get(i).setTick(true);
                 } else {
                     array_objectCategory.get(i).setTick(false);
                 }
             }
         }
-        adapterCategory = new DastresiAdapter("Category", CategoryList, object, new DastresiAdapter.SelectCallBack() {
-            @Override
-            public void Id(int num) {
-                params.put("Category", num);
-            }
 
-            @Override
-            public void refresh() {
-                CategoryList = CategoryList();
-            }
-        });
-        recyclerViewlistCategory.setAdapter(adapterCategory);
     }
 
     @Override

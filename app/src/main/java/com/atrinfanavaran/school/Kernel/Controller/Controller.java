@@ -626,6 +626,7 @@ public class Controller {
                     settingsBll.setLogoAddress(apiResponse.getData().getUser().getUrl());
                     settingsBll.setApplicationUserId(apiResponse.getData().getUser().getId());
                     settingsBll.setSchoolName(apiResponse.getData().getSchool());
+                    settingsBll.setUserType(apiResponse.getData().getUser().getUserType());
 //                        settingsBll.setUserId(UserId);
 
                     callbackOperation.onSuccess(response);

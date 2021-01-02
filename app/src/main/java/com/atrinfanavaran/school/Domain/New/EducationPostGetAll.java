@@ -71,7 +71,7 @@ public class EducationPostGetAll implements Serializable {
         private int number;
         private int accessType;
         private boolean pin;
-        private int category;
+        private int categoryId;
         private int teacherId;
         private Object teacher;
         private ArrayList<Medias> medias;
@@ -132,12 +132,12 @@ public class EducationPostGetAll implements Serializable {
             this.pin = pin;
         }
 
-        public int getCategory() {
-            return category;
+        public int getCategoryId() {
+            return categoryId;
         }
 
-        public void setCategory(int category) {
-            this.category = category;
+        public void setCategoryId(int categoryId) {
+            this.categoryId = categoryId;
         }
 
         public int getTeacherId() {

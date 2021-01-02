@@ -1,9 +1,14 @@
 package com.atrinfanavaran.school.Activity.New;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,8 +16,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.atrinfanavaran.school.Adapter.New.CategorySmallAdapter;
 import com.atrinfanavaran.school.Domain.New.BannerGetAll;
+import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
@@ -21,23 +30,122 @@ import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import java.util.List;
 
 public class Main3Activity extends BaseActivity {
     private static final int Time_Between_Two_Back = 2000;
     private long TimeBackPressed;
     private Toolbar my_toolbar;
     private SliderLayout banner1, banner2;
+    private RecyclerView recyclerviewCategorySmall;
+    private ProgressBar progressBarCategory;
+    private RecyclerView.Adapter adapterCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+
         bottomView();
         NavigationDrawer();
         initView();
         setToolbar();
         setBanner();
+        RunPermissionDownload();
+        getCategory();
+    }
+
+    private void getCategory() {
+
+
+        String address = "api/Category/GetAll?UserId=" + settingsBll().getApplicationUserId();
+        recyclerviewCategorySmall.setLayoutManager( new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerviewCategorySmall.setNestedScrollingEnabled(false);
+        progressBarCategory.setVisibility(View.VISIBLE);
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                Log.i(TAG, "category: " + resultStr);
+                CategoryGetAll categoryGetAll = gson().fromJson(resultStr, CategoryGetAll.class);
+
+
+                adapterCategory = new CategorySmallAdapter(categoryGetAll.getData());
+                recyclerviewCategorySmall.setAdapter(adapterCategory);
+                progressBarCategory.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(String error) {
+                progressBarCategory.setVisibility(View.GONE);
+                Toast.makeText(Main3Activity.this, error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+    private void RunPermissionDownload() {
+
+        Dexter.withActivity(getActivity())
+                .withPermissions(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        , Manifest.permission.READ_EXTERNAL_STORAGE
+
+
+                )
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+
+                        }
+
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                })
+                .onSameThread().check();
+
+    }
+
+    private void checkRunTimePermission() {
+        String[] permissionArrays = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
+                , Manifest.permission.READ_EXTERNAL_STORAGE
+                , Manifest.permission.ACCESS_NETWORK_STATE
+                , Manifest.permission.ACCESS_FINE_LOCATION
+                , Manifest.permission.ACCESS_COARSE_LOCATION
+        };
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissionArrays, 1);
+        } else {
+
+        }
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    checkRunTimePermission();
+                }
+                return;
+            }
+        }
     }
 
     private void setBanner() {
@@ -134,6 +242,9 @@ public class Main3Activity extends BaseActivity {
     }
 
     private void initView() {
+        recyclerviewCategorySmall = findViewById(R.id.viewCategorySmall);
+        progressBarCategory = findViewById(R.id.progressBarRow5);
+
         banner1 = findViewById(R.id.banner1);
         banner2 = findViewById(R.id.banner2);
         LinearLayout btn1 = findViewById(R.id.btn1);

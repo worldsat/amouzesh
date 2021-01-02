@@ -52,6 +52,7 @@ public class VolleyCall {
                 if (token != null) {
                     params.put("token", token);
                 }
+                params.put("Cache-Control", "no-cache");
                 Log.i("moh3n", "token: "+token);
                 return params;
             }

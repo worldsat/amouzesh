@@ -49,8 +49,22 @@ public class PostMiniListAdapter extends RecyclerView.Adapter<PostMiniListAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         context = holder.itemView.getContext();
-        String[] fileName = array_object.get(position).getListName().split("/");
+        if (array_object.get(position).getListName() != null) {
+            String[] fileName = array_object.get(position).getListName().split("/");
+            int nSplite = fileName.length;
+            String name = "---";
+            try {
+                if (nSplite > 0) {
+                    name = fileName[(nSplite - 1)];
+                }
+            } catch (Exception e) {
+                name = "---";
+            }
 
+            holder.title.setText(name);
+        } else {
+            holder.title.setText("-");
+        }
 //        int kindList = 0;
 //        if (object != null) {
 //            if (kind.equals("Category")) {
@@ -80,17 +94,7 @@ public class PostMiniListAdapter extends RecyclerView.Adapter<PostMiniListAdapte
             holder.icon.setVisibility(View.INVISIBLE);
         }
 
-        int nSplite = fileName.length;
-        String name = "---";
-        try {
-            if (nSplite > 0) {
-                name = fileName[(nSplite - 1)];
-            }
-        } catch (Exception e) {
-            name = "---";
-        }
 
-        holder.title.setText(name);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

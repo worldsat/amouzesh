@@ -23,9 +23,10 @@ import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.atrinfanavaran.school.Activity.New.ListPostActivity;
-import com.atrinfanavaran.school.Activity.New.LoginActivity;
 import com.atrinfanavaran.school.Activity.New.ListBannerActivity;
+import com.atrinfanavaran.school.Activity.New.ListPostActivity;
+import com.atrinfanavaran.school.Activity.New.ListCategoryActivity;
+import com.atrinfanavaran.school.Activity.New.LoginActivity;
 import com.atrinfanavaran.school.BuildConfig;
 import com.atrinfanavaran.school.Domain.BoxApi;
 import com.atrinfanavaran.school.Domain.BoxIncomeApi;
@@ -56,7 +57,7 @@ public class NavigationDrawerFragment extends Fragment {
     public static final String PREF_FILE_NAME = "testpref";
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private ImageView drawer_pic1;
-    private TextView drawer1, drawer2, exitBtn, btn1;
+    private TextView drawer1, drawer2, exitBtn, btn1, category_btn;
     private ActionBarDrawerToggle drawer_toggle;
     private LinearLayout btn2, btn3, btn4, btn5, btn6;
     private boolean m_userLearnedDrawer;
@@ -64,7 +65,7 @@ public class NavigationDrawerFragment extends Fragment {
     private AppDatabase db;
     private Controller controller;
     private BaseActivity baseActivity;
-    private ImageView imageView;
+    private ImageView imageViewCat;
 
     public NavigationDrawerFragment() {
         // Required empty public constructor
@@ -134,10 +135,23 @@ public class NavigationDrawerFragment extends Fragment {
         btn3 = view.findViewById(R.id.btn3);
         btn4 = view.findViewById(R.id.btn4);
         exitBtn = view.findViewById(R.id.exit_btn);
+        category_btn = view.findViewById(R.id.category_btn);
+        imageViewCat = view.findViewById(R.id.imageViewCat);
 
 
         btn1.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ListBannerActivity.class);
+            startActivity(intent);
+        });
+       if(settingsBll.getUserType()==0||settingsBll.getUserType()==1){
+           category_btn.setVisibility(View.VISIBLE);
+           imageViewCat.setVisibility(View.VISIBLE);
+       }else{
+           category_btn.setVisibility(View.GONE);
+           imageViewCat.setVisibility(View.GONE);
+       }
+        category_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ListCategoryActivity.class);
             startActivity(intent);
         });
         drawer1.setOnClickListener(v -> {
@@ -483,14 +497,6 @@ public class NavigationDrawerFragment extends Fragment {
         });
     }
 
-    private void setLogo() {
 
-        SettingsBll settingsBll = new SettingsBll(getActivity());
-
-        Glide.with(getActivity())
-                .load(settingsBll.getUrlAddress() + "/" + settingsBll.getLogoAddress())
-                .into(imageView);
-
-    }
 }
 

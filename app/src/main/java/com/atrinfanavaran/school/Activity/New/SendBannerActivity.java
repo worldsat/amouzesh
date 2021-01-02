@@ -531,7 +531,8 @@ public class SendBannerActivity extends BaseActivity {
 
         Dexter.withActivity(getActivity())
                 .withPermissions(
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
 
 
                 )
@@ -557,6 +558,7 @@ public class SendBannerActivity extends BaseActivity {
 
     private void checkRunTimePermission() {
         String[] permissionArrays = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
+              ,  Manifest.permission.READ_EXTERNAL_STORAGE
                 , Manifest.permission.ACCESS_NETWORK_STATE
                 , Manifest.permission.ACCESS_FINE_LOCATION
                 , Manifest.permission.ACCESS_COARSE_LOCATION
@@ -666,7 +668,7 @@ public class SendBannerActivity extends BaseActivity {
         adapterCategory = new CategoryAdapter("Category", array_objectCategory, object, new CategoryAdapter.SelectCallBack() {
             @Override
             public void Id(int num) {
-                params.put("Category", num);
+                params.put("CategoryId", num);
             }
         });
         recyclerViewlistCategory.setAdapter(adapterCategory);

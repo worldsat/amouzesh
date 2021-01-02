@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,22 +23,22 @@ import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.school.R;
 import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
 
-public class ListSendCategoryActivity extends BaseActivity {
+public class ListCategoryActivity extends BaseActivity {
     private RecyclerView recyclerViewlistPost;
     private RecyclerView.Adapter adapter;
     private FloatingActionButton floatingActionButton1;
-    private FloatingActionMenu floatingActionMenu;
     private ProgressBar progressBar;
     private TextView warningTxt;
     private Toolbar my_toolbar;
     private TextView titleTxt;
+    private EditText edtSearch;
+    private ImageView searchIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_category);
+        setContentView(R.layout.activity_list_category);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
         initView();
@@ -65,7 +67,7 @@ public class ListSendCategoryActivity extends BaseActivity {
         progressBar.setVisibility(View.VISIBLE);
         recyclerViewlistPost.setVisibility(View.GONE);
         warningTxt.setVisibility(View.GONE);
-        String address = "api/Category/GetAll?Id=" + settingsBll().getApplicationUserId();
+        String address = "api/Category/GetAll?UserId=" + settingsBll().getApplicationUserId();
 
         controller().GetFromApi2(address, new CallbackGetString() {
             @Override
@@ -92,30 +94,81 @@ public class ListSendCategoryActivity extends BaseActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListSendCategoryActivity.this, error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListCategoryActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    private void searchData() {
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerViewlistPost.setVisibility(View.GONE);
+        warningTxt.setVisibility(View.GONE);
+        String address = "api/Category/Search?txtSearch=" + edtSearch.getText().toString().trim() + "&UserId=" + settingsBll().getApplicationUserId();
+
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                try {
+                    CategoryGetAll categoryGetAll = gson().fromJson(resultStr, CategoryGetAll.class);
+
+                    if (categoryGetAll.getData().size() > 0) {
+                        warningTxt.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
+                        recyclerViewlistPost.setVisibility(View.VISIBLE);
+
+                        adapter = new CategoryListAdapter(categoryGetAll.getData());
+                        recyclerViewlistPost.setAdapter(adapter);
+                    } else {
+                        warningTxt.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        recyclerViewlistPost.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+                    Log.i(TAG, "onSuccessException: " + e);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(ListCategoryActivity.this, error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
     private void setVariable() {
 //        titleTxt.setText("کلیه پست ها");
         recyclerViewlistPost.setLayoutManager(new LinearLayoutManager(this));
-
-//        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(ListCategoryActivity.this, SendPostActivity.class));
-//            }
-//        });
+        floatingActionButton1.setVisibility(View.VISIBLE);
+        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ListCategoryActivity.this, SendCategoryActivity.class));
+            }
+        });
+        searchIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (edtSearch.getText().toString().trim().isEmpty()) {
+//                    Toast.makeText(ListCategoryActivity.this, "لطفا متن جستجو را وارد نمائید", Toast.LENGTH_SHORT).show();
+                    getData();
+                } else {
+                    searchData();
+                }
+            }
+        });
     }
 
     private void initView() {
-        recyclerViewlistPost = findViewById(R.id.View);
-//        floatingActionButton1 = findViewById(R.id.material_design_floating_action_menu_item1);
+        recyclerViewlistPost = findViewById(R.id.viewAttach);
+        floatingActionButton1 = findViewById(R.id.material_design_floating_action_menu_item1);
         progressBar = findViewById(R.id.progressBarRow4);
-        warningTxt = findViewById(R.id.warninTxt1);
+        warningTxt = findViewById(R.id.warninTxt);
         my_toolbar = findViewById(R.id.toolbar);
         titleTxt = findViewById(R.id.titleTxt);
+        searchIcon = findViewById(R.id.sub_toggle_button_category);
+        edtSearch = findViewById(R.id.edtSearch);
+
     }
 
     private void bottomView() {
@@ -130,34 +183,34 @@ public class ListSendCategoryActivity extends BaseActivity {
         View view4 = findViewById(R.id.view4);
         View view5 = findViewById(R.id.view5);
 
-        view4.setVisibility(View.VISIBLE);
+        view3.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ListSendCategoryActivity.this, Main1Activity.class);
+            Intent intent = new Intent(ListCategoryActivity.this, Main1Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn2.setOnClickListener(v -> {
-            Intent intent = new Intent(ListSendCategoryActivity.this, Main2Activity.class);
+            Intent intent = new Intent(ListCategoryActivity.this, Main2Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn3.setOnClickListener(v -> {
-            Intent intent = new Intent(ListSendCategoryActivity.this, Main3Activity.class);
+            Intent intent = new Intent(ListCategoryActivity.this, Main3Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListSendCategoryActivity.this, ListSendCategoryActivity.class);
+            Intent intent = new Intent(ListCategoryActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListSendCategoryActivity.this, Main5Activity.class);
+            Intent intent = new Intent(ListCategoryActivity.this, Main5Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
