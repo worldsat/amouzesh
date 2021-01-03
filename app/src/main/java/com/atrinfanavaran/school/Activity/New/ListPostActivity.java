@@ -32,6 +32,7 @@ public class ListPostActivity extends BaseActivity {
     private TextView warningTxt;
     private Toolbar my_toolbar;
     private TextView titleTxt;
+    private int CategoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,13 @@ public class ListPostActivity extends BaseActivity {
         progressBar.setVisibility(View.VISIBLE);
         recyclerViewlistPost.setVisibility(View.GONE);
         warningTxt.setVisibility(View.GONE);
-        String address = "api/EducationPost/GetAll?Id=" + settingsBll().getApplicationUserId();
+        String address = "";
+        CategoryId = getIntent().getIntExtra("CategoryId", 0);
+        if (CategoryId != 0) {
+            address = "api/EducationPost/GetByCategory?Id=" + CategoryId;
+        } else {
+            address = "api/EducationPost/GetAll?Id=" + settingsBll().getApplicationUserId();
+        }
 
         controller().GetFromApi2(address, new CallbackGetString() {
             @Override

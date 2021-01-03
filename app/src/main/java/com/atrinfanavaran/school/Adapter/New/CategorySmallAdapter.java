@@ -39,14 +39,14 @@ public class CategorySmallAdapter extends RecyclerView.Adapter<CategorySmallAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         RequestOptions requestOptions = new RequestOptions();
-//                                requestOptions.placeholder(R.mipmap.logo);
-//                                requestOptions.error(R.mipmap.logo);
+                                requestOptions.placeholder(R.mipmap.logo);
+                                requestOptions.error(R.mipmap.logo);
 
         SettingsBll settingsBll = new SettingsBll(holder.itemView.getContext());
         Glide.with(holder.itemView.getContext())
                 .setDefaultRequestOptions(requestOptions)
                 .load(settingsBll.getUrlAddress() + array_object.get(position).getUrl())
-//                    .apply(RequestOptions.circleCropTransform())
+                    .apply(RequestOptions.centerCropTransform())
                 .into(holder.icon);
 
         holder.title.setText(array_object.get(position).getName());
@@ -55,7 +55,7 @@ public class CategorySmallAdapter extends RecyclerView.Adapter<CategorySmallAdap
             public void onClick(View v) {
 
                 Intent intent = new Intent(holder.itemView.getContext(), ListPostActivity.class);
-                intent.putExtra("CategoryId", "");
+                intent.putExtra("CategoryId", array_object.get(position).getId());
                 holder.itemView.getContext().startActivity(intent);
             }
         });
