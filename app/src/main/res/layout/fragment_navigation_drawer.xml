@@ -44,7 +44,7 @@
                 android:textSize="18sp" />
 
             <ImageView
-                android:id="@+id/imageView11"
+                android:id="@+id/imageViewBanner"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
@@ -54,7 +54,7 @@
                 app:srcCompat="@drawable/gradient_line" />
 
             <TextView
-                android:id="@+id/exit_drawer"
+                android:id="@+id/mypost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lalehzar"
@@ -63,7 +63,7 @@
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
             <ImageView
-                android:id="@+id/imageViewCat"
+                android:id="@+id/imageViewPost"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
@@ -82,7 +82,7 @@
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
             <ImageView
-                android:id="@+id/imageView11"
+                android:id="@+id/imageViewCat"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
@@ -91,6 +91,62 @@
                 android:visibility="visible"
                 app:srcCompat="@drawable/gradient_line" />
 
+            <TextView
+                android:id="@+id/teacherlist_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lalehzar"
+                android:gravity="center_vertical"
+                android:text="گروه دبیران"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+            <ImageView
+                android:id="@+id/imageViewteacher"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:alpha="0.8"
+                android:visibility="visible"
+                app:srcCompat="@drawable/gradient_line" />
+
+            <TextView
+                android:id="@+id/studentlist_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lalehzar"
+                android:gravity="center_vertical"
+                android:text="گروه دانش آموزان"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+            <ImageView
+                android:id="@+id/imageViewStudent"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:alpha="0.8"
+                android:visibility="visible"
+                app:srcCompat="@drawable/gradient_line" />
+
+            <TextView
+                android:id="@+id/asatid_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lalehzar"
+                android:gravity="center_vertical"
+                android:text="اساتید"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+            <ImageView
+                android:id="@+id/imageViewasatid"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:alpha="0.8"
+                android:visibility="visible"
+                app:srcCompat="@drawable/gradient_line" />
             <TextView
                 android:id="@+id/exit_btn"
                 android:layout_width="match_parent"

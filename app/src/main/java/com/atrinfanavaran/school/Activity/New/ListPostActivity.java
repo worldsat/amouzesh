@@ -18,6 +18,7 @@ import com.atrinfanavaran.school.Adapter.New.EducationPostListAdapter;
 import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
+import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.school.R;
 import com.github.clans.fab.FloatingActionButton;
@@ -33,12 +34,14 @@ public class ListPostActivity extends BaseActivity {
     private Toolbar my_toolbar;
     private TextView titleTxt;
     private int CategoryId;
+    private SettingsBll settingsBll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_post2);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        settingsBll = new SettingsBll(this);
 
         initView();
         setVariable();
@@ -63,9 +66,16 @@ public class ListPostActivity extends BaseActivity {
     }
 
     private void getData() {
+        if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
+            warningTxt.setVisibility(View.VISIBLE);
+            floatingActionMenu.setVisibility(View.GONE);
+            warningTxt.setText("شما دسترسی لازم برای این قسمت را ندارید");
+            return;
+        }
         progressBar.setVisibility(View.VISIBLE);
         recyclerViewlistPost.setVisibility(View.GONE);
         warningTxt.setVisibility(View.GONE);
+        warningTxt.setText(R.string.noData);
         String address = "";
         CategoryId = getIntent().getIntExtra("CategoryId", 0);
         if (CategoryId != 0) {
@@ -123,6 +133,7 @@ public class ListPostActivity extends BaseActivity {
         warningTxt = findViewById(R.id.warninTxt1);
         my_toolbar = findViewById(R.id.toolbar);
         titleTxt = findViewById(R.id.titleTxt);
+        floatingActionMenu = findViewById(R.id.material_design_android_floating_action_menu);
     }
 
     private void bottomView() {

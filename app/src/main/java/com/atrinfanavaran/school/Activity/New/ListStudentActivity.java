@@ -23,8 +23,9 @@ import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.school.R;
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
-public class ListCategoryActivity extends BaseActivity {
+public class ListStudentActivity extends BaseActivity {
     private RecyclerView recyclerViewlistPost;
     private RecyclerView.Adapter adapter;
     private FloatingActionButton floatingActionButton1;
@@ -34,6 +35,7 @@ public class ListCategoryActivity extends BaseActivity {
     private TextView titleTxt;
     private EditText edtSearch;
     private ImageView searchIcon;
+    private FloatingActionMenu floatingActionMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,7 @@ public class ListCategoryActivity extends BaseActivity {
         warningTxt.setVisibility(View.GONE);
         String address = "api/Category/GetAll?UserId=" + settingsBll().getApplicationUserId();
         if (search) {
-            address = "api/Category/Search?txtSearch=" + edtSearch.getText().toString().trim() + "&UserId=" + settingsBll().getApplicationUserId();
+             address = "api/Category/Search?txtSearch=" + edtSearch.getText().toString().trim() + "&UserId=" + settingsBll().getApplicationUserId();
         }
         controller().GetFromApi2(address, new CallbackGetString() {
             @Override
@@ -96,56 +98,22 @@ public class ListCategoryActivity extends BaseActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListCategoryActivity.this, error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListStudentActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void searchData() {
-        progressBar.setVisibility(View.VISIBLE);
-        recyclerViewlistPost.setVisibility(View.GONE);
-        warningTxt.setVisibility(View.GONE);
-        String address = "api/Category/Search?txtSearch=" + edtSearch.getText().toString().trim() + "&UserId=" + settingsBll().getApplicationUserId();
-
-        controller().GetFromApi2(address, new CallbackGetString() {
-            @Override
-            public void onSuccess(String resultStr) {
-                try {
-                    CategoryGetAll categoryGetAll = gson().fromJson(resultStr, CategoryGetAll.class);
-
-                    if (categoryGetAll.getData().size() > 0) {
-                        warningTxt.setVisibility(View.GONE);
-                        progressBar.setVisibility(View.GONE);
-                        recyclerViewlistPost.setVisibility(View.VISIBLE);
-
-                        adapter = new CategoryListAdapter(categoryGetAll.getData());
-                        recyclerViewlistPost.setAdapter(adapter);
-                    } else {
-                        warningTxt.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
-                        recyclerViewlistPost.setVisibility(View.GONE);
-                    }
-                } catch (Exception e) {
-                    Log.i(TAG, "onSuccessException: " + e);
-                }
-            }
-
-            @Override
-            public void onError(String error) {
-                Toast.makeText(ListCategoryActivity.this, error, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
 
     private void setVariable() {
-//        titleTxt.setText("کلیه پست ها");
+        titleTxt.setText("لیست دانش آموزان");
         recyclerViewlistPost.setLayoutManager(new LinearLayoutManager(this));
+        floatingActionMenu.setVisibility(View.GONE);
         floatingActionButton1.setVisibility(View.VISIBLE);
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ListCategoryActivity.this, SendCategoryActivity.class));
+                startActivity(new Intent(ListStudentActivity.this, SendCategoryActivity.class));
             }
         });
         searchIcon.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +138,8 @@ public class ListCategoryActivity extends BaseActivity {
         titleTxt = findViewById(R.id.titleTxt);
         searchIcon = findViewById(R.id.sub_toggle_button_category);
         edtSearch = findViewById(R.id.edtSearch);
-
+        titleTxt = findViewById(R.id.title);
+        floatingActionMenu = findViewById(R.id.material_design_android_floating_action_menu);
     }
 
     private void bottomView() {
@@ -188,31 +157,31 @@ public class ListCategoryActivity extends BaseActivity {
         view3.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ListCategoryActivity.this, Main1Activity.class);
+            Intent intent = new Intent(ListStudentActivity.this, Main1Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn2.setOnClickListener(v -> {
-            Intent intent = new Intent(ListCategoryActivity.this, Main2Activity.class);
+            Intent intent = new Intent(ListStudentActivity.this, Main2Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn3.setOnClickListener(v -> {
-            Intent intent = new Intent(ListCategoryActivity.this, Main3Activity.class);
+            Intent intent = new Intent(ListStudentActivity.this, Main3Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListCategoryActivity.this, ListPostActivity.class);
+            Intent intent = new Intent(ListStudentActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListCategoryActivity.this, Main5Activity.class);
+            Intent intent = new Intent(ListStudentActivity.this, Main5Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

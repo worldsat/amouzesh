@@ -29,6 +29,7 @@ public class PostMiniListAdapter extends RecyclerView.Adapter<PostMiniListAdapte
     private SelectCallBack selectCallBack;
     private int oldPosition = 0;
     private BannerGetAll.Data object;
+    private ArrayList<Integer> listSelectedId = new ArrayList<>();
 
 
     public PostMiniListAdapter(ArrayList<DropdownList> result, BannerGetAll.Data object, SelectCallBack selectCallBack) {
@@ -90,6 +91,7 @@ public class PostMiniListAdapter extends RecyclerView.Adapter<PostMiniListAdapte
             holder.icon.setImageResource(R.mipmap.tick128);
             holder.icon.setVisibility(View.VISIBLE);
             oldPosition = position;
+
         } else {
             holder.icon.setVisibility(View.INVISIBLE);
         }
@@ -98,21 +100,27 @@ public class PostMiniListAdapter extends RecyclerView.Adapter<PostMiniListAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (array_object.get(position).getListId() != -1) {
 //                array_object.get(oldPosition).setTick(false);
-                if (array_object.get(position).isTick()) {
-                    array_object.get(position).setTick(false);
+                    if (array_object.get(position).isTick()) {
+                        array_object.get(position).setTick(false);
 
-                    notifyDataSetChanged();
-                    holder.icon.setVisibility(View.INVISIBLE);
+                        notifyDataSetChanged();
+                        holder.icon.setVisibility(View.INVISIBLE);
+
+                    } else {
+                        array_object.get(position).setTick(true);
+
+                        notifyDataSetChanged();
+                        holder.icon.setVisibility(View.VISIBLE);
+                        holder.icon.setImageResource(R.mipmap.tick128);
+
+                    }
+
+                    selectCallBack.Id(array_object.get(position).getListId(),false);
                 } else {
-                    array_object.get(position).setTick(true);
-
-                    notifyDataSetChanged();
-                    holder.icon.setVisibility(View.VISIBLE);
-                    holder.icon.setImageResource(R.mipmap.tick128);
+                    selectCallBack.Id(array_object.get(position).getListId(),true);
                 }
-                selectCallBack.Id(array_object.get(position).getListId());
             }
         });
 
@@ -154,6 +162,6 @@ public class PostMiniListAdapter extends RecyclerView.Adapter<PostMiniListAdapte
     }
 
     public interface SelectCallBack {
-        void Id(int num);
+        void Id(int num,boolean allSelect);
     }
 }

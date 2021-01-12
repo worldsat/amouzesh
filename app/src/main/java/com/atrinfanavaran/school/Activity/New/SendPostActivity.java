@@ -94,6 +94,7 @@ public class SendPostActivity extends BaseActivity {
     private EducationPostGetAll.Data object;
     private ProgressBar progressBarRowCategory;
     private ProgressBar progressBarRowtakhsis;
+    private ArrayList<Integer> takhisisSelectIds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -443,6 +444,7 @@ public class SendPostActivity extends BaseActivity {
                     takhsisList.clear();
                 }
                 if (getRelatedUsers.getData().getStudents().size() > 0) {
+                    array_object.add(new DropdownList("انتخاب همه", -1, false));
                     boolean tick = false;
                     for (int i = 0; i < getRelatedUsers.getData().getStudents().size(); i++) {
                         if (object != null) {
@@ -470,8 +472,40 @@ public class SendPostActivity extends BaseActivity {
 
                 adaptertakhsis = new PostMiniListAdapter(array_object, null, new PostMiniListAdapter.SelectCallBack() {
                     @Override
-                    public void Id(int num) {
+                    public void Id(int num, boolean allSelect) {
+                        if (allSelect) {
+                            ArrayList<Integer> allId = new ArrayList<>();
+                            for (int i = 0; i < array_object.size(); i++) {
+                                allId.add(array_object.get(i).getListId());
+                                array_object.get(i).setTick(true);
+
+                            }
+                            adaptertakhsis.notifyDataSetChanged();
+                            params.put("takhsis", allId.toString().replace(" ", ""));
+                            Log.i(TAG, "Id: " + params.toString());
+                            return;
+                        }
                         params.put("takhsis", num);
+
+                        if (takhisisSelectIds.contains(num)) {
+                            for (int i = 0; i < takhisisSelectIds.size(); i++) {
+                                if (takhisisSelectIds.get(i) == num) {
+                                    takhisisSelectIds.remove(i);
+                                    break;
+                                }
+                            }
+                        } else {
+                            takhisisSelectIds.add(num);
+                        }
+
+                        Log.i(TAG, "bannerToPostsId: " + takhisisSelectIds.toString().replace(" ", ""));
+                        if (takhisisSelectIds.size() > 0) {
+                            params.put("takhsis", takhisisSelectIds.toString().replace(" ", ""));
+                        } else {
+                            if (params.get("takhsis") != null) {
+                                params.remove("takhsis");
+                            }
+                        }
                     }
 
 

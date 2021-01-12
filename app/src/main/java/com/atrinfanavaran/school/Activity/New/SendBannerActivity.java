@@ -610,7 +610,7 @@ public class SendBannerActivity extends BaseActivity {
 //        }
         adapterPost = new PostMiniListAdapter(array_objectPost, object, new PostMiniListAdapter.SelectCallBack() {
             @Override
-            public void Id(int num) {
+            public void Id(int num, boolean allSelect) {
 
                 if (PostSelectIds.contains(num)) {
                     for (int i = 0; i < PostSelectIds.size(); i++) {

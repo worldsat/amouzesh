@@ -22,6 +22,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".Activity.New.ListPostActivity"></activity>
+        <activity android:name=".Activity.New.ListTeacherActivity"></activity>
+        <activity android:name=".Activity.New.ListAsatidActivity"></activity>
         <activity android:name=".Activity.New.ListCategoryActivity">
 
         </activity>
