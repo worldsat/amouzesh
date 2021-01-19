@@ -27,6 +27,7 @@ import com.atrinfanavaran.school.Activity.New.ListAsatidActivity;
 import com.atrinfanavaran.school.Activity.New.ListBannerActivity;
 import com.atrinfanavaran.school.Activity.New.ListCategoryActivity;
 import com.atrinfanavaran.school.Activity.New.ListPostActivity;
+import com.atrinfanavaran.school.Activity.New.ListStudentActivity;
 import com.atrinfanavaran.school.Activity.New.ListTeacherActivity;
 import com.atrinfanavaran.school.Activity.New.LoginActivity;
 import com.atrinfanavaran.school.BuildConfig;
@@ -200,6 +201,10 @@ public class NavigationDrawerFragment extends Fragment {
         });
         teacherlist_btn.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ListTeacherActivity.class);
+            startActivity(intent);
+        });
+        studentlist_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ListStudentActivity.class);
             startActivity(intent);
         });
 

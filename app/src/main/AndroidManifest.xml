@@ -21,6 +21,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Activity.New.ListStudentNameActivity"></activity>
+        <activity android:name=".Activity.New.SendStudentGroupNameActivity"></activity>
+        <activity android:name=".Activity.New.ListStudentActivity"></activity>
         <activity android:name=".Activity.New.ListPostActivity"></activity>
         <activity android:name=".Activity.New.ListTeacherActivity"></activity>
         <activity android:name=".Activity.New.ListAsatidActivity"></activity>

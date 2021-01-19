@@ -17,8 +17,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.atrinfanavaran.school.Activity.New.SendCategoryActivity;
-import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
+import com.atrinfanavaran.school.Activity.New.ListStudentNameActivity;
+import com.atrinfanavaran.school.Activity.New.SendStudentGroupNameActivity;
+import com.atrinfanavaran.school.Domain.New.CustomGroup;
 import com.atrinfanavaran.school.Domain.New.ManageDomain;
 import com.atrinfanavaran.school.Kernel.Controller.Controller;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
@@ -27,15 +28,15 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.ViewHolder> {
+public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.ViewHolder> {
 
-    private final ArrayList<CategoryGetAll.Data> array_object;
+    private final ArrayList<CustomGroup.data> array_object;
     private Context context;
 
     private Handler mHandler = new Handler();
     private int mFileDuration;
 
-    public TeacherListAdapter(ArrayList<CategoryGetAll.Data> result) {
+    public StudentListAdapter(ArrayList<CustomGroup.data> result) {
         this.array_object = result;
 
 
@@ -55,7 +56,7 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
         context = holder.itemView.getContext();
         holder.title.setText(array_object.get(position).getName());
 
-        holder.row.setText("" + position + 1);
+        holder.row.setText("" + (position + 1));
 
 
 
@@ -63,7 +64,15 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, SendCategoryActivity.class);
+                Intent intent = new Intent(context, SendStudentGroupNameActivity.class);
+                intent.putExtra("object", array_object.get(position));
+                context.startActivity(intent);
+            }
+        });
+        holder.SelectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ListStudentNameActivity.class);
                 intent.putExtra("object", array_object.get(position));
                 context.startActivity(intent);
             }
@@ -88,7 +97,7 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
             public void onClick(View v) {
                 question_dialog.dismiss();
                 Controller controller = new Controller(context);
-                controller.GetFromApi2("api/Category/Remove?Id=" + array_object.get(holder.getAdapterPosition()).getId(), new CallbackGetString() {
+                controller.GetFromApi2("api/CustomGroup/Remove?Id=" + array_object.get(holder.getAdapterPosition()).getId(), new CallbackGetString() {
                     @Override
                     public void onSuccess(String resultStr) {
                         try {
@@ -145,7 +154,7 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
         TextView title, row;
         ConstraintLayout card, deleteIcon;
         ImageView icon;
-        LinearLayout deleteBtn, editBtn;
+        LinearLayout deleteBtn, editBtn,SelectBtn;
 
         private ViewHolder(View itemView) {
             super(itemView);
@@ -157,6 +166,7 @@ public class TeacherListAdapter extends RecyclerView.Adapter<TeacherListAdapter.
             icon = itemView.findViewById(R.id.icon);
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
             editBtn = itemView.findViewById(R.id.editBtn);
+            SelectBtn = itemView.findViewById(R.id.SelectBtn);
 
 
         }

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.atrinfanavaran.school.Adapter.New.StudentListAdapter;
+import com.atrinfanavaran.school.Adapter.New.StudentNameListAdapter;
 import com.atrinfanavaran.school.Domain.New.CustomGroup;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
@@ -25,7 +26,7 @@ import com.atrinfanavaran.school.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-public class ListStudentActivity extends BaseActivity {
+public class ListStudentNameActivity extends BaseActivity {
     private RecyclerView recyclerViewlistPost;
     private RecyclerView.Adapter adapter;
     private FloatingActionButton floatingActionButton1;
@@ -84,7 +85,7 @@ public class ListStudentActivity extends BaseActivity {
                         progressBar.setVisibility(View.GONE);
                         recyclerViewlistPost.setVisibility(View.VISIBLE);
 
-                        adapter = new StudentListAdapter(list.getData());
+                        adapter = new StudentNameListAdapter(list.getData());
                         recyclerViewlistPost.setAdapter(adapter);
                     } else {
                         warningTxt.setVisibility(View.VISIBLE);
@@ -98,7 +99,7 @@ public class ListStudentActivity extends BaseActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListStudentActivity.this, error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListStudentNameActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -108,12 +109,12 @@ public class ListStudentActivity extends BaseActivity {
     private void setVariable() {
         titleTxt.setText("لیست دانش آموزان");
         recyclerViewlistPost.setLayoutManager(new LinearLayoutManager(this));
-        floatingActionMenu.setVisibility(View.VISIBLE);
+        floatingActionMenu.setVisibility(View.GONE);
         floatingActionButton1.setVisibility(View.VISIBLE);
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ListStudentActivity.this, SendStudentGroupNameActivity.class));
+                startActivity(new Intent(ListStudentNameActivity.this, SendStudentGroupNameActivity.class));
             }
         });
         searchIcon.setOnClickListener(new View.OnClickListener() {
@@ -157,31 +158,31 @@ public class ListStudentActivity extends BaseActivity {
         view3.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentActivity.this, Main1Activity.class);
+            Intent intent = new Intent(ListStudentNameActivity.this, Main1Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn2.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentActivity.this, Main2Activity.class);
+            Intent intent = new Intent(ListStudentNameActivity.this, Main2Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn3.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentActivity.this, Main3Activity.class);
+            Intent intent = new Intent(ListStudentNameActivity.this, Main3Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentActivity.this, ListPostActivity.class);
+            Intent intent = new Intent(ListStudentNameActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentActivity.this, Main5Activity.class);
+            Intent intent = new Intent(ListStudentNameActivity.this, Main5Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

@@ -654,14 +654,8 @@ public class Controller {
             @Override
             public void onSuccessResponse(String response) {
 
-                Gson gson = new Gson();
-                ApiResponse apiResponse = gson.fromJson(response, ApiResponse.class);
+                    callbackOperation.onSuccess(response);
 
-                if (!apiResponse.isSuccess()) {
-
-                    callbackOperation.onSuccess(apiResponse.getMessage());
-
-                } else callbackOperation.onError(apiResponse.getMessage());
             }
 
             @Override
