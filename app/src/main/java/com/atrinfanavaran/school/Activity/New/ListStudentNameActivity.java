@@ -72,12 +72,13 @@ public class ListStudentNameActivity extends BaseActivity {
 
     private void action() {
         if (Action.equals("Select")) {
-            getDataSelect(false);
+
             titleTxt.setText("اضافه کردن به لیست");
             titleBtn.setText("اضافه کردن");
         } else if (Action.equals("UnSelect")) {
             titleTxt.setText("حذف کردن به لیست");
             titleBtn.setText("حذف کردن");
+            getDataSelect(false);
         }
     }
 
@@ -187,23 +188,26 @@ public class ListStudentNameActivity extends BaseActivity {
                     return;
                 }
                 if (Action.equals("Select")) {
-                    SendSelected();
+                    SendToSelected();
+                } else if (Action.equals("UnSelect")) {
+                    SendToUnSelected();
+
                 }
             }
         });
     }
 
-    private void SendSelected() {
+    private void SendToSelected() {
         JSONObject params = new JSONObject();
         try {
-            params.put("StudentId", param.get("StudentId").toString().replace("\"",""));
+            params.put("StudentId", param.get("StudentId").toString().replace("\"", ""));
             params.put("GroupId", object.getId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
         MaterialDialog wait = new Waiting(ListStudentNameActivity.this).alertWaiting();
         wait.show();
-        controller().operationProcess(ListStudentNameActivity.this, "api/CustomGroup/AddStudentToGroup", params.toString().replace("\"[","[").replace("]\"","]"), new CallbackOperation() {
+        controller().operationProcess(ListStudentNameActivity.this, "api/CustomGroup/AddStudentToGroup", params.toString().replace("\"[", "[").replace("]\"", "]"), new CallbackOperation() {
             @Override
             public void onSuccess(String result) {
                 try {
@@ -224,7 +228,45 @@ public class ListStudentNameActivity extends BaseActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListStudentNameActivity.this,error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListStudentNameActivity.this, error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    private void SendToUnSelected() {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("UserId", param.get("StudentId").toString().replace("\"", ""));
+            params.put("CustomGrupId", object.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        MaterialDialog wait = new Waiting(ListStudentNameActivity.this).alertWaiting();
+        wait.show();
+        controller().operationProcess(ListStudentNameActivity.this, "api/CustomGroup/RemoveStudentFromGroup", params.toString().replace("\"[", "[").replace("]\"", "]"), new CallbackOperation() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    Gson gson = new Gson();
+                    ManageDomain manageDomain = gson.fromJson(result, ManageDomain.class);
+                    Toast.makeText(ListStudentNameActivity.this, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (manageDomain.isSuccess()) {
+                        finish();
+                        Intent intent = new Intent(ListStudentNameActivity.this, ListStudentActivity.class);
+                        startActivity(intent);
+                    }
+
+                } catch (Exception e) {
+                    Toast.makeText(ListStudentNameActivity.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
+                }
+                wait.dismiss();
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(ListStudentNameActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
 

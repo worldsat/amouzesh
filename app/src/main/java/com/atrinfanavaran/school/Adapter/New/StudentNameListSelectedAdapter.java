@@ -52,7 +52,7 @@ public class StudentNameListSelectedAdapter extends RecyclerView.Adapter<Student
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         context = holder.itemView.getContext();
-//        holder.title.setText(array_object.get(position).getName());
+        holder.title.setText(array_object.get(position).getStudentName());
 
         holder.row.setText("" + (position + 1));
 

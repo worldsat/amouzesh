@@ -128,7 +128,16 @@ public class CustomGroupGetById {
             private String applicationUser;
             private int studentsId;
             private String students;
+            private String studentName;
             private int customGroupId;
+
+            public String getStudentName() {
+                return studentName;
+            }
+
+            public void setStudentName(String studentName) {
+                this.studentName = studentName;
+            }
 
             public int getId() {
                 return id;
