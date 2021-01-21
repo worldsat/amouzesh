@@ -169,9 +169,9 @@ public class Main3Activity extends BaseActivity {
                                 DefaultSliderView DefaultSliderView = new DefaultSliderView(getActivity());
                                 DefaultSliderView
                                         .setOnSliderClickListener(slider -> {
-                                            Intent i1 = new Intent(Intent.ACTION_VIEW);
+//                                            Intent i1 = new Intent(Intent.ACTION_VIEW);
 //                                                i1.setData(Uri.parse(Url));
-                                            startActivity(i1);
+//                                            startActivity(i1);
                                         })
                                         .image(settingsBll().getUrlAddress() + "/" + result.getData().get(i).getUrl())
                                         .setScaleType(BaseSliderView.ScaleType.Fit);
@@ -194,9 +194,9 @@ public class Main3Activity extends BaseActivity {
                                 DefaultSliderView DefaultSliderView = new DefaultSliderView(getActivity());
                                 DefaultSliderView
                                         .setOnSliderClickListener(slider -> {
-                                            Intent i1 = new Intent(Intent.ACTION_VIEW);
+//                                            Intent i1 = new Intent(Intent.ACTION_VIEW);
 //                                                i1.setData(Uri.parse(Url));
-                                            startActivity(i1);
+//                                            startActivity(i1);
                                         })
                                         .image(settingsBll().getUrlAddress() + "/" + result.getData().get(i).getUrl())
                                         .setScaleType(BaseSliderView.ScaleType.Fit);

@@ -438,7 +438,7 @@ public class SendPostActivity extends BaseActivity {
         controller().GetFromApi2(address, new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
-                Log.i(TAG, "takhsis: " + resultStr);
+                Log.i(TAG, "StudentListToPost: " + resultStr);
                 GetRelatedUsers getRelatedUsers = gson().fromJson(resultStr, GetRelatedUsers.class);
                 if (takhsisList.size() > 0) {
                     takhsisList.clear();
@@ -481,11 +481,11 @@ public class SendPostActivity extends BaseActivity {
 
                             }
                             adaptertakhsis.notifyDataSetChanged();
-                            params.put("takhsis", allId.toString().replace(" ", ""));
+                            params.put("StudentListToPost", allId.toString().replace(" ", ""));
                             Log.i(TAG, "Id: " + params.toString());
                             return;
                         }
-                        params.put("takhsis", num);
+                        params.put("StudentListToPost", num);
 
                         if (takhisisSelectIds.contains(num)) {
                             for (int i = 0; i < takhisisSelectIds.size(); i++) {
@@ -500,10 +500,10 @@ public class SendPostActivity extends BaseActivity {
 
                         Log.i(TAG, "bannerToPostsId: " + takhisisSelectIds.toString().replace(" ", ""));
                         if (takhisisSelectIds.size() > 0) {
-                            params.put("takhsis", takhisisSelectIds.toString().replace(" ", ""));
+                            params.put("StudentListToPost", takhisisSelectIds.toString().replace(" ", ""));
                         } else {
-                            if (params.get("takhsis") != null) {
-                                params.remove("takhsis");
+                            if (params.get("StudentListToPost") != null) {
+                                params.remove("StudentListToPost");
                             }
                         }
                     }

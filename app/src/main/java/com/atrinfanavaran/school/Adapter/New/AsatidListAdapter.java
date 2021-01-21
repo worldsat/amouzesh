@@ -1,6 +1,7 @@
 package com.atrinfanavaran.school.Adapter.New;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
+import com.atrinfanavaran.school.Activity.New.ListPostAsatidActivity;
+import com.atrinfanavaran.school.Domain.New.GetRelatedTeachers;
 import com.atrinfanavaran.school.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -21,11 +23,11 @@ import java.util.ArrayList;
 
 public class AsatidListAdapter extends RecyclerView.Adapter<AsatidListAdapter.ViewHolder> {
 
-    private final ArrayList<CategoryGetAll.Data> array_object;
+    private final ArrayList<GetRelatedTeachers.Data> array_object;
     private Context context;
 
 
-    public AsatidListAdapter(ArrayList<CategoryGetAll.Data> result) {
+    public AsatidListAdapter(ArrayList<GetRelatedTeachers.Data> result) {
         this.array_object = result;
 
 
@@ -48,14 +50,17 @@ public class AsatidListAdapter extends RecyclerView.Adapter<AsatidListAdapter.Vi
         holder.showItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, ListPostAsatidActivity.class);
+                intent.putExtra("TeacherUserId", array_object.get(position).getId());
+                intent.putExtra("TeacherUserName", array_object.get(position).getName());
+                context.startActivity(intent);
             }
         });
 
 
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.mipmap.logo);
-        requestOptions.error(R.mipmap.logo);
+        requestOptions.placeholder(R.mipmap.profile);
+        requestOptions.error(R.mipmap.profile);
 
 
         Glide.with(holder.itemView.getContext())

@@ -22,23 +22,26 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView21"
+            android:id="@+id/icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             app:srcCompat="@mipmap/profile" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/iranyekan"
             android:text="-"
             android:textAlignment="center"
-            android:textColor="@color/blue_2" />
+            android:textColor="@color/blue_2"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/button3"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_margin="10dp"
             android:background="@drawable/background_button_message_dark_blue"
             android:fontFamily="@font/lalehzar"

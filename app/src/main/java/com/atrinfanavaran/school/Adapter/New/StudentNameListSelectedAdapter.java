@@ -1,16 +1,12 @@
 package com.atrinfanavaran.school.Adapter.New;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,34 +14,29 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.atrinfanavaran.school.Activity.New.ListStudentNameActivity;
-import com.atrinfanavaran.school.Activity.New.SendStudentGroupNameActivity;
-import com.atrinfanavaran.school.Domain.New.CustomGroup;
+import com.atrinfanavaran.school.Domain.New.CustomGroupGetById;
 import com.atrinfanavaran.school.Domain.New.ManageDomain;
 import com.atrinfanavaran.school.Kernel.Controller.Controller;
-import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackOperation;
 import com.atrinfanavaran.school.R;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class StudentNameListAdapter extends RecyclerView.Adapter<StudentNameListAdapter.ViewHolder> {
+public class StudentNameListSelectedAdapter extends RecyclerView.Adapter<StudentNameListSelectedAdapter.ViewHolder> {
 
-    private final ArrayList<CustomGroup.data> array_object;
+    private final ArrayList<CustomGroupGetById.Data.UsersToCustomGroups> array_object;
     private Context context;
 
     private Handler mHandler = new Handler();
     private int mFileDuration;
-
-    public StudentNameListAdapter(ArrayList<CustomGroup.data> result) {
+    private PostMiniListAdapter.SelectCallBack selectCallBack;
+    public StudentNameListSelectedAdapter(ArrayList<CustomGroupGetById.Data.UsersToCustomGroups> result, PostMiniListAdapter.SelectCallBack selectCallBack) {
         this.array_object = result;
-
+        this.selectCallBack = selectCallBack;
 
     }
 
@@ -53,7 +44,7 @@ public class StudentNameListAdapter extends RecyclerView.Adapter<StudentNameList
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_teacher_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_student_name_list, parent, false);
         return new ViewHolder(view);
     }
 
@@ -61,7 +52,7 @@ public class StudentNameListAdapter extends RecyclerView.Adapter<StudentNameList
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         context = holder.itemView.getContext();
-        holder.title.setText(array_object.get(position).getName());
+//        holder.title.setText(array_object.get(position).getName());
 
         holder.row.setText("" + (position + 1));
 
@@ -71,7 +62,9 @@ public class StudentNameListAdapter extends RecyclerView.Adapter<StudentNameList
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                alertQuestion(context, holder, isChecked);
+//                alertQuestion(context, holder, isChecked);
+
+                selectCallBack.Id(array_object.get(position).getStudentsId(),false);
             }
         });
     }

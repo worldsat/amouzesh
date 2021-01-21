@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -13,42 +11,52 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.atrinfanavaran.school.Adapter.New.AsatidListAdapter;
-import com.atrinfanavaran.school.Domain.New.GetRelatedTeachers;
+import com.atrinfanavaran.school.Adapter.New.BannerListAdapter;
+import com.atrinfanavaran.school.Adapter.New.PostListAsatidAdapter;
+import com.atrinfanavaran.school.Domain.New.BannerGetAll;
+import com.atrinfanavaran.school.Domain.New.GetRelatedEducationPost;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
+import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.school.R;
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
 
-public class ListAsatidActivity extends BaseActivity {
+public class ListPostAsatidActivity extends BaseActivity {
     private RecyclerView recyclerViewlistPost;
     private RecyclerView.Adapter adapter;
-    private FloatingActionButton floatingActionButton1;
+
     private ProgressBar progressBar;
     private TextView warningTxt;
     private Toolbar my_toolbar;
     private TextView titleTxt;
-    private EditText edtSearch;
-    private ImageView searchIcon;
-    private FloatingActionMenu floatingActionMenu;
+    private String TeacherUserId;
+    private String TeacherUserName;
+    private SettingsBll settingsBll;
+    private TextView postTitle, bannerTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_category);
+        setContentView(R.layout.activity_asatid_list_category2);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        settingsBll = new SettingsBll(this);
 
         initView();
+        getBundle();
+        getDataPost();
         setVariable();
-        getData(false);
         bottomView();
         NavigationDrawer();
         setToolbar();
+    }
+
+    private void getBundle() {
+        TeacherUserId = getIntent().getStringExtra("TeacherUserId");
+        TeacherUserName = getIntent().getStringExtra("TeacherUserName");
+        titleTxt.setText(TeacherUserName);
     }
 
     private void setToolbar() {
@@ -65,81 +73,111 @@ public class ListAsatidActivity extends BaseActivity {
 
     }
 
-    private void getData(boolean search) {
+    private void getDataPost() {
+
         progressBar.setVisibility(View.VISIBLE);
         recyclerViewlistPost.setVisibility(View.GONE);
         warningTxt.setVisibility(View.GONE);
-        String address = "api/User/GetRelatedTeachers?Id=" + settingsBll().getApplicationUserId();
-        if (search) {
-             address = "api/User/GetRelatedTeachers?txtSearch=" + edtSearch.getText().toString().trim() + "&Id=" + settingsBll().getApplicationUserId();
-        }
+        warningTxt.setText(R.string.noData);
+        String address = "";
+
+        postTitle.setTextColor(getResources().getColor(R.color.blue_2));
+        bannerTitle.setTextColor(getResources().getColor(R.color.grey_500));
+
+
+        address = "api/User/GetRelatedEducationPost?UserId=" + TeacherUserId + "&StudentId=" + settingsBll().getApplicationUserId();
+
+
         controller().GetFromApi2(address, new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
                 try {
-                    GetRelatedTeachers getRelatedTeachers = gson().fromJson(resultStr, GetRelatedTeachers.class);
+                    GetRelatedEducationPost getRelatedEducationPost = gson().fromJson(resultStr, GetRelatedEducationPost.class);
 
-                    if (getRelatedTeachers.getData().size() > 0) {
+                    if (getRelatedEducationPost.getData().size() > 0) {
                         warningTxt.setVisibility(View.GONE);
-                        progressBar.setVisibility(View.GONE);
                         recyclerViewlistPost.setVisibility(View.VISIBLE);
-
-                        adapter = new AsatidListAdapter(getRelatedTeachers.getData());
+                        adapter = new PostListAsatidAdapter(getRelatedEducationPost.getData());
                         recyclerViewlistPost.setAdapter(adapter);
                     } else {
                         warningTxt.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
                         recyclerViewlistPost.setVisibility(View.GONE);
                     }
                 } catch (Exception e) {
                     Log.i(TAG, "onSuccessException: " + e);
+
                 }
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListAsatidActivity.this, error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListPostAsatidActivity.this, error, Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
 
+    private void getDataBanner() {
 
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerViewlistPost.setVisibility(View.GONE);
+        warningTxt.setVisibility(View.GONE);
+        warningTxt.setText(R.string.noData);
+        String address = "";
+
+        postTitle.setTextColor(getResources().getColor(R.color.grey_500));
+        bannerTitle.setTextColor(getResources().getColor(R.color.blue_2));
+        address = "api/Banner/GetAll?Id=" + settingsBll().getApplicationUserId();
+
+
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                try {
+                    BannerGetAll bannerGetAll = gson().fromJson(resultStr, BannerGetAll.class);
+
+                    if (bannerGetAll.getData().size() > 0) {
+                        warningTxt.setVisibility(View.GONE);
+                        recyclerViewlistPost.setVisibility(View.VISIBLE);
+                        adapter = new BannerListAdapter(bannerGetAll.getData());
+                        recyclerViewlistPost.setAdapter(adapter);
+                    } else {
+                        warningTxt.setVisibility(View.VISIBLE);
+                        recyclerViewlistPost.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+                    Log.i(TAG, "onSuccessException: " + e);
+
+                }
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(ListPostAsatidActivity.this, error, Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
 
     private void setVariable() {
-        titleTxt.setText("اساتید");
-        recyclerViewlistPost.setLayoutManager(new GridLayoutManager(this,2));
-        floatingActionMenu.setVisibility(View.GONE);
-        floatingActionButton1.setVisibility(View.VISIBLE);
-        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ListAsatidActivity.this, SendCategoryActivity.class));
-            }
-        });
-        searchIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (edtSearch.getText().toString().trim().isEmpty()) {
-//                    Toast.makeText(ListCategoryActivity.this, "لطفا متن جستجو را وارد نمائید", Toast.LENGTH_SHORT).show();
-                    getData(false);
-                } else {
-                    getData(true);
-                }
-            }
-        });
+        recyclerViewlistPost.setLayoutManager(new LinearLayoutManager(this));
+
+        bannerTitle.setOnClickListener(v -> getDataBanner());
+        postTitle.setOnClickListener(v -> getDataPost());
     }
 
     private void initView() {
-        recyclerViewlistPost = findViewById(R.id.viewAttach);
-        floatingActionButton1 = findViewById(R.id.material_design_floating_action_menu_item1);
-        progressBar = findViewById(R.id.progressBarRow4);
-        warningTxt = findViewById(R.id.warninTxt);
+        recyclerViewlistPost = findViewById(R.id.View);
+
+        progressBar = findViewById(R.id.progressBarRow);
+        warningTxt = findViewById(R.id.warninTxt1);
         my_toolbar = findViewById(R.id.toolbar);
         titleTxt = findViewById(R.id.titleTxt);
-        searchIcon = findViewById(R.id.sub_toggle_button_category);
-        edtSearch = findViewById(R.id.edtSearch);
-        titleTxt = findViewById(R.id.title);
-        floatingActionMenu = findViewById(R.id.material_design_android_floating_action_menu);
+        postTitle = findViewById(R.id.t1);
+        bannerTitle = findViewById(R.id.t2);
+
     }
 
     private void bottomView() {
@@ -157,31 +195,31 @@ public class ListAsatidActivity extends BaseActivity {
         view3.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ListAsatidActivity.this, Main1Activity.class);
+            Intent intent = new Intent(ListPostAsatidActivity.this, Main1Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn2.setOnClickListener(v -> {
-            Intent intent = new Intent(ListAsatidActivity.this, Main2Activity.class);
+            Intent intent = new Intent(ListPostAsatidActivity.this, Main2Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn3.setOnClickListener(v -> {
-            Intent intent = new Intent(ListAsatidActivity.this, Main3Activity.class);
+            Intent intent = new Intent(ListPostAsatidActivity.this, Main3Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListAsatidActivity.this, ListPostActivity.class);
+            Intent intent = new Intent(ListPostAsatidActivity.this, ListPostAsatidActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListAsatidActivity.this, Main5Activity.class);
+            Intent intent = new Intent(ListPostAsatidActivity.this, Main5Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

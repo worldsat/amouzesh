@@ -101,6 +101,9 @@ public class BannerListAdapter extends RecyclerView.Adapter<BannerListAdapter.Vi
                 context.startActivity(intent);
             }
         });
+        if (settingsBll.getUserType() == 2) {
+            holder.buttonsLayer.setVisibility(View.GONE);
+        }
     }
 
     private void alertQuestion(Context context, ViewHolder holder) {
@@ -178,7 +181,7 @@ public class BannerListAdapter extends RecyclerView.Adapter<BannerListAdapter.Vi
         TextView title, rowNumber, status;
         ConstraintLayout card;
         ImageView bannerImage;
-        LinearLayout deleteBtn, editBtn;
+        LinearLayout deleteBtn, editBtn,buttonsLayer;
 
         private ViewHolder(View itemView) {
             super(itemView);
@@ -191,6 +194,7 @@ public class BannerListAdapter extends RecyclerView.Adapter<BannerListAdapter.Vi
 
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
             editBtn = itemView.findViewById(R.id.editBtn);
+            buttonsLayer = itemView.findViewById(R.id.buttonsLayer);
 
 
         }

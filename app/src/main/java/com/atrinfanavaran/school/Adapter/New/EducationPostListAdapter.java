@@ -86,6 +86,11 @@ public class EducationPostListAdapter extends RecyclerView.Adapter<EducationPost
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.icon);
 
+        if (settingsBll.getUserType() == 2) {
+            holder.editBtn.setVisibility(View.GONE);
+            holder.deleteBtn.setVisibility(View.GONE);
+        }
+
         holder.deleteBtn.setOnClickListener(v -> alertQuestion(context, holder));
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override

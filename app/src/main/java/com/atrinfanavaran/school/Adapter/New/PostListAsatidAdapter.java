@@ -17,26 +17,29 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.atrinfanavaran.school.Activity.New.ListStudentNameActivity;
-import com.atrinfanavaran.school.Activity.New.SendStudentGroupNameActivity;
-import com.atrinfanavaran.school.Domain.New.CustomGroup;
+import com.atrinfanavaran.school.Activity.New.SendPostActivity;
+import com.atrinfanavaran.school.Activity.New.ShowPostActivity;
+import com.atrinfanavaran.school.Domain.New.GetRelatedEducationPost;
 import com.atrinfanavaran.school.Domain.New.ManageDomain;
+import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.Kernel.Controller.Controller;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.school.R;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.ViewHolder> {
+public class PostListAsatidAdapter extends RecyclerView.Adapter<PostListAsatidAdapter.ViewHolder> {
 
-    private final ArrayList<CustomGroup.data> array_object;
+    private final ArrayList<GetRelatedEducationPost.Data> array_object;
     private Context context;
 
     private Handler mHandler = new Handler();
     private int mFileDuration;
 
-    public StudentListAdapter(ArrayList<CustomGroup.data> result) {
+    public PostListAsatidAdapter(ArrayList<GetRelatedEducationPost.Data> result) {
         this.array_object = result;
 
 
@@ -46,7 +49,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_teacher_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_post_list, parent, false);
         return new ViewHolder(view);
     }
 
@@ -54,38 +57,48 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         context = holder.itemView.getContext();
-        holder.title.setText(array_object.get(position).getName());
+        holder.title.setText(array_object.get(position).getTitle());
 
-        holder.row.setText("" + (position + 1));
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent intent = new Intent(context, ShowPostActivity.class);
+                intent.putExtra("Id", array_object.get(position).getId());
+                context.startActivity(intent);
+
+
+            }
+        });
+        SettingsBll settingsBll = new SettingsBll(context);
+        String Url = settingsBll.getUrlAddress() + array_object.get(position).getIconUrl();
+
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.mipmap.logo);
+        requestOptions.error(R.mipmap.logo);
+
+
+        Glide.with(holder.itemView.getContext())
+                .setDefaultRequestOptions(requestOptions)
+                .load(Url)
+                .apply(RequestOptions.circleCropTransform())
+                .into(holder.icon);
 
         holder.deleteBtn.setOnClickListener(v -> alertQuestion(context, holder));
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, SendStudentGroupNameActivity.class);
+                Intent intent = new Intent(context, SendPostActivity.class);
                 intent.putExtra("object", array_object.get(position));
                 context.startActivity(intent);
             }
         });
-        holder.UnSelectBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ListStudentNameActivity.class);
-                intent.putExtra("object", array_object.get(position));
-                intent.putExtra("Action", "UnSelect");
-                context.startActivity(intent);
-            }
-        });
-        holder.SelectBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ListStudentNameActivity.class);
-                intent.putExtra("object", array_object.get(position));
-                intent.putExtra("Action", "Select");
-                context.startActivity(intent);
-            }
-        });
+        if (settingsBll.getUserType() == 2) {
+            holder.editBtn.setVisibility(View.GONE);
+            holder.deleteBtn.setVisibility(View.GONE);
+        }
     }
 
     private void alertQuestion(Context context, ViewHolder holder) {
@@ -106,7 +119,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
             public void onClick(View v) {
                 question_dialog.dismiss();
                 Controller controller = new Controller(context);
-                controller.GetFromApi2("api/CustomGroup/Remove?Id=" + array_object.get(holder.getAdapterPosition()).getId(), new CallbackGetString() {
+                controller.GetFromApi2("api/EducationPost/Remove?Id=" + array_object.get(holder.getAdapterPosition()).getId(), new CallbackGetString() {
                     @Override
                     public void onSuccess(String resultStr) {
                         try {
@@ -160,23 +173,22 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, row;
+        TextView title, time, size;
         ConstraintLayout card, deleteIcon;
         ImageView icon;
-        LinearLayout deleteBtn, editBtn, SelectBtn, UnSelectBtn;
+        LinearLayout deleteBtn, editBtn;
 
         private ViewHolder(View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.title);
-            row = itemView.findViewById(R.id.rowNumber);
+            time = itemView.findViewById(R.id.timeTxt);
+            size = itemView.findViewById(R.id.sizeTxt);
             card = itemView.findViewById(R.id.item);
             deleteIcon = itemView.findViewById(R.id.icon_background);
             icon = itemView.findViewById(R.id.icon);
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
             editBtn = itemView.findViewById(R.id.editBtn);
-            SelectBtn = itemView.findViewById(R.id.SelectBtn);
-            UnSelectBtn = itemView.findViewById(R.id.UnSelectBtn);
 
 
         }

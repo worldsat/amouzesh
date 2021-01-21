@@ -29,9 +29,13 @@ import com.atrinfanavaran.school.Interface.PlayerCallBackMusic;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
+import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackOperation;
 import com.atrinfanavaran.school.R;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -79,11 +83,35 @@ public class ShowPostActivity extends BaseActivity {
         attach1();
         bottomView();
         setToolbar();
+        StudentAddView();
     }
+
+    private void StudentAddView() {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("UserId", settingsBll().getApplicationUserId());
+            params.put("EducationPostId", id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        controller().operationProcess(ShowPostActivity.this, "Api/EducationPost/StudentAddView", params.toString(), new CallbackOperation() {
+            @Override
+            public void onSuccess(String result) {
+                Log.i(TAG, "StudentAddView: " + result);
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+    }
+
     private void setToolbar() {
-        TextView titleToolbar=findViewById(R.id.titleToolbar);
+        TextView titleToolbar = findViewById(R.id.titleToolbar);
         titleToolbar.setText(settingsBll().getSchoolName());
     }
+
     private void getBundle() {
         id = getIntent().getIntExtra("Id", 0);
     }

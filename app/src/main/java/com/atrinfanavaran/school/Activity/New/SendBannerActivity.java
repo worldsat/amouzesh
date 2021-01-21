@@ -623,14 +623,15 @@ public class SendBannerActivity extends BaseActivity {
                     PostSelectIds.add(num);
                 }
 
-                Log.i(TAG, "bannerToPostsId: " + PostSelectIds.toString().replace(" ", ""));
+                Log.i(TAG, "bannerToPostsId: " +PostSelectIds.toString().replace(" ", "").replace("]", "").replace("[", ""));
                 if (PostSelectIds.size() > 0) {
-                    params.put("bannerToPosts", PostSelectIds.toString().replace(" ", ""));
+                    params.put("bannerToPosts", PostSelectIds.toString().replace(" ", "").replace("]", "").replace("[", ""));
                 } else {
                     if (params.get("bannerToPosts") != null) {
                         params.remove("bannerToPosts");
                     }
                 }
+                Log.i(TAG, "bannerToPosts: "+params.get("bannerToPosts") );
             }
         });
         recyclerViewlistDastresi.setAdapter(adapterPost);

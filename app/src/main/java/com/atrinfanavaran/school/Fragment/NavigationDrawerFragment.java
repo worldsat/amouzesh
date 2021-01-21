@@ -171,6 +171,8 @@ public class NavigationDrawerFragment extends Fragment {
             imageViewPost.setVisibility(View.GONE);
             imageViewBanner.setVisibility(View.GONE);
             Banner_btn.setVisibility(View.GONE);
+            studentlist_btn.setVisibility(View.GONE);
+            imageViewStudent.setVisibility(View.GONE);
         }
         if (settingsBll.getUserType() == 0) {
             teacherlist_btn.setVisibility(View.VISIBLE);
@@ -212,6 +214,7 @@ public class NavigationDrawerFragment extends Fragment {
             Intent intent = new Intent(getActivity(), ListAsatidActivity.class);
             startActivity(intent);
         });
+//        asatid_btn.setVisibility(View.VISIBLE);
 
         exitBtn.setOnClickListener(v -> {
             settingsBll.logout();

@@ -16,40 +16,74 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.atrinfanavaran.school.Adapter.New.StudentListAdapter;
-import com.atrinfanavaran.school.Adapter.New.StudentNameListAdapter;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.atrinfanavaran.school.Adapter.New.PostMiniListAdapter;
+import com.atrinfanavaran.school.Adapter.New.StudentNameListSelectedAdapter;
 import com.atrinfanavaran.school.Domain.New.CustomGroup;
+import com.atrinfanavaran.school.Domain.New.CustomGroupGetById;
+import com.atrinfanavaran.school.Domain.New.ManageDomain;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
+import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackOperation;
+import com.atrinfanavaran.school.Kernel.Helper.Waiting;
 import com.atrinfanavaran.school.R;
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ListStudentNameActivity extends BaseActivity {
     private RecyclerView recyclerViewlistPost;
     private RecyclerView.Adapter adapter;
-    private FloatingActionButton floatingActionButton1;
+
     private ProgressBar progressBar;
     private TextView warningTxt;
     private Toolbar my_toolbar;
     private TextView titleTxt;
     private EditText edtSearch;
     private ImageView searchIcon;
-    private FloatingActionMenu floatingActionMenu;
+
+    private String Action;
+    private CustomGroup.data object;
+    private LinearLayout SendBtn;
+    private TextView titleBtn;
+    private ArrayList<Integer> SelectedStudentId = new ArrayList<>();
+    private HashMap<String, Object> param = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_category);
+        setContentView(R.layout.activity_group_list);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
         initView();
+        getBundle();
         setVariable();
-        getData(false);
+
         bottomView();
         NavigationDrawer();
         setToolbar();
+        action();
+    }
+
+    private void action() {
+        if (Action.equals("Select")) {
+            getDataSelect(false);
+            titleTxt.setText("اضافه کردن به لیست");
+            titleBtn.setText("اضافه کردن");
+        } else if (Action.equals("UnSelect")) {
+            titleTxt.setText("حذف کردن به لیست");
+            titleBtn.setText("حذف کردن");
+        }
+    }
+
+    private void getBundle() {
+        Action = getIntent().getStringExtra("Action");
+        object = (CustomGroup.data) getIntent().getSerializableExtra("object");
     }
 
     private void setToolbar() {
@@ -66,11 +100,11 @@ public class ListStudentNameActivity extends BaseActivity {
 
     }
 
-    private void getData(boolean search) {
+    private void getDataSelect(boolean search) {
         progressBar.setVisibility(View.VISIBLE);
         recyclerViewlistPost.setVisibility(View.GONE);
         warningTxt.setVisibility(View.GONE);
-        String address = "api/CustomGroup/GetAll?UserId=" + settingsBll().getApplicationUserId();
+        String address = "api/CustomGroup/getById?Id=" + object.getId();
         if (search) {
             address = "api/CustomGroup/Search?txtSearch=" + edtSearch.getText().toString().trim() + "&UserId=" + settingsBll().getApplicationUserId();
         }
@@ -78,14 +112,39 @@ public class ListStudentNameActivity extends BaseActivity {
             @Override
             public void onSuccess(String resultStr) {
                 try {
-                    CustomGroup list = gson().fromJson(resultStr, CustomGroup.class);
+                    CustomGroupGetById list = gson().fromJson(resultStr, CustomGroupGetById.class);
 
-                    if (list.getData().size() > 0) {
+                    if (list.getData().getUsersToCustomGroups().size() > 0) {
                         warningTxt.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                         recyclerViewlistPost.setVisibility(View.VISIBLE);
 
-                        adapter = new StudentNameListAdapter(list.getData());
+                        adapter = new StudentNameListSelectedAdapter(list.getData().getUsersToCustomGroups(), new PostMiniListAdapter.SelectCallBack() {
+                            @Override
+                            public void Id(int num, boolean allSelect) {
+
+                                if (SelectedStudentId.contains(num)) {
+                                    for (int i = 0; i < SelectedStudentId.size(); i++) {
+                                        if (SelectedStudentId.get(i) == num) {
+                                            SelectedStudentId.remove(i);
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    SelectedStudentId.add(num);
+                                }
+
+                                Log.i(TAG, "StudentSelectedId: " + SelectedStudentId.toString().replace(" ", ""));
+                                if (SelectedStudentId.size() > 0) {
+                                    param.put("StudentId", SelectedStudentId.toString().replace(" ", ""));
+                                } else {
+                                    if (param.get("StudentId") != null) {
+                                        param.remove("StudentId");
+                                    }
+                                }
+                                Log.i(TAG, "StudentSelectedId: " + param.get("StudentId"));
+                            }
+                        });
                         recyclerViewlistPost.setAdapter(adapter);
                     } else {
                         warningTxt.setVisibility(View.VISIBLE);
@@ -105,34 +164,75 @@ public class ListStudentNameActivity extends BaseActivity {
     }
 
 
-
     private void setVariable() {
-        titleTxt.setText("لیست دانش آموزان");
+
         recyclerViewlistPost.setLayoutManager(new LinearLayoutManager(this));
-        floatingActionMenu.setVisibility(View.GONE);
-        floatingActionButton1.setVisibility(View.VISIBLE);
-        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ListStudentNameActivity.this, SendStudentGroupNameActivity.class));
-            }
-        });
+
         searchIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (edtSearch.getText().toString().trim().isEmpty()) {
 //                    Toast.makeText(ListCategoryActivity.this, "لطفا متن جستجو را وارد نمائید", Toast.LENGTH_SHORT).show();
-                    getData(false);
+                    getDataSelect(false);
                 } else {
-                    getData(true);
+                    getDataSelect(true);
+                }
+            }
+        });
+        SendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (param.get("StudentId") == null) {
+                    Toast.makeText(ListStudentNameActivity.this, "هیچ مورد انتخاب نشده است", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (Action.equals("Select")) {
+                    SendSelected();
                 }
             }
         });
     }
 
+    private void SendSelected() {
+        JSONObject params = new JSONObject();
+        try {
+            params.put("StudentId", param.get("StudentId").toString().replace("\"",""));
+            params.put("GroupId", object.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        MaterialDialog wait = new Waiting(ListStudentNameActivity.this).alertWaiting();
+        wait.show();
+        controller().operationProcess(ListStudentNameActivity.this, "api/CustomGroup/AddStudentToGroup", params.toString().replace("\"[","[").replace("]\"","]"), new CallbackOperation() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    Gson gson = new Gson();
+                    ManageDomain manageDomain = gson.fromJson(result, ManageDomain.class);
+                    Toast.makeText(ListStudentNameActivity.this, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (manageDomain.isSuccess()) {
+                        finish();
+                        Intent intent = new Intent(ListStudentNameActivity.this, ListStudentActivity.class);
+                        startActivity(intent);
+                    }
+
+                } catch (Exception e) {
+                    Toast.makeText(ListStudentNameActivity.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
+                }
+                wait.dismiss();
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(ListStudentNameActivity.this,error, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
     private void initView() {
         recyclerViewlistPost = findViewById(R.id.viewAttach);
-        floatingActionButton1 = findViewById(R.id.material_design_floating_action_menu_item1);
         progressBar = findViewById(R.id.progressBarRow4);
         warningTxt = findViewById(R.id.warninTxt);
         my_toolbar = findViewById(R.id.toolbar);
@@ -140,7 +240,8 @@ public class ListStudentNameActivity extends BaseActivity {
         searchIcon = findViewById(R.id.sub_toggle_button_category);
         edtSearch = findViewById(R.id.edtSearch);
         titleTxt = findViewById(R.id.title);
-        floatingActionMenu = findViewById(R.id.material_design_android_floating_action_menu);
+        SendBtn = findViewById(R.id.sendBtn);
+        titleBtn = findViewById(R.id.titleBtn);
     }
 
     private void bottomView() {
