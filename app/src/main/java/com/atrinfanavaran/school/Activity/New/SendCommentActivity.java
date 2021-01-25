@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +19,6 @@ import com.atrinfanavaran.school.Domain.New.ManageDomain;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
-import com.atrinfanavaran.school.Kernel.Controller.Controller;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackOperation;
 import com.atrinfanavaran.school.Kernel.Helper.Waiting;
 import com.atrinfanavaran.school.R;
@@ -29,23 +27,22 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SendStudentGroupNameActivity extends BaseActivity {
+public class SendCommentActivity extends BaseActivity {
 
 
     private Toolbar my_toolbar;
     private TextView titleTxt;
     private EditText edt1;
     private LinearLayout saveBtn;
-    private JSONObject  params = new JSONObject();
-    private String selectedFilePath;
-    private ImageView toggle_icon;
-    private LinearLayout iconBtn;
+    private JSONObject params = new JSONObject();
+
     private CustomGroup.data object;
+    private String EducationPostId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_student_group);
+        setContentView(R.layout.activity_send_comment);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
         initView();
@@ -58,16 +55,18 @@ public class SendStudentGroupNameActivity extends BaseActivity {
     }
 
     private void getBundle() {
-        object = (CustomGroup.data) getIntent().getSerializableExtra("object");
-
-        if (object != null) {
-            edt1.setText(object.getName());
-            try {
-                params.put("id", object.getId());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        EducationPostId = getIntent().getStringExtra("EducationPostId");
+        EducationPostId = "1028";
+//        object = (CustomGroup.data) getIntent().getSerializableExtra("object");
+//
+//        if (object != null) {
+//            edt1.setText(object.getName());
+//            try {
+//                params.put("id", object.getId());
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
 
@@ -86,44 +85,44 @@ public class SendStudentGroupNameActivity extends BaseActivity {
     }
 
 
-
     private void setVariable() {
-        titleTxt.setText("گروه دانش آموزان");
+//        titleTxt.setText("گروه دانش آموزان");
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (edt1.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(SendStudentGroupNameActivity.this, "لطفا عنوان را وارد نمائید", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SendCommentActivity.this, "لطفا نظر خود را وارد نمائید", Toast.LENGTH_SHORT).show();
                 } else {
-                    Controller controller = new Controller(SendStudentGroupNameActivity.this);
-                    SettingsBll settingsBll = new SettingsBll(SendStudentGroupNameActivity.this);
+
+                    SettingsBll settingsBll = new SettingsBll(SendCommentActivity.this);
 
                     try {
-                        params.put("Name", edt1.getText().toString().trim());
-                        params.put("ApplicationUserId", settingsBll.getApplicationUserId());
+                        params.put("Text", edt1.getText().toString().trim());
+                        params.put("EducationPostId", EducationPostId);
+                        params.put("StudentsId", settingsBll.getApplicationUserId());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                     Log.i(TAG, "onClick: " + params.toString());
-                    MaterialDialog wait=new Waiting(SendStudentGroupNameActivity.this).alertWaiting();
+                    MaterialDialog wait = new Waiting(SendCommentActivity.this).alertWaiting();
                     wait.show();
-                    controller().operationProcess(SendStudentGroupNameActivity.this, "api/CustomGroup/Add", params.toString(), new CallbackOperation() {
+                    controller().operationProcess(SendCommentActivity.this, "Api/Comments/Add", params.toString(), new CallbackOperation() {
                         @Override
                         public void onSuccess(String result) {
                             try {
                                 Gson gson = new Gson();
                                 ManageDomain manageDomain = gson.fromJson(result, ManageDomain.class);
-                                Toast.makeText(SendStudentGroupNameActivity.this, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SendCommentActivity.this, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
                                 if (manageDomain.isSuccess()) {
                                     finish();
-                                    Intent intent = new Intent(SendStudentGroupNameActivity.this, ListStudentActivity.class);
+                                    Intent intent = new Intent(SendCommentActivity.this, ListCommentActivity.class);
                                     startActivity(intent);
                                 }
 
                             } catch (Exception e) {
-                                Toast.makeText(SendStudentGroupNameActivity.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SendCommentActivity.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
                             }
                             wait.dismiss();
                         }
@@ -131,7 +130,7 @@ public class SendStudentGroupNameActivity extends BaseActivity {
                         @Override
                         public void onError(String error) {
                             wait.dismiss();
-                            Toast.makeText(SendStudentGroupNameActivity.this, "" + error.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SendCommentActivity.this, "" + error, Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -148,9 +147,6 @@ public class SendStudentGroupNameActivity extends BaseActivity {
         titleTxt = findViewById(R.id.titleTxt);
         edt1 = findViewById(R.id.edt1);
         saveBtn = findViewById(R.id.sendBtn);
-        toggle_icon = findViewById(R.id.sub_toggle_button_icon);
-        iconBtn = findViewById(R.id.iconBtn);
-
 
     }
 
@@ -169,36 +165,36 @@ public class SendStudentGroupNameActivity extends BaseActivity {
         view3.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(SendStudentGroupNameActivity.this, Main1Activity.class);
+            Intent intent = new Intent(SendCommentActivity.this, Main1Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn2.setOnClickListener(v -> {
-            Intent intent = new Intent(SendStudentGroupNameActivity.this, Main2Activity.class);
+            Intent intent = new Intent(SendCommentActivity.this, Main2Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn3.setOnClickListener(v -> {
-            Intent intent = new Intent(SendStudentGroupNameActivity.this, Main3Activity.class);
+            Intent intent = new Intent(SendCommentActivity.this, Main3Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(SendStudentGroupNameActivity.this, ListPostActivity.class);
+            Intent intent = new Intent(SendCommentActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(SendStudentGroupNameActivity.this, Main5Activity.class);
+            Intent intent = new Intent(SendCommentActivity.this, Main5Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
-        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        ConstraintLayout postLayout = findViewById(R.id.postlayout);
         if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
             postLayout.setVisibility(View.GONE);
         }

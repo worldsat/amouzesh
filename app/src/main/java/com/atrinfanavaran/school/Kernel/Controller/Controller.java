@@ -653,9 +653,7 @@ public class Controller {
         volleyCall.Post(params, Address, new VolleyCall.VolleyCallback() {
             @Override
             public void onSuccessResponse(String response) {
-
                     callbackOperation.onSuccess(response);
-
             }
 
             @Override

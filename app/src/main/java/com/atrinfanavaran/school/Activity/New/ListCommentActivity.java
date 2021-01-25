@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -14,9 +12,9 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.atrinfanavaran.school.Adapter.New.CommentListAdapter;
 import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
@@ -25,30 +23,36 @@ import com.atrinfanavaran.school.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-public class ListTeacherActivity extends BaseActivity {
+public class ListCommentActivity extends BaseActivity {
     private RecyclerView recyclerViewlistPost;
     private RecyclerView.Adapter adapter;
     private FloatingActionButton floatingActionButton1;
+    private FloatingActionMenu floatingActionMenu;
     private ProgressBar progressBar;
     private TextView warningTxt;
     private Toolbar my_toolbar;
     private TextView titleTxt;
-    private EditText edtSearch;
-    private ImageView searchIcon;
-    private FloatingActionMenu floatingActionMenu;
+    private LinearLayout backBtn, newCommentBtn;
+    private String EducationPostId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_category);
+        setContentView(R.layout.activity_list_comment);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
         initView();
+        getBundle();
         setVariable();
-        getData(false);
+        getData();
         bottomView();
         NavigationDrawer();
         setToolbar();
+    }
+
+    private void getBundle() {
+        EducationPostId = getIntent().getStringExtra("EducationPostId");
+        EducationPostId ="1028";
     }
 
     private void setToolbar() {
@@ -65,14 +69,12 @@ public class ListTeacherActivity extends BaseActivity {
 
     }
 
-    private void getData(boolean search) {
+    private void getData() {
         progressBar.setVisibility(View.VISIBLE);
         recyclerViewlistPost.setVisibility(View.GONE);
         warningTxt.setVisibility(View.GONE);
-        String address = "api/Category/GetAll?UserId=" + settingsBll().getApplicationUserId();
-        if (search) {
-             address = "api/Category/Search?txtSearch=" + edtSearch.getText().toString().trim() + "&UserId=" + settingsBll().getApplicationUserId();
-        }
+        String address = "Api/EducationPost/GetRelatedComment?Id=" + EducationPostId;
+
         controller().GetFromApi2(address, new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
@@ -84,7 +86,7 @@ public class ListTeacherActivity extends BaseActivity {
                         progressBar.setVisibility(View.GONE);
                         recyclerViewlistPost.setVisibility(View.VISIBLE);
 
-//                        adapter = new TeacherListAdapter(categoryGetAll.getData());
+                        adapter = new CommentListAdapter(categoryGetAll.getData());
                         recyclerViewlistPost.setAdapter(adapter);
                     } else {
                         warningTxt.setVisibility(View.VISIBLE);
@@ -98,48 +100,46 @@ public class ListTeacherActivity extends BaseActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListTeacherActivity.this, error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListCommentActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-
-
     private void setVariable() {
-        titleTxt.setText("لیست معلمان");
-        recyclerViewlistPost.setLayoutManager(new LinearLayoutManager(this));
-        floatingActionMenu.setVisibility(View.GONE);
-        floatingActionButton1.setVisibility(View.VISIBLE);
-        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+//        titleTxt.setText("کلیه پست ها");
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ListTeacherActivity.this, SendCategoryActivity.class));
+                finish();
             }
         });
-        searchIcon.setOnClickListener(new View.OnClickListener() {
+        newCommentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edtSearch.getText().toString().trim().isEmpty()) {
-//                    Toast.makeText(ListCategoryActivity.this, "لطفا متن جستجو را وارد نمائید", Toast.LENGTH_SHORT).show();
-                    getData(false);
-                } else {
-                    getData(true);
+                if (settingsBll.getUserType() == 2) {
+                    Intent i = new Intent(getActivity(), SendCommentActivity.class);
+                    i.putExtra("EducationPostId", EducationPostId);
+//                getActivity().startActivityForResult(i, 0);
+                    startActivity(i);
+                }else{
+                    Toast.makeText(ListCommentActivity.this, "شما دسترسی لازم را ندارید", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+
     }
 
     private void initView() {
-        recyclerViewlistPost = findViewById(R.id.viewAttach);
-        floatingActionButton1 = findViewById(R.id.material_design_floating_action_menu_item1);
+        recyclerViewlistPost = findViewById(R.id.View);
+//        floatingActionButton1 = findViewById(R.id.material_design_floating_action_menu_item1);
         progressBar = findViewById(R.id.progressBarRow4);
-        warningTxt = findViewById(R.id.warninTxt);
+        warningTxt = findViewById(R.id.warninTxt1);
         my_toolbar = findViewById(R.id.toolbar);
         titleTxt = findViewById(R.id.titleTxt);
-        searchIcon = findViewById(R.id.sub_toggle_button_category);
-        edtSearch = findViewById(R.id.edtSearch);
-        titleTxt = findViewById(R.id.title);
-        floatingActionMenu = findViewById(R.id.material_design_android_floating_action_menu);
+        backBtn = findViewById(R.id.backBtn);
+        newCommentBtn = findViewById(R.id.sendBtn);
     }
 
     private void bottomView() {
@@ -154,39 +154,39 @@ public class ListTeacherActivity extends BaseActivity {
         View view4 = findViewById(R.id.view4);
         View view5 = findViewById(R.id.view5);
 
-        view3.setVisibility(View.VISIBLE);
+        view4.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ListTeacherActivity.this, Main1Activity.class);
+            Intent intent = new Intent(ListCommentActivity.this, Main1Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn2.setOnClickListener(v -> {
-            Intent intent = new Intent(ListTeacherActivity.this, Main2Activity.class);
+            Intent intent = new Intent(ListCommentActivity.this, Main2Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn3.setOnClickListener(v -> {
-            Intent intent = new Intent(ListTeacherActivity.this, Main3Activity.class);
+            Intent intent = new Intent(ListCommentActivity.this, Main3Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListTeacherActivity.this, ListPostActivity.class);
+            Intent intent = new Intent(ListCommentActivity.this, ListCommentActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListTeacherActivity.this, Main5Activity.class);
+            Intent intent = new Intent(ListCommentActivity.this, Main5Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
-        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        ConstraintLayout postLayout = findViewById(R.id.postlayout);
         if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
             postLayout.setVisibility(View.GONE);
         }

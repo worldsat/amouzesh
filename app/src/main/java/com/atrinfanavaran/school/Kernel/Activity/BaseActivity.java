@@ -3,6 +3,8 @@ package com.atrinfanavaran.school.Kernel.Activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,14 +24,19 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 public class BaseActivity extends AppCompatActivity {
-
+    protected SettingsBll settingsBll;
     public static final String TAG = "moh3n";
 
     {
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
 
     }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+        settingsBll = new SettingsBll(BaseActivity.this);
+    }
     @SuppressLint("SimpleDateFormat")
     public static String getCurrentTimeStamp(Date date) {
         return new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(date);

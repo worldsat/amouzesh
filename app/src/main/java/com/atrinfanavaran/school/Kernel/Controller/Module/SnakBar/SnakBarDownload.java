@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
+import com.atrinfanavaran.school.Activity.New.PdfActivity;
 import com.atrinfanavaran.school.R;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -29,10 +30,17 @@ public class SnakBarDownload {
             @Override
             public void onClick(View vv) {
 
-                File root = new File(Environment.getExternalStorageDirectory() + folderName , fileName);
+                File root = new File(Environment.getExternalStorageDirectory() + folderName, fileName);
 
                 try {
-                    openFile(context, root);
+                    if (fileName.contains(".pdf")) {
+                        Intent intent = new Intent(context, PdfActivity.class);
+                        intent.putExtra("folderName", folderName);
+                        intent.putExtra("fileName", fileName);
+                        context.startActivity(intent);
+                    } else {
+                        openFile(context, root);
+                    }
                 } catch (ActivityNotFoundException e) {
                     Log.i("moh3n", "onClick: " + e.toString());
                 }
@@ -52,6 +60,7 @@ public class SnakBarDownload {
         snackbar.show();
 
     }
+
     public void snakShow(final Context context, String str, final String fileName) {
 
 
@@ -60,13 +69,12 @@ public class SnakBarDownload {
             @Override
             public void onClick(View vv) {
 
-                File root = new File(Environment.getExternalStorageDirectory() + "/makan/"  , fileName);
+                File root = new File(Environment.getExternalStorageDirectory() + "/makan/", fileName);
 
                 try {
-                    openFile(context,root);
-                }
-                catch (ActivityNotFoundException e) {
-                    Log.i("moh3n", "onClick: "+e.toString());
+                    openFile(context, root);
+                } catch (ActivityNotFoundException e) {
+                    Log.i("moh3n", "onClick: " + e.toString());
                 }
             }
         });

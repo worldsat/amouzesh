@@ -16,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,9 +64,10 @@ public class ShowPostActivity extends BaseActivity {
     private ImageView PlayBtn;
     private ScrollView scrollView;
     private ImageView icon;
-    private TextView title;
+    private TextView title, CountView;
     private int id;
     private ProgressBar progressBar;
+    private LinearLayout commentBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +96,7 @@ public class ShowPostActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.i(TAG, "StudentAddView: " + params.toString());
         controller().operationProcess(ShowPostActivity.this, "Api/EducationPost/StudentAddView", params.toString(), new CallbackOperation() {
             @Override
             public void onSuccess(String result) {
@@ -123,6 +126,12 @@ public class ShowPostActivity extends BaseActivity {
         linearLayoutManagerMedia = new LinearLayoutManager(this);
         recyclerViewlistMedia.setLayoutManager(linearLayoutManagerMedia);
 
+
+        commentBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(ShowPostActivity.this, ListCommentActivity.class);
+            intent.putExtra("EducationPostId", id);
+            startActivity(intent);
+        });
     }
 
     private ArrayList<ShowPost> attach1() {
@@ -142,6 +151,8 @@ public class ShowPostActivity extends BaseActivity {
 
 
                     title.setText(educationPost.getData().getTitle());
+                    CountView.setText("بازدید: " + educationPost.getData().getViewCount());
+
                     Glide.with(getActivity())
                             .load(settingsBll.getUrlAddress() + "/" + educationPost.getData().getIconUrl())
                             .into(icon);
@@ -219,6 +230,8 @@ public class ShowPostActivity extends BaseActivity {
         icon = findViewById(R.id.icon);
         title = findViewById(R.id.titleTxt);
         progressBar = findViewById(R.id.progressBarRow3);
+        CountView = findViewById(R.id.CountView);
+        commentBtn = findViewById(R.id.commentBtn);
     }
 
     private void NavigationDrawer() {
@@ -333,6 +346,10 @@ public class ShowPostActivity extends BaseActivity {
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
+        ConstraintLayout postLayout = findViewById(R.id.postlayout);
+        if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
+            postLayout.setVisibility(View.GONE);
+        }
     }
 
 }

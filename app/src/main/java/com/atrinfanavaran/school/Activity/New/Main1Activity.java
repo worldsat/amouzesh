@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -23,7 +24,7 @@ public class Main1Activity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main1);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         bottomView();
         NavigationDrawer();
@@ -115,5 +116,9 @@ public class Main1Activity extends BaseActivity {
             startActivity(intent);
             overridePendingTransition(0,0); //0 for no animation
         });
+        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
+            postLayout.setVisibility(View.GONE);
+        }
     }
 }

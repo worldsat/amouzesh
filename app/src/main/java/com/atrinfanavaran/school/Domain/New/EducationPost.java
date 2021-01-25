@@ -74,6 +74,7 @@ public class EducationPost {
         private String title;
         private String description;
         private String iconUrl;
+        private int viewCount;
         private int number;
         private int accessType;
         private boolean pin;
@@ -81,6 +82,14 @@ public class EducationPost {
         private int teacherId;
         private Object teacher;
         private ArrayList<Medias> medias;
+
+        public int getViewCount() {
+            return viewCount;
+        }
+
+        public void setViewCount(int viewCount) {
+            this.viewCount = viewCount;
+        }
 
         public int getId() {
             return id;

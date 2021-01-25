@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name="com.atrinfanavaran.school.Activity.App"
+        android:name=".Activity.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,23 +21,29 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity.New.ListPostAsatidActivity"></activity>
-        <activity android:name=".Activity.New.ListStudentNameActivity"></activity>
-        <activity android:name=".Activity.New.SendStudentGroupNameActivity"></activity>
-        <activity android:name=".Activity.New.ListStudentActivity"></activity>
-        <activity android:name=".Activity.New.ListPostActivity"></activity>
-        <activity android:name=".Activity.New.ListTeacherActivity"></activity>
-        <activity android:name=".Activity.New.ListAsatidActivity"></activity>
-        <activity android:name=".Activity.New.ListCategoryActivity">
+        <activity android:name=".Activity.New.PdfActivity"></activity>
+        <activity android:name=".Activity.New.ListCommentTeacherActivity"></activity>
+        <activity android:name=".Activity.New.ListPostAsatidActivity" />
+        <activity android:name=".Activity.New.ListCommentActivity" ><intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-        </activity>
-        <activity android:name=".Activity.New.ListBannerActivity"></activity>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
+        <activity android:name=".Activity.New.SendCommentActivity" >    </activity>
+        <activity android:name=".Activity.New.ListStudentNameActivity" />
+        <activity android:name=".Activity.New.SendStudentGroupNameActivity" />
+        <activity android:name=".Activity.New.ListStudentActivity" />
+        <activity android:name=".Activity.New.ListPostActivity" />
+        <activity android:name=".Activity.New.ListTeacherActivity" />
+        <activity android:name=".Activity.New.ListAsatidActivity" />
+        <activity android:name=".Activity.New.ListCategoryActivity"></activity>
+        <activity android:name=".Activity.New.ListBannerActivity" />
         <activity android:name=".Activity.New.SendCategoryActivity" />
         <activity android:name=".Activity.New.Main1Activity" />
         <activity android:name=".Activity.New.Main2Activity" />
         <activity android:name=".Activity.New.Main4Activity" />
         <activity android:name=".Activity.New.Main5Activity" />
-        <activity android:name=".Activity.New.Main3Activity"></activity>
+        <activity android:name=".Activity.New.Main3Activity" />
         <activity android:name=".Activity.New.SoundActivity" />
         <activity
             android:name=".Activity.New.VideoActivity"
@@ -56,17 +62,14 @@
             android:value="AIzaSyAI_kveeeGMtMwh0qG1gyTJdJV65FSagv4" />
 
         <activity android:name=".Activity.SplashActivity" />
-        <activity android:name=".Activity.New.LoginActivity"> <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
-        <activity android:name=".Activity.Map2Activity" />
-        <activity android:name=".Activity.New.SendPostActivity"></activity>
-        <activity android:name=".Activity.New.SendBannerActivity"></activity>
-        <activity android:name=".Activity.New.SelectCategoryActivity"></activity>
-        <activity android:name=".Activity.New.ShowPostActivity">
+        <activity android:name=".Activity.New.LoginActivity">
 
         </activity>
+        <activity android:name=".Activity.Map2Activity" />
+        <activity android:name=".Activity.New.SendPostActivity" />
+        <activity android:name=".Activity.New.SendBannerActivity" />
+        <activity android:name=".Activity.New.SelectCategoryActivity" />
+        <activity android:name=".Activity.New.ShowPostActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

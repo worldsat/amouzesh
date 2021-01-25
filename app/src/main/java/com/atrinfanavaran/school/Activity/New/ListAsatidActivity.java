@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -186,5 +187,10 @@ public class ListAsatidActivity extends BaseActivity {
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
+
+        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
+            postLayout.setVisibility(View.GONE);
+        }
     }
 }

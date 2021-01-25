@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,8 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.school.Adapter.New.PostMiniListAdapter;
 import com.atrinfanavaran.school.Adapter.New.StudentNameListSelectedAdapter;
+import com.atrinfanavaran.school.Adapter.New.StudentNameListUnSelectedAdapter;
 import com.atrinfanavaran.school.Domain.New.CustomGroup;
 import com.atrinfanavaran.school.Domain.New.CustomGroupGetById;
+import com.atrinfanavaran.school.Domain.New.GetRelatedStudentsFromCustomGroup;
 import com.atrinfanavaran.school.Domain.New.ManageDomain;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
@@ -72,11 +75,11 @@ public class ListStudentNameActivity extends BaseActivity {
 
     private void action() {
         if (Action.equals("Select")) {
-
             titleTxt.setText("اضافه کردن به لیست");
             titleBtn.setText("اضافه کردن");
+            getDataUnSelect(false);
         } else if (Action.equals("UnSelect")) {
-            titleTxt.setText("حذف کردن به لیست");
+            titleTxt.setText("حذف کردن از لیست");
             titleBtn.setText("حذف کردن");
             getDataSelect(false);
         }
@@ -164,6 +167,68 @@ public class ListStudentNameActivity extends BaseActivity {
         });
     }
 
+    private void getDataUnSelect(boolean search) {
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerViewlistPost.setVisibility(View.GONE);
+        warningTxt.setVisibility(View.GONE);
+        String address = "api/CustomGroup/GetRelatedStudentsFromCustomGroup?groupId=" + object.getId() + "&UserId=" + settingsBll().getApplicationUserId();
+        if (search) {
+            address = "api/CustomGroup/Search?txtSearch=" + edtSearch.getText().toString().trim() + "&UserId=" + settingsBll().getApplicationUserId();
+        }
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                try {
+                    GetRelatedStudentsFromCustomGroup list = gson().fromJson(resultStr, GetRelatedStudentsFromCustomGroup.class);
+
+                    if (list.getData().size() > 0) {
+                        warningTxt.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
+                        recyclerViewlistPost.setVisibility(View.VISIBLE);
+
+                        adapter = new StudentNameListUnSelectedAdapter(list.getData(), new PostMiniListAdapter.SelectCallBack() {
+                            @Override
+                            public void Id(int num, boolean allSelect) {
+
+                                if (SelectedStudentId.contains(num)) {
+                                    for (int i = 0; i < SelectedStudentId.size(); i++) {
+                                        if (SelectedStudentId.get(i) == num) {
+                                            SelectedStudentId.remove(i);
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    SelectedStudentId.add(num);
+                                }
+
+                                Log.i(TAG, "StudentSelectedId: " + SelectedStudentId.toString().replace(" ", ""));
+                                if (SelectedStudentId.size() > 0) {
+                                    param.put("StudentId", SelectedStudentId.toString().replace(" ", ""));
+                                } else {
+                                    if (param.get("StudentId") != null) {
+                                        param.remove("StudentId");
+                                    }
+                                }
+                                Log.i(TAG, "StudentSelectedId: " + param.get("StudentId"));
+                            }
+                        });
+                        recyclerViewlistPost.setAdapter(adapter);
+                    } else {
+                        warningTxt.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        recyclerViewlistPost.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+                    Log.i(TAG, "onSuccessException: " + e);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(ListStudentNameActivity.this, error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void setVariable() {
 
@@ -238,7 +303,7 @@ public class ListStudentNameActivity extends BaseActivity {
     private void SendToUnSelected() {
         JSONObject params = new JSONObject();
         try {
-            params.put("UserId", param.get("StudentId").toString().replace("\"", ""));
+            params.put("UsersId", param.get("StudentId").toString().replace("\"", ""));
             params.put("CustomGrupId", object.getId());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -330,5 +395,9 @@ public class ListStudentNameActivity extends BaseActivity {
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
+        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
+            postLayout.setVisibility(View.GONE);
+        }
     }
 }

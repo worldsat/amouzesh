@@ -861,5 +861,9 @@ public class SendBannerActivity extends BaseActivity {
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
+        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
+            postLayout.setVisibility(View.GONE);
+        }
     }
 }

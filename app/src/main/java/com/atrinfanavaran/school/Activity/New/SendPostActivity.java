@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +28,7 @@ import com.atrinfanavaran.school.Adapter.New.DastresiAdapter;
 import com.atrinfanavaran.school.Adapter.New.PostMiniListAdapter;
 import com.atrinfanavaran.school.Domain.New.AttachFile;
 import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
+import com.atrinfanavaran.school.Domain.New.CustomGroup;
 import com.atrinfanavaran.school.Domain.New.DropdownList;
 import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
 import com.atrinfanavaran.school.Domain.New.GetRelatedUsers;
@@ -75,26 +77,31 @@ public class SendPostActivity extends BaseActivity {
     private RecyclerView recyclerViewlistDastresi;
     private RecyclerView recyclerViewlistCategory;
     private RecyclerView recyclerViewlisttakhsis;
+    private RecyclerView recyclerViewlisttakhsisGroup;
     private RecyclerView.Adapter adapterAttach;
     private RecyclerView.Adapter adapterDastresi;
     private RecyclerView.Adapter adapterCategory;
     private RecyclerView.Adapter adaptertakhsis;
+    private RecyclerView.Adapter adaptertakhsisGroup;
     private ArrayList<AttachFile> attachFiles = new ArrayList<>();
     private ArrayList<DropdownList> DastresiList = new ArrayList<>();
     private ArrayList<DropdownList> CategoryList = new ArrayList<>();
     private ArrayList<DropdownList> takhsisList = new ArrayList<>();
+    private ArrayList<DropdownList> takhsisGroupList = new ArrayList<>();
     private LinearLayout addAttachFile;
     private HashMap<String, Object> params = new HashMap<>();
     private LinearLayout sendBtn;
     private Switch pinnedSwitch;
     private EditText titlePostEdt;
     private Editor editor;
-    private LinearLayout categoryBtn, dastresiBtn, iconBtn, takhsisBtn;
-    private ImageView toggle_category, toggle_dastresi, toggle_icon, toggle_takhsis;
+    private LinearLayout categoryBtn, dastresiBtn, iconBtn, takhsisBtn,takhsisGroupBtn;
+    private ImageView toggle_category, toggle_dastresi, toggle_icon, toggle_takhsis,toggle_takhsis_group;
     private EducationPostGetAll.Data object;
     private ProgressBar progressBarRowCategory;
     private ProgressBar progressBarRowtakhsis;
+    private ProgressBar progressBarRowtakhsisGroup;
     private ArrayList<Integer> takhisisSelectIds = new ArrayList<>();
+    private ArrayList<Integer> takhisisGroupSelectIds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +121,7 @@ public class SendPostActivity extends BaseActivity {
         DastresiList = DastresiList();
         CategoryList = CategoryList(false);
         takhsisList = takhsisList(false);
+        takhsisGroupList = TakhsisGroupList(false);
 
         getDataApi2(attachFiles, DastresiList, CategoryList, false);
 
@@ -521,7 +529,103 @@ public class SendPostActivity extends BaseActivity {
         });
         return array_object;
     }
+    private ArrayList<DropdownList> TakhsisGroupList(boolean notify) {
 
+        ArrayList<DropdownList> array_object = new ArrayList<>();
+//        array_object.add(new DropdownList("ریاضی", 0, true));
+//        array_object.add(new DropdownList("علوم پایه", 1, false));
+//        array_object.add(new DropdownList("جغرافیا", 2, false));
+//        array_object.add(new DropdownList("زیست", 3, false));
+
+        String address ="api/CustomGroup/GetAll?UserId=" + settingsBll().getApplicationUserId();
+
+        progressBarRowtakhsisGroup.setVisibility(View.VISIBLE);
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                Log.i(TAG, "takhsisGroup: " + resultStr);
+                CustomGroup list = gson().fromJson(resultStr, CustomGroup.class);
+                if (takhsisGroupList.size() > 0) {
+                    takhsisGroupList.clear();
+                }
+                if (list.getData().size() > 0) {
+                    array_object.add(new DropdownList("انتخاب همه", -1, false));
+                    boolean tick = false;
+                    for (int i = 0; i < list.getData().size(); i++) {
+                        if (object != null) {
+                            if (object.getCategoryId() == list.getData().get(i).getId()) {
+                                tick = true;
+                            } else {
+                                tick = false;
+                            }
+                        } else {
+                            if (i == 0) {
+                                tick = true;
+                            } else {
+                                tick = false;
+                            }
+                        }
+                        array_object.add(new DropdownList(list.getData().get(i).getName(), list.getData().get(i).getId(), tick));
+                    }
+                }
+
+//                if (notify) {
+//                    CategoryList = array_object;
+//                    adapterCategory.notifyDataSetChanged();
+//
+//                }
+
+                adaptertakhsisGroup = new PostMiniListAdapter(array_object, null, new PostMiniListAdapter.SelectCallBack() {
+                    @Override
+                    public void Id(int num, boolean allSelect) {
+                        if (allSelect) {
+                            ArrayList<Integer> allId = new ArrayList<>();
+                            for (int i = 0; i < array_object.size(); i++) {
+                                allId.add(array_object.get(i).getListId());
+                                array_object.get(i).setTick(true);
+
+                            }
+                            adaptertakhsisGroup.notifyDataSetChanged();
+                            params.put("StudentListToPost", allId.toString().replace(" ", ""));
+                            Log.i(TAG, "Id: " + params.toString());
+                            return;
+                        }
+                        params.put("StudentListToPost", num);
+
+                        if (takhisisGroupSelectIds.contains(num)) {
+                            for (int i = 0; i < takhisisGroupSelectIds.size(); i++) {
+                                if (takhisisGroupSelectIds.get(i) == num) {
+                                    takhisisGroupSelectIds.remove(i);
+                                    break;
+                                }
+                            }
+                        } else {
+                            takhisisGroupSelectIds.add(num);
+                        }
+
+                        Log.i(TAG, "takhsisGroup: " + takhisisGroupSelectIds.toString().replace(" ", ""));
+                        if (takhisisGroupSelectIds.size() > 0) {
+                            params.put("StudentListToPost", takhisisGroupSelectIds.toString().replace(" ", ""));
+                        } else {
+                            if (params.get("StudentListToPost") != null) {
+                                params.remove("StudentListToPost");
+                            }
+                        }
+                    }
+
+
+                });
+                recyclerViewlisttakhsisGroup.setAdapter(adaptertakhsisGroup);
+                progressBarRowtakhsisGroup.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+        return array_object;
+    }
     private void initView() {
 
         my_toolbar = findViewById(R.id.toolbar);
@@ -531,19 +635,23 @@ public class SendPostActivity extends BaseActivity {
         recyclerViewlistDastresi = findViewById(R.id.viewDastresi);
         recyclerViewlistCategory = findViewById(R.id.viewPostion);
         recyclerViewlisttakhsis = findViewById(R.id.viewtakhsis);
+        recyclerViewlisttakhsisGroup = findViewById(R.id.viewtakhsisgroup);
         sendBtn = findViewById(R.id.sendBtn);
         pinnedSwitch = findViewById(R.id.switch10);
         titlePostEdt = findViewById(R.id.titlePostEdt);
         categoryBtn = findViewById(R.id.categoryBtn);
         dastresiBtn = findViewById(R.id.dastresiBtn);
         takhsisBtn = findViewById(R.id.takhsisBtn);
+        takhsisGroupBtn = findViewById(R.id.takhsisGroupBtn);
         toggle_category = findViewById(R.id.sub_toggle_button_category);
         toggle_dastresi = findViewById(R.id.sub_toggle_button_dastresi);
         toggle_takhsis = findViewById(R.id.sub_toggle_button_takhsis);
         toggle_icon = findViewById(R.id.sub_toggle_button_icon);
+        toggle_takhsis_group= findViewById(R.id.sub_toggle_button_takhsis_groups);
         iconBtn = findViewById(R.id.iconBtn);
         progressBarRowCategory = findViewById(R.id.progressBarRow1);
         progressBarRowtakhsis = findViewById(R.id.progressBarRow2);
+        progressBarRowtakhsisGroup = findViewById(R.id.progressBarRow3);
     }
 
     private void NavigationDrawer() {
@@ -900,5 +1008,9 @@ public class SendPostActivity extends BaseActivity {
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
+        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
+            postLayout.setVisibility(View.GONE);
+        }
     }
 }

@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/page"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -17,6 +16,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
 
             <include
                 android:id="@+id/toolbar"
@@ -50,6 +50,8 @@
                         android:background="@drawable/background_button_message_blue2"
                         android:orientation="vertical"
                         android:visibility="gone">
+
+
 
                         <TextView
                             android:id="@+id/textView20"
@@ -143,11 +145,11 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/title"
+                            android:id="@+id/textView8"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/casablanca"
-                            android:text="دسته بندی آموزشی"
+                            android:text="نظرات"
                             android:textColor="@color/blue_900"
                             android:textSize="18sp" />
 
@@ -166,39 +168,7 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/sendBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@drawable/background_button_gradiunt_blue"
-                        android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/titleBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/casablanca"
-                            android:text="ذخیره"
-                            android:textColor="#ffffff" />
-
-                        <TextView
-                            android:id="@+id/textView18"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="center"
-                            android:text="✓"
-                            android:textColor="@color/light_green_A400"
-                            android:textSize="18sp" />
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -228,7 +198,7 @@
                                     android:layout_marginStart="10dp"
                                     android:layout_weight="1"
                                     android:fontFamily="@font/casablanca"
-                                    android:text="وضعیت ورودی"
+                                    android:text="مرتب سازی"
                                     android:textColor="#ffffff"
                                     android:textSize="16sp" />
 
@@ -268,7 +238,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginTop="10dp"
                                 android:visibility="gone"
-                                tools:visibility="visible" />
+                                tools:visibility="gone" />
 
                         </LinearLayout>
 
@@ -288,7 +258,7 @@
                                 android:orientation="horizontal">
 
                                 <EditText
-                                    android:id="@+id/edtSearch"
+                                    android:id="@+id/textView23"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center_vertical"
@@ -296,24 +266,10 @@
                                     android:layout_weight="1"
                                     android:background="#cacaca"
                                     android:fontFamily="@font/casablanca"
-                                    android:hint="جستجو"
-                                    android:singleLine="true"
+                                    android:text="ثبت نظر"
+                                    android:textAlignment="center"
                                     android:textColor="#000000"
-                                    android:textColorHint="#ffffff"
                                     android:textSize="16sp" />
-
-                                <ImageView
-                                    android:id="@+id/sub_toggle_button_category"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_alignTop="@+id/defect_checkBox"
-                                    android:layout_alignBottom="@+id/defect_checkBox"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_marginEnd="10dp"
-                                    android:padding="7dp"
-                                    android:visibility="visible"
-                                    app:srcCompat="?android:attr/actionModeWebSearchDrawable"
-                                    tools:ignore="NewApi" />
 
                             </LinearLayout>
 
@@ -328,6 +284,86 @@
                         </LinearLayout>
                     </LinearLayout>
 
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/sendBtn"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/background_button_gradiunt_blue"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView17"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/casablanca"
+                                android:text="ثبت نظر جدید"
+                                android:textColor="#ffffff" />
+
+                            <TextView
+                                android:id="@+id/textView18"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:fontFamily="sans-serif"
+                                android:gravity="center"
+                                android:text="✓"
+                                android:textColor="@color/light_green_A400"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/backBtn"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/background_item_orange_border"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView17"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/casablanca"
+                                android:text="بازگشت"
+                                android:textColor="#000000" />
+
+                            <TextView
+                                android:id="@+id/textView18"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:fontFamily="sans-serif"
+                                android:gravity="center"
+                                android:text="×"
+                                android:textColor="@color/red_800"
+                                android:textSize="18sp" />
+                        </LinearLayout></LinearLayout>
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -348,7 +384,6 @@
                             android:fontFamily="@font/iransans"
                             android:text="@string/noData"
                             android:textColor="@color/gray"
-                            android:textSize="12sp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/viewAttach"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -382,8 +417,6 @@
                             tools:visibility="visible" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
@@ -434,6 +467,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
