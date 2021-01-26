@@ -337,6 +337,15 @@ public class SendPostActivity extends BaseActivity {
                 toggle_takhsis.setImageResource(R.drawable.ic_expand_more);
             }
         });
+        takhsisGroupBtn.setOnClickListener(v -> {
+            if (recyclerViewlisttakhsisGroup.getVisibility() == (View.VISIBLE)) {
+                recyclerViewlisttakhsisGroup.setVisibility(View.GONE);
+                toggle_takhsis_group.setImageResource(R.drawable.ic_expand_less);
+            } else {
+                recyclerViewlisttakhsisGroup.setVisibility(View.VISIBLE);
+                toggle_takhsis_group.setImageResource(R.drawable.ic_expand_more);
+            }
+        });
     }
 
     private ArrayList<AttachFile> attach1() {

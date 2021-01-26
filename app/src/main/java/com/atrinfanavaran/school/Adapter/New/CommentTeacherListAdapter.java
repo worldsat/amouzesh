@@ -20,7 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.school.Activity.New.ListCommentActivity;
+import com.atrinfanavaran.school.Activity.New.ListCommentTeacherActivity;
 import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
+import com.atrinfanavaran.school.Domain.New.CommentsGetAll;
 import com.atrinfanavaran.school.Domain.New.ManageDomain;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.Kernel.Controller.Controller;
@@ -36,13 +38,13 @@ import java.util.ArrayList;
 
 public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeacherListAdapter.ViewHolder> {
 
-    private final ArrayList<CategoryGetAll.Data> array_object;
+    private final ArrayList<CommentsGetAll.Data> array_object;
     private Context context;
 
     private Handler mHandler = new Handler();
     private int mFileDuration;
 
-    public CommentTeacherListAdapter(ArrayList<CategoryGetAll.Data> result) {
+    public CommentTeacherListAdapter(ArrayList<CommentsGetAll.Data> result) {
         this.array_object = result;
 
 
@@ -60,19 +62,29 @@ public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeach
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         context = holder.itemView.getContext();
-        holder.title.setText(array_object.get(position).getName());
-
+        holder.title.setText(array_object.get(position).getText());
+        if (array_object.get(position).getCommentStatus() == 0) {
+            holder.statusTxt.setText("تاییده شده");
+            holder.statusTxt.setTextColor(context.getResources().getColor(R.color.green_A700));
+        } else if (array_object.get(position).getCommentStatus() == 1) {
+            holder.statusTxt.setText("در حال انتظار");
+            holder.statusTxt.setTextColor(context.getResources().getColor(R.color.brown_700));
+        }
+        else if (array_object.get(position).getCommentStatus() == 2) {
+            holder.statusTxt.setText("عدم تایید");
+            holder.statusTxt.setTextColor(context.getResources().getColor(R.color.red_700));
+        }
         holder.approve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                approve(0,array_object.get(position));
+                approve(0, array_object.get(position));
             }
         });
 
         holder.unapprove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                approve(1,array_object.get(position));
+                approve(1, array_object.get(position));
             }
         });
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
@@ -83,12 +95,13 @@ public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeach
         });
 
     }
-    private void approve(int status,CategoryGetAll.Data object) {
+
+    private void approve(int status, CommentsGetAll.Data object) {
         SettingsBll settingsBll = new SettingsBll(context);
         JSONObject params = new JSONObject();
         try {
             params.put("CommentStatus", status);
-//            params.put("Id", EducationPostId);
+            params.put("Id", object.getId());
             params.put("ApplicationUserId", settingsBll.getApplicationUserId());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -107,7 +120,7 @@ public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeach
                     Toast.makeText(context, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
                     if (manageDomain.isSuccess()) {
                         ((Activity) context).finish();
-                        Intent intent = new Intent(context, ListCommentActivity.class);
+                        Intent intent = new Intent(context, ListCommentTeacherActivity.class);
                         context.startActivity(intent);
                     }
 
@@ -124,13 +137,13 @@ public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeach
             }
         });
     }
-    private void deleteComment(CategoryGetAll.Data object) {
+
+    private void deleteComment(CommentsGetAll.Data object) {
         SettingsBll settingsBll = new SettingsBll(context);
         JSONObject params = new JSONObject();
         try {
 
-//            params.put("Id", EducationPostId);
-            params.put("ApplicationUserId", settingsBll.getApplicationUserId());
+            params.put("Id", object.getId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -139,7 +152,7 @@ public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeach
         MaterialDialog wait = new Waiting(context).alertWaiting();
         wait.show();
         Controller controller = new Controller(context);
-        controller.operationProcess(context, "Api/Comments/ChangeStatus", params.toString(), new CallbackOperation() {
+        controller.operationProcess(context, "Api/Comments/Remove", params.toString(), new CallbackOperation() {
             @Override
             public void onSuccess(String result) {
                 try {
@@ -148,7 +161,7 @@ public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeach
                     Toast.makeText(context, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
                     if (manageDomain.isSuccess()) {
                         ((Activity) context).finish();
-                        Intent intent = new Intent(context, ListCommentActivity.class);
+                        Intent intent = new Intent(context, ListCommentTeacherActivity.class);
                         context.startActivity(intent);
                     }
 
@@ -165,6 +178,7 @@ public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeach
             }
         });
     }
+
     @Override
     public int getItemCount() {
         return array_object == null ? 0 : array_object.size();
@@ -182,14 +196,16 @@ public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeach
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, rowNumber, size;
+        TextView title, rowNumber, statusTxt;
         ConstraintLayout card;
         ImageView icon;
         CheckBox checkBox;
-        LinearLayout approve, unapprove,deleteBtn;
+        LinearLayout approve, unapprove, deleteBtn;
+
         private ViewHolder(View itemView) {
             super(itemView);
 
+            statusTxt = itemView.findViewById(R.id.statusTxt);
             title = itemView.findViewById(R.id.title);
             rowNumber = itemView.findViewById(R.id.rowNumber);
             card = itemView.findViewById(R.id.item);

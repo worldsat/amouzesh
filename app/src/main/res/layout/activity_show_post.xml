@@ -237,7 +237,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginStart="5dp"
                                 android:fontFamily="@font/iranyekanmedium"
-                                android:text="نظر: 50"
+                                android:text="نظر: "
                                 android:textAlignment="viewEnd"
                                 android:textColor="@color/blue_900"
                                 android:textSize="10sp" />

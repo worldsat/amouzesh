@@ -24,11 +24,7 @@
         <activity android:name=".Activity.New.PdfActivity"></activity>
         <activity android:name=".Activity.New.ListCommentTeacherActivity"></activity>
         <activity android:name=".Activity.New.ListPostAsatidActivity" />
-        <activity android:name=".Activity.New.ListCommentActivity" ><intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        <activity android:name=".Activity.New.ListCommentActivity" ></activity>
         <activity android:name=".Activity.New.SendCommentActivity" >    </activity>
         <activity android:name=".Activity.New.ListStudentNameActivity" />
         <activity android:name=".Activity.New.SendStudentGroupNameActivity" />
@@ -69,7 +65,11 @@
         <activity android:name=".Activity.New.SendPostActivity" />
         <activity android:name=".Activity.New.SendBannerActivity" />
         <activity android:name=".Activity.New.SelectCategoryActivity" />
-        <activity android:name=".Activity.New.ShowPostActivity"></activity>
+        <activity android:name=".Activity.New.ShowPostActivity"><intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

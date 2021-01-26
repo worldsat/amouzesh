@@ -56,7 +56,7 @@ public class SendCommentActivity extends BaseActivity {
 
     private void getBundle() {
         EducationPostId = getIntent().getStringExtra("EducationPostId");
-        EducationPostId = "1028";
+//        EducationPostId = "1028";
 //        object = (CustomGroup.data) getIntent().getSerializableExtra("object");
 //
 //        if (object != null) {

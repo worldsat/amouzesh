@@ -12,10 +12,12 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.atrinfanavaran.school.Adapter.New.CommentListAdapter;
 import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
+import com.atrinfanavaran.school.Domain.New.GetRelatedComment;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
@@ -52,7 +54,7 @@ public class ListCommentActivity extends BaseActivity {
 
     private void getBundle() {
         EducationPostId = getIntent().getStringExtra("EducationPostId");
-        EducationPostId ="1028";
+        EducationPostId ="1032";
     }
 
     private void setToolbar() {
@@ -79,14 +81,14 @@ public class ListCommentActivity extends BaseActivity {
             @Override
             public void onSuccess(String resultStr) {
                 try {
-                    CategoryGetAll categoryGetAll = gson().fromJson(resultStr, CategoryGetAll.class);
+                    GetRelatedComment getRelatedComment = gson().fromJson(resultStr, GetRelatedComment.class);
 
-                    if (categoryGetAll.getData().size() > 0) {
+                    if (getRelatedComment.getData().size() > 0) {
                         warningTxt.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                         recyclerViewlistPost.setVisibility(View.VISIBLE);
 
-                        adapter = new CommentListAdapter(categoryGetAll.getData());
+                        adapter = new CommentListAdapter(getRelatedComment.getData());
                         recyclerViewlistPost.setAdapter(adapter);
                     } else {
                         warningTxt.setVisibility(View.VISIBLE);
@@ -107,7 +109,7 @@ public class ListCommentActivity extends BaseActivity {
 
     private void setVariable() {
 //        titleTxt.setText("کلیه پست ها");
-
+        recyclerViewlistPost.setLayoutManager(new LinearLayoutManager(this));
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,10 +134,10 @@ public class ListCommentActivity extends BaseActivity {
     }
 
     private void initView() {
-        recyclerViewlistPost = findViewById(R.id.View);
+        recyclerViewlistPost = findViewById(R.id.viewAttach);
 //        floatingActionButton1 = findViewById(R.id.material_design_floating_action_menu_item1);
         progressBar = findViewById(R.id.progressBarRow4);
-        warningTxt = findViewById(R.id.warninTxt1);
+        warningTxt = findViewById(R.id.warninTxt);
         my_toolbar = findViewById(R.id.toolbar);
         titleTxt = findViewById(R.id.titleTxt);
         backBtn = findViewById(R.id.backBtn);

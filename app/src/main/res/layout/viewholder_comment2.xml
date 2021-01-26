@@ -76,7 +76,7 @@
                     android:text="فعال"
                     android:textColor="@color/green_A700"
                     android:textSize="12sp"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
             </LinearLayout>
 
             <LinearLayout
@@ -122,14 +122,14 @@
                     android:fontFamily="@font/iranyekan"
                     android:text="تائید نظر"
                     android:textColor="#ffffff"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/textView18"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginEnd="10dp"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
@@ -158,9 +158,9 @@
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/iranyekan"
-                    android:text="رد نظر"
+                    android:text="عدم تائید"
                     android:textColor="#000000"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/textView18"
@@ -168,7 +168,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="5dp"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="×"
@@ -198,7 +198,7 @@
                     android:fontFamily="@font/iranyekan"
                     android:text="حذف نظر"
                     android:textColor="#000000"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/textView18"
@@ -206,7 +206,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="5dp"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="×"

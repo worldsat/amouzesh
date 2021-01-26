@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -21,9 +22,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.atrinfanavaran.school.Adapter.New.CommentTeacherListAdapter;
 import com.atrinfanavaran.school.Adapter.New.ShowPostAttachAdapter;
 import com.atrinfanavaran.school.Adapter.New.ShowPostMediaAdapter;
+import com.atrinfanavaran.school.Domain.New.CommentsGetAll;
 import com.atrinfanavaran.school.Domain.New.EducationPost;
+import com.atrinfanavaran.school.Domain.New.GetTotalComment;
 import com.atrinfanavaran.school.Domain.New.ShowPost;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Interface.PlayerCallBackMusic;
@@ -64,7 +68,7 @@ public class ShowPostActivity extends BaseActivity {
     private ImageView PlayBtn;
     private ScrollView scrollView;
     private ImageView icon;
-    private TextView title, CountView;
+    private TextView title, CountView, countComment;
     private int id;
     private ProgressBar progressBar;
     private LinearLayout commentBtn;
@@ -86,6 +90,7 @@ public class ShowPostActivity extends BaseActivity {
         bottomView();
         setToolbar();
         StudentAddView();
+        getCommentCount() ;
     }
 
     private void StudentAddView() {
@@ -117,6 +122,7 @@ public class ShowPostActivity extends BaseActivity {
 
     private void getBundle() {
         id = getIntent().getIntExtra("Id", 0);
+        id = 1032;
     }
 
     private void setVariable() {
@@ -128,9 +134,15 @@ public class ShowPostActivity extends BaseActivity {
 
 
         commentBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(ShowPostActivity.this, ListCommentActivity.class);
-            intent.putExtra("EducationPostId", id);
-            startActivity(intent);
+            if (settingsBll.getUserType() == 1) {
+                Intent intent = new Intent(ShowPostActivity.this, ListCommentTeacherActivity.class);
+                intent.putExtra("EducationPostId", id);
+                startActivity(intent);
+            } else if (settingsBll.getUserType() == 2) {
+                Intent intent = new Intent(ShowPostActivity.this, ListCommentActivity.class);
+                intent.putExtra("EducationPostId", id);
+                startActivity(intent);
+            }
         });
     }
 
@@ -232,6 +244,7 @@ public class ShowPostActivity extends BaseActivity {
         progressBar = findViewById(R.id.progressBarRow3);
         CountView = findViewById(R.id.CountView);
         commentBtn = findViewById(R.id.commentBtn);
+        countComment = findViewById(R.id.textView19);
     }
 
     private void NavigationDrawer() {
@@ -289,6 +302,26 @@ public class ShowPostActivity extends BaseActivity {
         recyclerViewlistAttach.setAdapter(adapterAttach);
 
 
+    }
+
+    private void getCommentCount() {
+        controller().GetFromApi2("api/EducationPost/GetTotalComment?Id=" + id, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                try {
+                    GetTotalComment getTotalComment = gson().fromJson(resultStr, GetTotalComment.class);
+                    countComment.setText("نظر:" + getTotalComment.getData());
+
+                } catch (Exception e) {
+                    Log.i(TAG, "onSuccessException: " + e);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(ShowPostActivity.this, error, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

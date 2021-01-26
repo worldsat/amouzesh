@@ -14,19 +14,20 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
+import com.atrinfanavaran.school.Domain.New.GetRelatedComment;
 import com.atrinfanavaran.school.R;
 
 import java.util.ArrayList;
 
 public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.ViewHolder> {
 
-    private final ArrayList<CategoryGetAll.Data> array_object;
+    private final ArrayList<GetRelatedComment.Data> array_object;
     private Context context;
 
     private Handler mHandler = new Handler();
     private int mFileDuration;
 
-    public CommentListAdapter(ArrayList<CategoryGetAll.Data> result) {
+    public CommentListAdapter(ArrayList<GetRelatedComment.Data> result) {
         this.array_object = result;
 
 
@@ -44,7 +45,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         context = holder.itemView.getContext();
-        holder.title.setText(array_object.get(position).getName());
+        holder.title.setText(array_object.get(position).getText());
 
 
     }
