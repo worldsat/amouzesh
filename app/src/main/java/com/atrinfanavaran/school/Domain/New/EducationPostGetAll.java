@@ -9,7 +9,7 @@ public class EducationPostGetAll implements Serializable {
      * success : true
      * status : 200
      * message : عملیات انجام شد
-     * data : [{"id":41,"title":"test","description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;b&gt;test2&lt;/b&gt;&lt;/p&gt;","iconUrl":"/Upload/Post/Icon/a8062ed60272104b550aa1b022ad80128eca.jpg","medias":[{"id":51,"title":"-46-11.jpg","url":"/Upload/Post/Media/140f68f60531004b860a0c6043625976dc79.jpg","educationPostId":41,"durationTime":"0","lenght":"1.6 KB","mediaType":5},{"id":52,"title":"-00-40.jpg","url":"/Upload/Post/Media/d36eafb007282048c80b42e0c2ed17d66c9e.jpg","educationPostId":41,"durationTime":"0","lenght":"1.6 KB","mediaType":5}],"number":0,"accessType":1,"pin":true,"category":1,"teacherId":1,"teacher":null},{"id":17,"title":"Alireza44","description":"Razmjoooooooo","iconUrl":"/Upload/Post/Icon/a3d87612016a20492d0b39f023d28a1ca9b5.png","medias":[],"number":2020,"accessType":1,"pin":false,"category":0,"teacherId":1,"teacher":null},{"id":16,"title":"Test6","description":"desssssssss3","iconUrl":"/Upload/Post/Icon/37e6c38f0e541047290a31a001f289913606.png","medias":[],"number":2,"accessType":1,"pin":false,"category":0,"teacherId":1,"teacher":null},{"id":15,"title":"ریاضی فصل سوم","description":"<p data-tag=\"input\" style=\"color:#000000;\"><\/p>","iconUrl":null,"medias":[],"number":1,"accessType":1,"pin":false,"category":0,"teacherId":1,"teacher":null},{"id":14,"title":"ریاضی فصل سوم","description":"<p data-tag=\"input\" style=\"color:#000000;\"><\/p>","iconUrl":null,"medias":[{"id":35,"title":"symbol_54.png","url":"/Upload/Post/Media/a7cc579008a3e04d0009ca701f944cc370c4.png","educationPostId":14,"durationTime":null,"lenght":null,"mediaType":5}],"number":1,"accessType":1,"pin":false,"category":0,"teacherId":1,"teacher":null},{"id":13,"title":"ریاضی فصل سوم","description":"<p data-tag=\"input\" style=\"color:#000000;\"><\/p>","iconUrl":null,"medias":[{"id":33,"title":"symbol_55.png","url":"/Upload/Post/Media/3b4f75d900015048430befc05ee65f5c7e51.png","educationPostId":13,"durationTime":null,"lenght":null,"mediaType":5},{"id":34,"title":"symbol_54.png","url":"/Upload/Post/Media/145f46cd0ff930415909082088cd4178ed0d.png","educationPostId":13,"durationTime":null,"lenght":null,"mediaType":5}],"number":1,"accessType":1,"pin":false,"category":0,"teacherId":1,"teacher":null},{"id":12,"title":"ریاضی فصل سوم","description":"<p data-tag=\"input\" style=\"color:#000000;\"><\/p>","iconUrl":null,"medias":[],"number":1,"accessType":1,"pin":false,"category":0,"teacherId":1,"teacher":null},{"id":11,"title":"ریاضی فصل سوم","description":"<p data-tag=\"input\" style=\"color:#000000;\"><\/p>","iconUrl":null,"medias":[],"number":1,"accessType":1,"pin":false,"category":0,"teacherId":1,"teacher":null},{"id":10,"title":"ریاضی دوم دبیرستان","description":" تست توضیحات","iconUrl":"/Upload/Post/Icon/1fca73690af1604fe20b60e056736d719021.png","medias":[{"id":30,"title":"جلسه.pdf","url":"/Upload/Post/Media/b51957ec07942048b70bbcb000c8882ea3f0.pdf","educationPostId":10,"durationTime":null,"lenght":null,"mediaType":0},{"id":31,"title":"فیلم 1.mp4","url":"/Upload/Post/Media/550c40a808670049e0081cb0594b1f597471.mp4","educationPostId":10,"durationTime":null,"lenght":null,"mediaType":3},{"id":32,"title":"صدای جلسه.mp3","url":"/Upload/Post/Media/a610babd04861049b7081fc05ebfdfd3cdbe.mp3","educationPostId":10,"durationTime":null,"lenght":null,"mediaType":4}],"number":1,"accessType":1,"pin":false,"category":0,"teacherId":1,"teacher":null}]
+     * data : [{"id":1049,"title":"تست","description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;تست&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;","iconUrl":"/Upload/Post/Icon/2e16033a040cc047c2084a902e29e8b7d062.png","medias":[{"id":1011,"title":"04GL128.pdf","url":"/Upload/Post/Media/03029106057c804c0f0a85d079e78e2fbe57.pdf","educationPostId":1049,"durationTime":"0","lenght":"4.3 MB","educationPost":{"id":1049,"title":"تست","description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;تست&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;","iconUrl":"/Upload/Post/Icon/2e16033a040cc047c2084a902e29e8b7d062.png","number":0,"accessType":1,"pin":true,"categoryId":19,"category":null,"applicationUserId":"d4801771-5087-463f-be54-6d70d2466f39","applicationUser":null,"comments":null,"viewCount":0,"status":0,"groupsIds":null,"studentArrayListToPost":null,"teacherArrayListToPost":null,"usersToEducationPosts":[{"id":1019,"applicationUserId":null,"applicationUser":null,"studentsId":57,"students":null,"educationPostId":1049}]},"mediaType":5}],"number":0,"accessType":1,"pin":true,"categoryId":19,"category":null,"applicationUserId":"d4801771-5087-463f-be54-6d70d2466f39","applicationUser":null,"comments":null,"viewCount":0,"status":0,"students":[57]},{"id":1048,"title":"TestRazmjoo2","description":"MyDescription","iconUrl":null,"medias":[],"number":1,"accessType":0,"pin":true,"categoryId":6,"category":null,"applicationUserId":"d4801771-5087-463f-be54-6d70d2466f39","applicationUser":null,"comments":null,"viewCount":0,"status":0,"students":[57,58]},{"id":26,"title":"زنگ علوم ","description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;آشنایی با هوا&lt;/p&gt;","iconUrl":null,"medias":[{"id":14,"title":"VID-20210104-WA0009.mp4","url":"/Upload/Post/Media/e9804ed30c061040ca0b966078db644096df.mp4","educationPostId":26,"durationTime":"0","lenght":"22.3 MB","educationPost":{"id":26,"title":"زنگ علوم ","description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;آشنایی با هوا&lt;/p&gt;","iconUrl":null,"number":0,"accessType":0,"pin":false,"categoryId":16,"category":null,"applicationUserId":"5b56fd2e-acdc-4202-8522-c466cad1285f","applicationUser":null,"comments":null,"viewCount":1,"status":0,"groupsIds":null,"studentArrayListToPost":null,"teacherArrayListToPost":null,"usersToEducationPosts":[]},"mediaType":5}],"number":0,"accessType":0,"pin":false,"categoryId":16,"category":null,"applicationUserId":"5b56fd2e-acdc-4202-8522-c466cad1285f","applicationUser":null,"comments":null,"viewCount":1,"status":0,"students":[]},{"id":23,"title":"زنگ اوا","description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;اموزش حرف د&amp;nbsp; در کلمات هم پایان&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;","iconUrl":null,"medias":[{"id":13,"title":"VID-20210104-WA0007.mp4","url":"/Upload/Post/Media/cb1c2c610480504cb70a3a904e18b3ce675e.mp4","educationPostId":23,"durationTime":"0","lenght":"17.0 MB","educationPost":{"id":23,"title":"زنگ اوا","description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;اموزش حرف د&amp;nbsp; در کلمات هم پایان&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;","iconUrl":null,"number":0,"accessType":0,"pin":false,"categoryId":20,"category":null,"applicationUserId":"5b56fd2e-acdc-4202-8522-c466cad1285f","applicationUser":null,"comments":null,"viewCount":1,"status":0,"groupsIds":null,"studentArrayListToPost":null,"teacherArrayListToPost":null,"usersToEducationPosts":[]},"mediaType":5}],"number":0,"accessType":0,"pin":false,"categoryId":20,"category":null,"applicationUserId":"5b56fd2e-acdc-4202-8522-c466cad1285f","applicationUser":null,"comments":null,"viewCount":1,"status":0,"students":[]},{"id":21,"title":"زنگ ریاضی","description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;زنگ ریاضی&lt;/p&gt;","iconUrl":null,"medias":[{"id":12,"title":"VID-20210103-WA0004.mp4","url":"/Upload/Post/Media/206cb9c9059b304c920818f0e6adf0a676b9.mp4","educationPostId":21,"durationTime":"0","lenght":"10.0 MB","educationPost":{"id":21,"title":"زنگ ریاضی","description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;زنگ ریاضی&lt;/p&gt;","iconUrl":null,"number":0,"accessType":0,"pin":false,"categoryId":20,"category":null,"applicationUserId":"aea11655-c2bc-49fb-a2bb-79a92c0d0fd6","applicationUser":null,"comments":null,"viewCount":1,"status":0,"groupsIds":null,"studentArrayListToPost":null,"teacherArrayListToPost":null,"usersToEducationPosts":[]},"mediaType":5}],"number":0,"accessType":0,"pin":false,"categoryId":20,"category":null,"applicationUserId":"aea11655-c2bc-49fb-a2bb-79a92c0d0fd6","applicationUser":null,"comments":null,"viewCount":1,"status":0,"students":[]}]
      */
 
     private boolean success;
@@ -49,19 +49,24 @@ public class EducationPostGetAll implements Serializable {
         this.data = data;
     }
 
-    public static class Data  implements Serializable{
+    public static class Data implements Serializable{
         /**
-         * id : 41
-         * title : test
-         * description : &lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;b&gt;test2&lt;/b&gt;&lt;/p&gt;
-         * iconUrl : /Upload/Post/Icon/a8062ed60272104b550aa1b022ad80128eca.jpg
-         * medias : [{"id":51,"title":"-46-11.jpg","url":"/Upload/Post/Media/140f68f60531004b860a0c6043625976dc79.jpg","educationPostId":41,"durationTime":"0","lenght":"1.6 KB","mediaType":5},{"id":52,"title":"-00-40.jpg","url":"/Upload/Post/Media/d36eafb007282048c80b42e0c2ed17d66c9e.jpg","educationPostId":41,"durationTime":"0","lenght":"1.6 KB","mediaType":5}]
+         * id : 1049
+         * title : تست
+         * description : &lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;تست&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;
+         * iconUrl : /Upload/Post/Icon/2e16033a040cc047c2084a902e29e8b7d062.png
+         * medias : [{"id":1011,"title":"04GL128.pdf","url":"/Upload/Post/Media/03029106057c804c0f0a85d079e78e2fbe57.pdf","educationPostId":1049,"durationTime":"0","lenght":"4.3 MB","educationPost":{"id":1049,"title":"تست","description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;تست&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;","iconUrl":"/Upload/Post/Icon/2e16033a040cc047c2084a902e29e8b7d062.png","number":0,"accessType":1,"pin":true,"categoryId":19,"category":null,"applicationUserId":"d4801771-5087-463f-be54-6d70d2466f39","applicationUser":null,"comments":null,"viewCount":0,"status":0,"groupsIds":null,"studentArrayListToPost":null,"teacherArrayListToPost":null,"usersToEducationPosts":[{"id":1019,"applicationUserId":null,"applicationUser":null,"studentsId":57,"students":null,"educationPostId":1049}]},"mediaType":5}]
          * number : 0
          * accessType : 1
          * pin : true
-         * category : 1
-         * teacherId : 1
-         * teacher : null
+         * categoryId : 19
+         * category : null
+         * applicationUserId : d4801771-5087-463f-be54-6d70d2466f39
+         * applicationUser : null
+         * comments : null
+         * viewCount : 0
+         * status : 0
+         * students : [57]
          */
 
         private int id;
@@ -72,9 +77,14 @@ public class EducationPostGetAll implements Serializable {
         private int accessType;
         private boolean pin;
         private int categoryId;
-        private int teacherId;
-        private Object teacher;
+        private Object category;
+        private String applicationUserId;
+        private Object applicationUser;
+        private Object comments;
+        private int viewCount;
+        private int status;
         private ArrayList<Medias> medias;
+        private ArrayList<Integer> students;
 
         public int getId() {
             return id;
@@ -140,20 +150,52 @@ public class EducationPostGetAll implements Serializable {
             this.categoryId = categoryId;
         }
 
-        public int getTeacherId() {
-            return teacherId;
+        public Object getCategory() {
+            return category;
         }
 
-        public void setTeacherId(int teacherId) {
-            this.teacherId = teacherId;
+        public void setCategory(Object category) {
+            this.category = category;
         }
 
-        public Object getTeacher() {
-            return teacher;
+        public String getApplicationUserId() {
+            return applicationUserId;
         }
 
-        public void setTeacher(Object teacher) {
-            this.teacher = teacher;
+        public void setApplicationUserId(String applicationUserId) {
+            this.applicationUserId = applicationUserId;
+        }
+
+        public Object getApplicationUser() {
+            return applicationUser;
+        }
+
+        public void setApplicationUser(Object applicationUser) {
+            this.applicationUser = applicationUser;
+        }
+
+        public Object getComments() {
+            return comments;
+        }
+
+        public void setComments(Object comments) {
+            this.comments = comments;
+        }
+
+        public int getViewCount() {
+            return viewCount;
+        }
+
+        public void setViewCount(int viewCount) {
+            this.viewCount = viewCount;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
         }
 
         public ArrayList<Medias> getMedias() {
@@ -164,14 +206,23 @@ public class EducationPostGetAll implements Serializable {
             this.medias = medias;
         }
 
-        public static class Medias implements Serializable {
+        public ArrayList<Integer> getStudents() {
+            return students;
+        }
+
+        public void setStudents(ArrayList<Integer> students) {
+            this.students = students;
+        }
+
+        public static class Medias implements Serializable{
             /**
-             * id : 51
-             * title : -46-11.jpg
-             * url : /Upload/Post/Media/140f68f60531004b860a0c6043625976dc79.jpg
-             * educationPostId : 41
+             * id : 1011
+             * title : 04GL128.pdf
+             * url : /Upload/Post/Media/03029106057c804c0f0a85d079e78e2fbe57.pdf
+             * educationPostId : 1049
              * durationTime : 0
-             * lenght : 1.6 KB
+             * lenght : 4.3 MB
+             * educationPost : {"id":1049,"title":"تست","description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;تست&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;","iconUrl":"/Upload/Post/Icon/2e16033a040cc047c2084a902e29e8b7d062.png","number":0,"accessType":1,"pin":true,"categoryId":19,"category":null,"applicationUserId":"d4801771-5087-463f-be54-6d70d2466f39","applicationUser":null,"comments":null,"viewCount":0,"status":0,"groupsIds":null,"studentArrayListToPost":null,"teacherArrayListToPost":null,"usersToEducationPosts":[{"id":1019,"applicationUserId":null,"applicationUser":null,"studentsId":57,"students":null,"educationPostId":1049}]}
              * mediaType : 5
              */
 
@@ -181,6 +232,7 @@ public class EducationPostGetAll implements Serializable {
             private int educationPostId;
             private String durationTime;
             private String lenght;
+            private EducationPost educationPost;
             private int mediaType;
 
             public int getId() {
@@ -231,12 +283,272 @@ public class EducationPostGetAll implements Serializable {
                 this.lenght = lenght;
             }
 
+            public EducationPost getEducationPost() {
+                return educationPost;
+            }
+
+            public void setEducationPost(EducationPost educationPost) {
+                this.educationPost = educationPost;
+            }
+
             public int getMediaType() {
                 return mediaType;
             }
 
             public void setMediaType(int mediaType) {
                 this.mediaType = mediaType;
+            }
+
+            public static class EducationPost implements Serializable{
+                /**
+                 * id : 1049
+                 * title : تست
+                 * description : &lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;تست&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;
+                 * iconUrl : /Upload/Post/Icon/2e16033a040cc047c2084a902e29e8b7d062.png
+                 * number : 0
+                 * accessType : 1
+                 * pin : true
+                 * categoryId : 19
+                 * category : null
+                 * applicationUserId : d4801771-5087-463f-be54-6d70d2466f39
+                 * applicationUser : null
+                 * comments : null
+                 * viewCount : 0
+                 * status : 0
+                 * groupsIds : null
+                 * studentArrayListToPost : null
+                 * teacherArrayListToPost : null
+                 * usersToEducationPosts : [{"id":1019,"applicationUserId":null,"applicationUser":null,"studentsId":57,"students":null,"educationPostId":1049}]
+                 */
+
+                private int id;
+                private String title;
+                private String description;
+                private String iconUrl;
+                private int number;
+                private int accessType;
+                private boolean pin;
+                private int categoryId;
+                private Object category;
+                private String applicationUserId;
+                private Object applicationUser;
+                private Object comments;
+                private int viewCount;
+                private int status;
+                private Object groupsIds;
+                private Object studentArrayListToPost;
+                private Object teacherArrayListToPost;
+                private ArrayList<UsersToEducationPosts> usersToEducationPosts;
+
+                public int getId() {
+                    return id;
+                }
+
+                public void setId(int id) {
+                    this.id = id;
+                }
+
+                public String getTitle() {
+                    return title;
+                }
+
+                public void setTitle(String title) {
+                    this.title = title;
+                }
+
+                public String getDescription() {
+                    return description;
+                }
+
+                public void setDescription(String description) {
+                    this.description = description;
+                }
+
+                public String getIconUrl() {
+                    return iconUrl;
+                }
+
+                public void setIconUrl(String iconUrl) {
+                    this.iconUrl = iconUrl;
+                }
+
+                public int getNumber() {
+                    return number;
+                }
+
+                public void setNumber(int number) {
+                    this.number = number;
+                }
+
+                public int getAccessType() {
+                    return accessType;
+                }
+
+                public void setAccessType(int accessType) {
+                    this.accessType = accessType;
+                }
+
+                public boolean isPin() {
+                    return pin;
+                }
+
+                public void setPin(boolean pin) {
+                    this.pin = pin;
+                }
+
+                public int getCategoryId() {
+                    return categoryId;
+                }
+
+                public void setCategoryId(int categoryId) {
+                    this.categoryId = categoryId;
+                }
+
+                public Object getCategory() {
+                    return category;
+                }
+
+                public void setCategory(Object category) {
+                    this.category = category;
+                }
+
+                public String getApplicationUserId() {
+                    return applicationUserId;
+                }
+
+                public void setApplicationUserId(String applicationUserId) {
+                    this.applicationUserId = applicationUserId;
+                }
+
+                public Object getApplicationUser() {
+                    return applicationUser;
+                }
+
+                public void setApplicationUser(Object applicationUser) {
+                    this.applicationUser = applicationUser;
+                }
+
+                public Object getComments() {
+                    return comments;
+                }
+
+                public void setComments(Object comments) {
+                    this.comments = comments;
+                }
+
+                public int getViewCount() {
+                    return viewCount;
+                }
+
+                public void setViewCount(int viewCount) {
+                    this.viewCount = viewCount;
+                }
+
+                public int getStatus() {
+                    return status;
+                }
+
+                public void setStatus(int status) {
+                    this.status = status;
+                }
+
+                public Object getGroupsIds() {
+                    return groupsIds;
+                }
+
+                public void setGroupsIds(Object groupsIds) {
+                    this.groupsIds = groupsIds;
+                }
+
+                public Object getStudentArrayListToPost() {
+                    return studentArrayListToPost;
+                }
+
+                public void setStudentArrayListToPost(Object studentArrayListToPost) {
+                    this.studentArrayListToPost = studentArrayListToPost;
+                }
+
+                public Object getTeacherArrayListToPost() {
+                    return teacherArrayListToPost;
+                }
+
+                public void setTeacherArrayListToPost(Object teacherArrayListToPost) {
+                    this.teacherArrayListToPost = teacherArrayListToPost;
+                }
+
+                public ArrayList<UsersToEducationPosts> getUsersToEducationPosts() {
+                    return usersToEducationPosts;
+                }
+
+                public void setUsersToEducationPosts(ArrayList<UsersToEducationPosts> usersToEducationPosts) {
+                    this.usersToEducationPosts = usersToEducationPosts;
+                }
+
+                public static class UsersToEducationPosts implements Serializable{
+                    /**
+                     * id : 1019
+                     * applicationUserId : null
+                     * applicationUser : null
+                     * studentsId : 57
+                     * students : null
+                     * educationPostId : 1049
+                     */
+
+                    private int id;
+                    private Object applicationUserId;
+                    private Object applicationUser;
+                    private int studentsId;
+                    private Object students;
+                    private int educationPostId;
+
+                    public int getId() {
+                        return id;
+                    }
+
+                    public void setId(int id) {
+                        this.id = id;
+                    }
+
+                    public Object getApplicationUserId() {
+                        return applicationUserId;
+                    }
+
+                    public void setApplicationUserId(Object applicationUserId) {
+                        this.applicationUserId = applicationUserId;
+                    }
+
+                    public Object getApplicationUser() {
+                        return applicationUser;
+                    }
+
+                    public void setApplicationUser(Object applicationUser) {
+                        this.applicationUser = applicationUser;
+                    }
+
+                    public int getStudentsId() {
+                        return studentsId;
+                    }
+
+                    public void setStudentsId(int studentsId) {
+                        this.studentsId = studentsId;
+                    }
+
+                    public Object getStudents() {
+                        return students;
+                    }
+
+                    public void setStudents(Object students) {
+                        this.students = students;
+                    }
+
+                    public int getEducationPostId() {
+                        return educationPostId;
+                    }
+
+                    public void setEducationPostId(int educationPostId) {
+                        this.educationPostId = educationPostId;
+                    }
+                }
             }
         }
     }

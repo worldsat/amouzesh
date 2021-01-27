@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.atrinfanavaran.school.Adapter.New.CommentListAdapter;
-import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
 import com.atrinfanavaran.school.Domain.New.GetRelatedComment;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
@@ -54,7 +53,7 @@ public class ListCommentActivity extends BaseActivity {
 
     private void getBundle() {
         EducationPostId = getIntent().getStringExtra("EducationPostId");
-        EducationPostId ="1032";
+//        EducationPostId ="1032";
     }
 
     private void setToolbar() {

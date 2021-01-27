@@ -94,8 +94,8 @@ public class SendPostActivity extends BaseActivity {
     private Switch pinnedSwitch;
     private EditText titlePostEdt;
     private Editor editor;
-    private LinearLayout categoryBtn, dastresiBtn, iconBtn, takhsisBtn,takhsisGroupBtn;
-    private ImageView toggle_category, toggle_dastresi, toggle_icon, toggle_takhsis,toggle_takhsis_group;
+    private LinearLayout categoryBtn, dastresiBtn, iconBtn, takhsisBtn, takhsisGroupBtn;
+    private ImageView toggle_category, toggle_dastresi, toggle_icon, toggle_takhsis, toggle_takhsis_group;
     private EducationPostGetAll.Data object;
     private ProgressBar progressBarRowCategory;
     private ProgressBar progressBarRowtakhsis;
@@ -465,14 +465,23 @@ public class SendPostActivity extends BaseActivity {
                     boolean tick = false;
                     for (int i = 0; i < getRelatedUsers.getData().getStudents().size(); i++) {
                         if (object != null) {
-                            if (object.getCategoryId() == getRelatedUsers.getData().getStudents().get(i).getId()) {
-                                tick = true;
-                            } else {
-                                tick = false;
+                            for (int j = 0; j < object.getStudents().size(); j++) {
+                                if (object.getStudents().get(j) == getRelatedUsers.getData().getStudents().get(i).getId()) {
+                                    tick = true;
+                                    takhisisSelectIds.add(object.getStudents().get(j));
+                                    params.put("StudentListToPost", takhisisSelectIds.toString().replace(" ", "").replace("[", "").replace("]", ""));
+
+                                    break;
+
+                                } else {
+                                    tick = false;
+
+                                }
                             }
+
                         } else {
                             if (i == 0) {
-                                tick = true;
+                                tick = false;
                             } else {
                                 tick = false;
                             }
@@ -498,7 +507,7 @@ public class SendPostActivity extends BaseActivity {
 
                             }
                             adaptertakhsis.notifyDataSetChanged();
-                            params.put("StudentListToPost", allId.toString().replace(" ", ""));
+                            params.put("StudentListToPost", allId.toString().replace(" ", "").replace("[", "").replace("]", ""));
                             Log.i(TAG, "Id: " + params.toString());
                             return;
                         }
@@ -515,9 +524,9 @@ public class SendPostActivity extends BaseActivity {
                             takhisisSelectIds.add(num);
                         }
 
-                        Log.i(TAG, "bannerToPostsId: " + takhisisSelectIds.toString().replace(" ", ""));
+                        Log.i(TAG, "bannerToPostsId: " + takhisisSelectIds.toString().replace(" ", "").replace("[", "").replace("]", ""));
                         if (takhisisSelectIds.size() > 0) {
-                            params.put("StudentListToPost", takhisisSelectIds.toString().replace(" ", ""));
+                            params.put("StudentListToPost", takhisisSelectIds.toString().replace(" ", "").replace("[", "").replace("]", ""));
                         } else {
                             if (params.get("StudentListToPost") != null) {
                                 params.remove("StudentListToPost");
@@ -538,6 +547,7 @@ public class SendPostActivity extends BaseActivity {
         });
         return array_object;
     }
+
     private ArrayList<DropdownList> TakhsisGroupList(boolean notify) {
 
         ArrayList<DropdownList> array_object = new ArrayList<>();
@@ -546,7 +556,7 @@ public class SendPostActivity extends BaseActivity {
 //        array_object.add(new DropdownList("جغرافیا", 2, false));
 //        array_object.add(new DropdownList("زیست", 3, false));
 
-        String address ="api/CustomGroup/GetAll?UserId=" + settingsBll().getApplicationUserId();
+        String address = "api/CustomGroup/GetAll?UserId=" + settingsBll().getApplicationUserId();
 
         progressBarRowtakhsisGroup.setVisibility(View.VISIBLE);
         controller().GetFromApi2(address, new CallbackGetString() {
@@ -635,6 +645,7 @@ public class SendPostActivity extends BaseActivity {
         });
         return array_object;
     }
+
     private void initView() {
 
         my_toolbar = findViewById(R.id.toolbar);
@@ -656,7 +667,7 @@ public class SendPostActivity extends BaseActivity {
         toggle_dastresi = findViewById(R.id.sub_toggle_button_dastresi);
         toggle_takhsis = findViewById(R.id.sub_toggle_button_takhsis);
         toggle_icon = findViewById(R.id.sub_toggle_button_icon);
-        toggle_takhsis_group= findViewById(R.id.sub_toggle_button_takhsis_groups);
+        toggle_takhsis_group = findViewById(R.id.sub_toggle_button_takhsis_groups);
         iconBtn = findViewById(R.id.iconBtn);
         progressBarRowCategory = findViewById(R.id.progressBarRow1);
         progressBarRowtakhsis = findViewById(R.id.progressBarRow2);
@@ -1017,7 +1028,7 @@ public class SendPostActivity extends BaseActivity {
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
-        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        ConstraintLayout postLayout = findViewById(R.id.postlayout);
         if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
             postLayout.setVisibility(View.GONE);
         }

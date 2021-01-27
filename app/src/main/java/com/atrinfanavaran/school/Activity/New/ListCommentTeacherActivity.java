@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.atrinfanavaran.school.Adapter.New.CommentTeacherListAdapter;
-import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
 import com.atrinfanavaran.school.Domain.New.CommentsGetAll;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
@@ -53,8 +52,8 @@ public class ListCommentTeacherActivity extends BaseActivity {
     }
 
     private void getBundle() {
-        EducationPostId = getIntent().getStringExtra("EducationPostId");
-        EducationPostId ="1032";
+        EducationPostId = String.valueOf(getIntent().getIntExtra("EducationPostId",0));
+//        EducationPostId ="1032";
     }
 
     private void setToolbar() {
@@ -178,7 +177,7 @@ public class ListCommentTeacherActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListCommentTeacherActivity.this, ListCommentTeacherActivity.class);
+            Intent intent = new Intent(ListCommentTeacherActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

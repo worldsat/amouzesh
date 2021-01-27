@@ -22,10 +22,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.atrinfanavaran.school.Adapter.New.CommentTeacherListAdapter;
 import com.atrinfanavaran.school.Adapter.New.ShowPostAttachAdapter;
 import com.atrinfanavaran.school.Adapter.New.ShowPostMediaAdapter;
-import com.atrinfanavaran.school.Domain.New.CommentsGetAll;
 import com.atrinfanavaran.school.Domain.New.EducationPost;
 import com.atrinfanavaran.school.Domain.New.GetTotalComment;
 import com.atrinfanavaran.school.Domain.New.ShowPost;
@@ -37,6 +35,7 @@ import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackOperation;
 import com.atrinfanavaran.school.R;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -122,7 +121,7 @@ public class ShowPostActivity extends BaseActivity {
 
     private void getBundle() {
         id = getIntent().getIntExtra("Id", 0);
-        id = 1032;
+//        id = 1032;
     }
 
     private void setVariable() {
@@ -164,8 +163,14 @@ public class ShowPostActivity extends BaseActivity {
 
                     title.setText(educationPost.getData().getTitle());
                     CountView.setText("بازدید: " + educationPost.getData().getViewCount());
+                    RequestOptions requestOptions = new RequestOptions();
+
+                    requestOptions.placeholder(R.mipmap.logo);
+                    requestOptions.error(R.mipmap.logo);
+
 
                     Glide.with(getActivity())
+                            .setDefaultRequestOptions(requestOptions)
                             .load(settingsBll.getUrlAddress() + "/" + educationPost.getData().getIconUrl())
                             .into(icon);
 

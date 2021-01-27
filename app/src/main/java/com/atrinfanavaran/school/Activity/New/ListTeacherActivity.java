@@ -36,7 +36,7 @@ public class ListTeacherActivity extends BaseActivity {
     private EditText edtSearch;
     private ImageView searchIcon;
     private FloatingActionMenu floatingActionMenu;
-
+private LinearLayout categoryBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +107,7 @@ public class ListTeacherActivity extends BaseActivity {
 
     private void setVariable() {
         titleTxt.setText("لیست معلمان");
+
         recyclerViewlistPost.setLayoutManager(new LinearLayoutManager(this));
         floatingActionMenu.setVisibility(View.GONE);
         floatingActionButton1.setVisibility(View.VISIBLE);
@@ -140,6 +141,7 @@ public class ListTeacherActivity extends BaseActivity {
         edtSearch = findViewById(R.id.edtSearch);
         titleTxt = findViewById(R.id.title);
         floatingActionMenu = findViewById(R.id.material_design_android_floating_action_menu);
+        categoryBtn = findViewById(R.id.categoryBtn);
     }
 
     private void bottomView() {

@@ -37,7 +37,7 @@ public class ListAsatidActivity extends BaseActivity {
     private EditText edtSearch;
     private ImageView searchIcon;
     private FloatingActionMenu floatingActionMenu;
-
+    private LinearLayout categoryBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +108,7 @@ public class ListAsatidActivity extends BaseActivity {
 
     private void setVariable() {
         titleTxt.setText("اساتید");
+        categoryBtn.setVisibility(View.GONE);
         recyclerViewlistPost.setLayoutManager(new GridLayoutManager(this,2));
         floatingActionMenu.setVisibility(View.GONE);
         floatingActionButton1.setVisibility(View.VISIBLE);
@@ -141,6 +142,7 @@ public class ListAsatidActivity extends BaseActivity {
         edtSearch = findViewById(R.id.edtSearch);
         titleTxt = findViewById(R.id.title);
         floatingActionMenu = findViewById(R.id.material_design_android_floating_action_menu);
+        categoryBtn = findViewById(R.id.categoryBtn);
     }
 
     private void bottomView() {
