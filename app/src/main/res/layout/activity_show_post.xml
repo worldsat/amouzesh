@@ -217,6 +217,35 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/BookamrkBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/imageView13"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:tint="@color/blue"
+                                app:srcCompat="@mipmap/bottom2"
+                                app:tintMode="src_in" />
+
+                            3<TextView
+                                android:id="@+id/textView1937"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="5dp"
+                                android:fontFamily="@font/iranyekanmedium"
+                                android:text="علاقه مندی"
+                                android:textAlignment="viewEnd"
+                                android:textColor="@color/blue_900"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/commentBtn"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"

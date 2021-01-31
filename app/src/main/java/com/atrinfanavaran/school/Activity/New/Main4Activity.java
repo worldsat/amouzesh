@@ -88,7 +88,7 @@ public class Main4Activity extends BaseActivity {
         view4.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(Main4Activity.this, Main1Activity.class);
+            Intent intent = new Intent(Main4Activity.this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0,0); //0 for no animation
@@ -112,7 +112,7 @@ public class Main4Activity extends BaseActivity {
             overridePendingTransition(0,0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(Main4Activity.this, Main5Activity.class);
+            Intent intent = new Intent(Main4Activity.this,BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0,0); //0 for no animation

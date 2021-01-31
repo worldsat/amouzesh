@@ -189,7 +189,7 @@ public class ListCategoryActivity extends BaseActivity {
         view3.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ListCategoryActivity.this, Main1Activity.class);
+            Intent intent = new Intent(ListCategoryActivity.this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
@@ -213,7 +213,7 @@ public class ListCategoryActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListCategoryActivity.this, Main5Activity.class);
+            Intent intent = new Intent(ListCategoryActivity.this,BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

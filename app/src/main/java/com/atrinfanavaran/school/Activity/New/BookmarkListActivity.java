@@ -15,8 +15,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.atrinfanavaran.school.Adapter.New.EducationPostListAdapter;
-import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
+import com.atrinfanavaran.school.Adapter.BookmarkListAdapter;
+import com.atrinfanavaran.school.Domain.New.FavoritGetAll;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
@@ -25,7 +25,7 @@ import com.atrinfanavaran.school.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-public class ListPostActivity extends BaseActivity {
+public class BookmarkListActivity extends BaseActivity {
     private RecyclerView recyclerViewlistPost;
     private RecyclerView.Adapter adapter;
     private FloatingActionButton floatingActionButton1;
@@ -68,37 +68,29 @@ public class ListPostActivity extends BaseActivity {
 
     private void getData() {
         progressBar.setVisibility(View.VISIBLE);
-        if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
-            warningTxt.setVisibility(View.VISIBLE);
-            floatingActionMenu.setVisibility(View.GONE);
-            warningTxt.setText("شما دسترسی لازم برای این قسمت را ندارید");
-            progressBar.setVisibility(View.GONE);
-            return;
-        }
+        floatingActionMenu.setVisibility(View.GONE);
+
 
         recyclerViewlistPost.setVisibility(View.GONE);
         warningTxt.setVisibility(View.GONE);
         warningTxt.setText(R.string.noData);
         String address = "";
-        CategoryId = getIntent().getIntExtra("CategoryId", 0);
-        if (CategoryId != 0) {
-            address = "api/EducationPost/GetByCategory?Id=" + CategoryId;
-        } else {
-            address = "api/EducationPost/GetAll?Id=" + settingsBll().getApplicationUserId();
-        }
+
+            address = "api/Favorit/GetAll?Id=" + settingsBll().getApplicationUserId();
+
 
         controller().GetFromApi2(address, new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
                 try {
-                    EducationPostGetAll educationPostGetAll = gson().fromJson(resultStr, EducationPostGetAll.class);
+                    FavoritGetAll favoritGetAll = gson().fromJson(resultStr, FavoritGetAll.class);
 
-                    if (educationPostGetAll.getData().size() > 0) {
+                    if (favoritGetAll.getData().size() > 0) {
                         warningTxt.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                         recyclerViewlistPost.setVisibility(View.VISIBLE);
 
-                        adapter = new EducationPostListAdapter(educationPostGetAll.getData());
+                        adapter = new BookmarkListAdapter(favoritGetAll.getData());
                         recyclerViewlistPost.setAdapter(adapter);
                     } else {
                         warningTxt.setVisibility(View.VISIBLE);
@@ -112,19 +104,19 @@ public class ListPostActivity extends BaseActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListPostActivity.this, error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(BookmarkListActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void setVariable() {
-        titleTxt.setText("کلیه پست ها");
+        titleTxt.setText("علاقه مندی ها");
         recyclerViewlistPost.setLayoutManager(new LinearLayoutManager(this));
 
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ListPostActivity.this, SendPostActivity.class));
+                startActivity(new Intent(BookmarkListActivity.this, SendPostActivity.class));
             }
         });
     }
@@ -151,34 +143,34 @@ public class ListPostActivity extends BaseActivity {
         View view4 = findViewById(R.id.view4);
         View view5 = findViewById(R.id.view5);
 
-        view4.setVisibility(View.VISIBLE);
+        view5.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, ProfileActivity.class);
+            Intent intent = new Intent(BookmarkListActivity.this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn2.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, Main2Activity.class);
+            Intent intent = new Intent(BookmarkListActivity.this, Main2Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn3.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, Main3Activity.class);
+            Intent intent = new Intent(BookmarkListActivity.this, Main3Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, ListPostActivity.class);
+            Intent intent = new Intent(BookmarkListActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this,BookmarkListActivity.class);
+            Intent intent = new Intent(BookmarkListActivity.this,BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

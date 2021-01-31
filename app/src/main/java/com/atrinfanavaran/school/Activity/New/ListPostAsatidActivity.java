@@ -196,7 +196,7 @@ public class ListPostAsatidActivity extends BaseActivity {
         view3.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostAsatidActivity.this, Main1Activity.class);
+            Intent intent = new Intent(ListPostAsatidActivity.this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
@@ -214,13 +214,13 @@ public class ListPostAsatidActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostAsatidActivity.this, ListPostAsatidActivity.class);
+            Intent intent = new Intent(ListPostAsatidActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostAsatidActivity.this, Main5Activity.class);
+            Intent intent = new Intent(ListPostAsatidActivity.this,BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

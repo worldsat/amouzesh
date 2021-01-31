@@ -158,7 +158,7 @@ public class ListCommentActivity extends BaseActivity {
         view4.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ListCommentActivity.this, Main1Activity.class);
+            Intent intent = new Intent(ListCommentActivity.this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
@@ -176,13 +176,13 @@ public class ListCommentActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListCommentActivity.this, ListCommentActivity.class);
+            Intent intent = new Intent(ListCommentActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListCommentActivity.this, Main5Activity.class);
+            Intent intent = new Intent(ListCommentActivity.this,BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

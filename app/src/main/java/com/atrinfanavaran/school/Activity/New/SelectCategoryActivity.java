@@ -146,7 +146,7 @@ public class SelectCategoryActivity extends BaseActivity {
         view4.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(SelectCategoryActivity.this, Main1Activity.class);
+            Intent intent = new Intent(SelectCategoryActivity.this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
@@ -164,13 +164,13 @@ public class SelectCategoryActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(SelectCategoryActivity.this, SelectCategoryActivity.class);
+            Intent intent = new Intent(SelectCategoryActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(SelectCategoryActivity.this, Main5Activity.class);
+            Intent intent = new Intent(SelectCategoryActivity.this,BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

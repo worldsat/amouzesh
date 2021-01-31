@@ -248,15 +248,7 @@ public class Main3Activity extends BaseActivity {
 
         banner1 = findViewById(R.id.banner1);
         banner2 = findViewById(R.id.banner2);
-        LinearLayout btn1 = findViewById(R.id.btn1);
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Main3Activity.this, ListPostActivity.class);
-                intent.putExtra("", "");
-                startActivity(intent);
-            }
-        });
+
     }
 
     @Override
@@ -291,7 +283,8 @@ public class Main3Activity extends BaseActivity {
     }
 
     private void bottomView() {
-        LinearLayout btn1 = findViewById(R.id.btn1);
+//        LinearLayout btn1 = findViewById(R.id.btn1);
+        ConstraintLayout btn1 = findViewById(R.id.btn1layout);
         LinearLayout btn2 = findViewById(R.id.btn2);
         LinearLayout btn3 = findViewById(R.id.btn3);
         LinearLayout btn4 = findViewById(R.id.btn4);
@@ -305,7 +298,7 @@ public class Main3Activity extends BaseActivity {
         view3.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(Main3Activity.this, Main1Activity.class);
+            Intent intent = new Intent(Main3Activity.this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
@@ -329,13 +322,12 @@ public class Main3Activity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(Main3Activity.this, Main5Activity.class);
+            Intent intent = new Intent(Main3Activity.this, BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
-
-        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        ConstraintLayout postLayout = findViewById(R.id.postlayout);
         if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
             postLayout.setVisibility(View.GONE);
         }

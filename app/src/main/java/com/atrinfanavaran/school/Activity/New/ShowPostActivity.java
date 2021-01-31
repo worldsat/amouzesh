@@ -22,17 +22,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.school.Adapter.New.ShowPostAttachAdapter;
 import com.atrinfanavaran.school.Adapter.New.ShowPostMediaAdapter;
 import com.atrinfanavaran.school.Domain.New.EducationPost;
 import com.atrinfanavaran.school.Domain.New.GetTotalComment;
+import com.atrinfanavaran.school.Domain.New.ManageDomain;
 import com.atrinfanavaran.school.Domain.New.ShowPost;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Interface.PlayerCallBackMusic;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
+import com.atrinfanavaran.school.Kernel.Controller.Controller;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackOperation;
+import com.atrinfanavaran.school.Kernel.Helper.Waiting;
 import com.atrinfanavaran.school.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -70,7 +74,7 @@ public class ShowPostActivity extends BaseActivity {
     private TextView title, CountView, countComment;
     private int id;
     private ProgressBar progressBar;
-    private LinearLayout commentBtn;
+    private LinearLayout commentBtn,BookamrkBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +146,54 @@ public class ShowPostActivity extends BaseActivity {
                 intent.putExtra("EducationPostId", id);
                 startActivity(intent);
             }
+        });
+
+        BookamrkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                            JSONObject params = new JSONObject();
+                            try {
+                                SettingsBll settingsBll=new SettingsBll(ShowPostActivity.this);
+                                params.put("StudentsId",settingsBll.getApplicationUserId());
+                                params.put("EducationPostId",id);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            Log.i("moh3n", "Favorit: " + params.toString());
+                            MaterialDialog wait = new Waiting(ShowPostActivity.this).alertWaiting();
+                            wait.show();
+                            Controller controller = new Controller(ShowPostActivity.this);
+                            controller.operationProcess(ShowPostActivity.this, "Api/Favorit/Add", params.toString(), new CallbackOperation() {
+                                @Override
+                                public void onSuccess(String result) {
+                                    try {
+                                        Gson gson = new Gson();
+                                        ManageDomain manageDomain = gson.fromJson(result, ManageDomain.class);
+                                        Toast.makeText(ShowPostActivity.this, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
+                                        if (manageDomain.isSuccess()) {
+
+                                        }
+
+                                    } catch (Exception e) {
+                                        Toast.makeText(ShowPostActivity.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
+                                    }
+                                    wait.dismiss();
+                                }
+
+                                @Override
+                                public void onError(String error) {
+                                    wait.dismiss();
+                                    Toast.makeText(ShowPostActivity.this, "" + error, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+
+
         });
     }
 
@@ -249,6 +301,7 @@ public class ShowPostActivity extends BaseActivity {
         progressBar = findViewById(R.id.progressBarRow3);
         CountView = findViewById(R.id.CountView);
         commentBtn = findViewById(R.id.commentBtn);
+        BookamrkBtn = findViewById(R.id.BookamrkBtn);
         countComment = findViewById(R.id.textView19);
     }
 
@@ -355,7 +408,7 @@ public class ShowPostActivity extends BaseActivity {
         view4.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ShowPostActivity.this, Main1Activity.class);
+            Intent intent = new Intent(ShowPostActivity.this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
@@ -379,7 +432,7 @@ public class ShowPostActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ShowPostActivity.this, Main5Activity.class);
+            Intent intent = new Intent(ShowPostActivity.this,BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

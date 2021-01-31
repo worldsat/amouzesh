@@ -504,7 +504,7 @@ public class SendPostActivity extends BaseActivity {
                             for (int i = 0; i < array_object.size(); i++) {
                                 allId.add(array_object.get(i).getListId());
                                 array_object.get(i).setTick(true);
-
+                                takhisisSelectIds.add(array_object.get(i).getListId());
                             }
                             adaptertakhsis.notifyDataSetChanged();
                             params.put("StudentListToPost", allId.toString().replace(" ", "").replace("[", "").replace("]", ""));
@@ -999,7 +999,7 @@ public class SendPostActivity extends BaseActivity {
         view4.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(SendPostActivity.this, Main1Activity.class);
+            Intent intent = new Intent(SendPostActivity.this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
@@ -1023,7 +1023,7 @@ public class SendPostActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(SendPostActivity.this, Main5Activity.class);
+            Intent intent = new Intent(SendPostActivity.this,BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

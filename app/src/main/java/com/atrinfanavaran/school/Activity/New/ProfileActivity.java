@@ -12,44 +12,52 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.atrinfanavaran.school.Adapter.New.EducationPostListAdapter;
-import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
+import com.atrinfanavaran.school.Domain.New.UserGetStudentById;
+import com.atrinfanavaran.school.Domain.New.UserGetTeacherById;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
 import com.atrinfanavaran.school.R;
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
 
-public class ListPostActivity extends BaseActivity {
-    private RecyclerView recyclerViewlistPost;
-    private RecyclerView.Adapter adapter;
-    private FloatingActionButton floatingActionButton1;
-    private FloatingActionMenu floatingActionMenu;
+public class ProfileActivity extends BaseActivity {
+
+
     private ProgressBar progressBar;
-    private TextView warningTxt;
+
     private Toolbar my_toolbar;
     private TextView titleTxt;
-    private int CategoryId;
+    private String TeacherUserId;
     private SettingsBll settingsBll;
+    private TextView reshteTitle, maghtaTitle, fatherTitle,reshteTitle2,reshteTitle1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_post2);
+        setContentView(R.layout.activity_profile);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         settingsBll = new SettingsBll(this);
 
         initView();
+        getBundle();
+
         setVariable();
-        getData();
         bottomView();
         NavigationDrawer();
         setToolbar();
+
+        if(settingsBll.getUserType()==0 || settingsBll.getUserType()==1){
+            getDataPostTeacher();
+        }else{
+            getDataPostStudent();
+        }
+    }
+
+    private void getBundle() {
+//        TeacherUserId = getIntent().getStringExtra("TeacherUserId");
+
+
     }
 
     private void setToolbar() {
@@ -66,77 +74,101 @@ public class ListPostActivity extends BaseActivity {
 
     }
 
-    private void getData() {
-        progressBar.setVisibility(View.VISIBLE);
-        if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
-            warningTxt.setVisibility(View.VISIBLE);
-            floatingActionMenu.setVisibility(View.GONE);
-            warningTxt.setText("شما دسترسی لازم برای این قسمت را ندارید");
-            progressBar.setVisibility(View.GONE);
-            return;
-        }
+    private void getDataPostStudent() {
 
-        recyclerViewlistPost.setVisibility(View.GONE);
-        warningTxt.setVisibility(View.GONE);
-        warningTxt.setText(R.string.noData);
+//        progressBar.setVisibility(View.VISIBLE);
+
         String address = "";
-        CategoryId = getIntent().getIntExtra("CategoryId", 0);
-        if (CategoryId != 0) {
-            address = "api/EducationPost/GetByCategory?Id=" + CategoryId;
-        } else {
-            address = "api/EducationPost/GetAll?Id=" + settingsBll().getApplicationUserId();
-        }
+
+        reshteTitle.setTextColor(getResources().getColor(R.color.blue_2));
+
+
+
+        address = "api/User/GetStudentById?Id=" + settingsBll().getApplicationUserId();
+        fatherTitle.setVisibility(View.GONE);
 
         controller().GetFromApi2(address, new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
                 try {
-                    EducationPostGetAll educationPostGetAll = gson().fromJson(resultStr, EducationPostGetAll.class);
+                    UserGetStudentById object = gson().fromJson(resultStr, UserGetStudentById.class);
+                    titleTxt.setText(object.getData().getFullName());
+                    reshteTitle.setText(object.getData().getMajor().getName());
+                    maghtaTitle.setText(object.getData().getGrade().getName());
 
-                    if (educationPostGetAll.getData().size() > 0) {
-                        warningTxt.setVisibility(View.GONE);
-                        progressBar.setVisibility(View.GONE);
-                        recyclerViewlistPost.setVisibility(View.VISIBLE);
 
-                        adapter = new EducationPostListAdapter(educationPostGetAll.getData());
-                        recyclerViewlistPost.setAdapter(adapter);
-                    } else {
-                        warningTxt.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
-                        recyclerViewlistPost.setVisibility(View.GONE);
-                    }
                 } catch (Exception e) {
                     Log.i(TAG, "onSuccessException: " + e);
+
                 }
+//                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListPostActivity.this, error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, error, Toast.LENGTH_SHORT).show();
+//                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+    private void getDataPostTeacher() {
+
+//        progressBar.setVisibility(View.VISIBLE);
+
+        String address = "";
+
+        reshteTitle.setTextColor(getResources().getColor(R.color.blue_2));
+        reshteTitle1.setText("شماره همراه:");
+        reshteTitle2.setVisibility(View.GONE);
+        maghtaTitle.setVisibility(View.GONE);
+
+
+        address = "api/User/GetTeacherById?Id=" + settingsBll().getApplicationUserId();
+        fatherTitle.setVisibility(View.GONE);
+
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                try {
+                    UserGetTeacherById object = gson().fromJson(resultStr, UserGetTeacherById.class);
+                    titleTxt.setText(object.getData().getFullName());
+                    reshteTitle.setText(""+object.getData().getMobile());
+
+
+
+                } catch (Exception e) {
+                    Log.i(TAG, "onSuccessException: " + e);
+
+                }
+//                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(ProfileActivity.this, error, Toast.LENGTH_SHORT).show();
+//                progressBar.setVisibility(View.GONE);
             }
         });
     }
 
     private void setVariable() {
-        titleTxt.setText("کلیه پست ها");
-        recyclerViewlistPost.setLayoutManager(new LinearLayoutManager(this));
 
-        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ListPostActivity.this, SendPostActivity.class));
-            }
-        });
+
     }
 
     private void initView() {
-        recyclerViewlistPost = findViewById(R.id.View);
-        floatingActionButton1 = findViewById(R.id.material_design_floating_action_menu_item1);
+
+
         progressBar = findViewById(R.id.progressBarRow);
-        warningTxt = findViewById(R.id.warninTxt1);
+
         my_toolbar = findViewById(R.id.toolbar);
         titleTxt = findViewById(R.id.titleTxt);
-        floatingActionMenu = findViewById(R.id.material_design_android_floating_action_menu);
+        reshteTitle2 = findViewById(R.id.t4);
+        reshteTitle1 = findViewById(R.id.t);
+        reshteTitle = findViewById(R.id.t1);
+        maghtaTitle = findViewById(R.id.t2);
+        fatherTitle = findViewById(R.id.fatherTxt);
+
     }
 
     private void bottomView() {
@@ -151,39 +183,39 @@ public class ListPostActivity extends BaseActivity {
         View view4 = findViewById(R.id.view4);
         View view5 = findViewById(R.id.view5);
 
-        view4.setVisibility(View.VISIBLE);
+        view1.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, ProfileActivity.class);
+            Intent intent = new Intent(ProfileActivity.this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn2.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, Main2Activity.class);
+            Intent intent = new Intent(ProfileActivity.this, Main2Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn3.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, Main3Activity.class);
+            Intent intent = new Intent(ProfileActivity.this, Main3Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this, ListPostActivity.class);
+            Intent intent = new Intent(ProfileActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this,BookmarkListActivity.class);
+            Intent intent = new Intent(ProfileActivity.this, BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
-        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        ConstraintLayout postLayout = findViewById(R.id.postlayout);
         if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
             postLayout.setVisibility(View.GONE);
         }
