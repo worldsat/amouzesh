@@ -118,6 +118,7 @@ public class SendCommentActivity extends BaseActivity {
                                 if (manageDomain.isSuccess()) {
                                     finish();
                                     Intent intent = new Intent(SendCommentActivity.this, ListCommentActivity.class);
+                                   intent.putExtra("EducationPostId",Integer.valueOf(EducationPostId));
                                     startActivity(intent);
                                 }
 

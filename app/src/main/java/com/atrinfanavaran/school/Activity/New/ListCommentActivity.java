@@ -52,7 +52,7 @@ public class ListCommentActivity extends BaseActivity {
     }
 
     private void getBundle() {
-        EducationPostId = getIntent().getStringExtra("EducationPostId");
+        EducationPostId = String.valueOf(getIntent().getIntExtra("EducationPostId",0));
 //        EducationPostId ="1032";
     }
 
