@@ -30,6 +30,7 @@
         <activity android:name=".Activity.New.SendStudentGroupNameActivity" />
         <activity android:name=".Activity.New.ListStudentActivity" />
         <activity android:name=".Activity.New.ListPostActivity" />
+        <activity android:name=".Activity.New.SendAnnouncementActivity" />
         <activity android:name=".Activity.New.ProfileActivity" />
         <activity android:name=".Activity.New.BookmarkListActivity" />
         <activity android:name=".Activity.New.ListTeacherActivity" />
@@ -43,6 +44,7 @@
         <activity android:name=".Activity.New.Main5Activity" />
         <activity android:name=".Activity.New.Main3Activity" />
         <activity android:name=".Activity.New.SoundActivity" />
+        <activity android:name=".Activity.New.ListAnnouncementActivity" />
         <activity
             android:name=".Activity.New.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

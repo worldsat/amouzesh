@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,6 +17,7 @@ import com.atrinfanavaran.school.Domain.New.DropdownList;
 import com.atrinfanavaran.school.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PostMiniListAdapter extends RecyclerView.Adapter<PostMiniListAdapter.ViewHolder> {
 
@@ -31,12 +33,12 @@ public class PostMiniListAdapter extends RecyclerView.Adapter<PostMiniListAdapte
     private BannerGetAll.Data object;
     private ArrayList<Integer> listSelectedId = new ArrayList<>();
 
-
-    public PostMiniListAdapter(ArrayList<DropdownList> result, BannerGetAll.Data object, SelectCallBack selectCallBack) {
+    private HashMap<String, Object> params = new HashMap<>();
+    public PostMiniListAdapter(ArrayList<DropdownList> result, BannerGetAll.Data object,HashMap<String, Object> params, SelectCallBack selectCallBack) {
         this.array_object = result;
         this.selectCallBack = selectCallBack;
         this.object = object;
-
+        this.params = params;
     }
 
     @NonNull
@@ -100,6 +102,10 @@ public class PostMiniListAdapter extends RecyclerView.Adapter<PostMiniListAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (params!=null && params.get("CategoryId")!=null) {
+                    Toast.makeText(context, "لطفا جهت انتخاب پست، اقدام به حذف لینک به دسته بندی کنید", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (array_object.get(position).getListId() != -1) {
 //                array_object.get(oldPosition).setTick(false);
                     if (array_object.get(position).isTick()) {

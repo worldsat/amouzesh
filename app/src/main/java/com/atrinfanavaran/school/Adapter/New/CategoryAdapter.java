@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,6 +17,7 @@ import com.atrinfanavaran.school.Domain.New.DropdownList;
 import com.atrinfanavaran.school.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
@@ -30,12 +32,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private int oldPosition=0;
     private BannerGetAll.Data object;
     private String kind;
-
-    public CategoryAdapter(String kind, ArrayList<DropdownList> result, BannerGetAll.Data object, SelectCallBack selectCallBack) {
+    private HashMap<String, Object> params = new HashMap<>();
+    public CategoryAdapter(String kind, ArrayList<DropdownList> result, BannerGetAll.Data object,HashMap<String, Object> params, SelectCallBack selectCallBack) {
         this.array_object = result;
         this.selectCallBack = selectCallBack;
         this.object = object;
         this.kind = kind;
+        this.params = params;
     }
 
     @NonNull
@@ -76,6 +79,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             holder.icon.setImageResource(R.mipmap.tick128);
             holder.icon.setVisibility(View.VISIBLE);
             oldPosition = position;
+
         } else {
             holder.icon.setVisibility(View.INVISIBLE);
         }
@@ -94,13 +98,28 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (params!=null && params.get("bannerToPosts")!=null) {
+                    Toast.makeText(context, "لطفا جهت انتخاب پست، اقدام به حذف لینک به پست کنید", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (params!=null && params.get("CategoryId")!=null && !params.get("CategoryId").equals(array_object.get(position).getListId())) {
+                    Toast.makeText(context, "فقط مجاز به انتخاب یک دسته بندی مباشید", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (array_object.get(position).isTick()) {
+                    array_object.get(position).setTick(false);
 
-                array_object.get(oldPosition).setTick(false);
-                array_object.get(position).setTick(true);
+                    notifyDataSetChanged();
+                    holder.icon.setVisibility(View.INVISIBLE);
 
-                notifyDataSetChanged();
-                holder.icon.setImageResource(R.mipmap.tick128);
+                } else {
+                    array_object.get(position).setTick(true);
 
+                    notifyDataSetChanged();
+                    holder.icon.setVisibility(View.VISIBLE);
+                    holder.icon.setImageResource(R.mipmap.tick128);
+
+                }
                 selectCallBack.Id(array_object.get(position).getListId());
             }
         });

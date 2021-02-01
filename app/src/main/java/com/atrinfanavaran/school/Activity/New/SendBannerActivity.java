@@ -134,10 +134,12 @@ public class SendBannerActivity extends BaseActivity {
         showTime();
         setToolbar();
     }
+
     private void setToolbar() {
-        TextView titleToolbar=findViewById(R.id.titleToolbar);
+        TextView titleToolbar = findViewById(R.id.titleToolbar);
         titleToolbar.setText(settingsBll().getSchoolName());
     }
+
     private void showTime() {
 
     }
@@ -355,6 +357,10 @@ public class SendBannerActivity extends BaseActivity {
         });
 
         PostListBtn.setOnClickListener(v -> {
+            if (params.get("CategoryId") != null) {
+                Toast.makeText(this, "لطفا جهت انتخاب پست، اقدام به حذف لینک به دسته بندی کنید", Toast.LENGTH_SHORT).show();
+                return;
+            }
             if (!socialNetworkPostEdt.getText().toString().trim().isEmpty()) {
                 Toast.makeText(this, "لطفا جهت انتخاب پست، اقدام به حذف متن شبکه های اجتماعی کنید", Toast.LENGTH_SHORT).show();
                 return;
@@ -368,6 +374,10 @@ public class SendBannerActivity extends BaseActivity {
             }
         });
         CategoryListBtn.setOnClickListener(v -> {
+            if (params.get("bannerToPosts") != null) {
+                Toast.makeText(this, "لطفا جهت انتخاب پست، اقدام به حذف لینک به پست کنید", Toast.LENGTH_SHORT).show();
+                return;
+            }
             if (!socialNetworkPostEdt.getText().toString().trim().isEmpty()) {
                 Toast.makeText(this, "لطفا جهت انتخاب پست، اقدام به حذف متن شبکه های اجتماعی کنید", Toast.LENGTH_SHORT).show();
                 return;
@@ -477,6 +487,7 @@ public class SendBannerActivity extends BaseActivity {
         array_object.add(new DropdownList("جغرافیا", 2, false));
         array_object.add(new DropdownList("زیست", 3, false));
 
+        params.put("CategoryId", 0);
         return array_object;
     }
 
@@ -558,7 +569,7 @@ public class SendBannerActivity extends BaseActivity {
 
     private void checkRunTimePermission() {
         String[] permissionArrays = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
-              ,  Manifest.permission.READ_EXTERNAL_STORAGE
+                , Manifest.permission.READ_EXTERNAL_STORAGE
                 , Manifest.permission.ACCESS_NETWORK_STATE
                 , Manifest.permission.ACCESS_FINE_LOCATION
                 , Manifest.permission.ACCESS_COARSE_LOCATION
@@ -608,7 +619,7 @@ public class SendBannerActivity extends BaseActivity {
 //                }
 //            }
 //        }
-        adapterPost = new PostMiniListAdapter(array_objectPost, object, new PostMiniListAdapter.SelectCallBack() {
+        adapterPost = new PostMiniListAdapter(array_objectPost, object, params, new PostMiniListAdapter.SelectCallBack() {
             @Override
             public void Id(int num, boolean allSelect) {
 
@@ -623,7 +634,7 @@ public class SendBannerActivity extends BaseActivity {
                     PostSelectIds.add(num);
                 }
 
-                Log.i(TAG, "bannerToPostsId: " +PostSelectIds.toString().replace(" ", "").replace("]", "").replace("[", ""));
+                Log.i(TAG, "bannerToPostsId: " + PostSelectIds.toString().replace(" ", "").replace("]", "").replace("[", ""));
                 if (PostSelectIds.size() > 0) {
                     params.put("bannerToPosts", PostSelectIds.toString().replace(" ", "").replace("]", "").replace("[", ""));
                 } else {
@@ -631,7 +642,7 @@ public class SendBannerActivity extends BaseActivity {
                         params.remove("bannerToPosts");
                     }
                 }
-                Log.i(TAG, "bannerToPosts: "+params.get("bannerToPosts") );
+                Log.i(TAG, "bannerToPosts: " + params.get("bannerToPosts"));
             }
         });
         recyclerViewlistDastresi.setAdapter(adapterPost);
@@ -666,10 +677,15 @@ public class SendBannerActivity extends BaseActivity {
                 }
             }
         }
-        adapterCategory = new CategoryAdapter("Category", array_objectCategory, object, new CategoryAdapter.SelectCallBack() {
+        adapterCategory = new CategoryAdapter("Category", array_objectCategory, object, params, new CategoryAdapter.SelectCallBack() {
             @Override
             public void Id(int num) {
-                params.put("CategoryId", num);
+                if (params.get("CategoryId") != null && params.get("CategoryId").equals(num)) {
+                    params.remove("CategoryId");
+                } else {
+                    params.put("CategoryId", num);
+                }
+                Log.i(TAG, "CategoryId: " + params.get("CategoryId"));
             }
         });
         recyclerViewlistCategory.setAdapter(adapterCategory);
@@ -856,12 +872,12 @@ public class SendBannerActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(SendBannerActivity.this,BookmarkListActivity.class);
+            Intent intent = new Intent(SendBannerActivity.this, BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
-        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        ConstraintLayout postLayout = findViewById(R.id.postlayout);
         if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
             postLayout.setVisibility(View.GONE);
         }

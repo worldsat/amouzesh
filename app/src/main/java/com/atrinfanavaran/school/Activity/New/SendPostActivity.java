@@ -496,7 +496,7 @@ public class SendPostActivity extends BaseActivity {
 //
 //                }
 
-                adaptertakhsis = new PostMiniListAdapter(array_object, null, new PostMiniListAdapter.SelectCallBack() {
+                adaptertakhsis = new PostMiniListAdapter(array_object, null,null, new PostMiniListAdapter.SelectCallBack() {
                     @Override
                     public void Id(int num, boolean allSelect) {
                         if (allSelect) {
@@ -594,7 +594,7 @@ public class SendPostActivity extends BaseActivity {
 //
 //                }
 
-                adaptertakhsisGroup = new PostMiniListAdapter(array_object, null, new PostMiniListAdapter.SelectCallBack() {
+                adaptertakhsisGroup = new PostMiniListAdapter(array_object, null,null, new PostMiniListAdapter.SelectCallBack() {
                     @Override
                     public void Id(int num, boolean allSelect) {
                         if (allSelect) {
