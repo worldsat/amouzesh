@@ -147,6 +147,25 @@
                 android:alpha="0.8"
                 android:visibility="visible"
                 app:srcCompat="@drawable/gradient_line" />
+
+            <TextView
+                android:id="@+id/notification_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lalehzar"
+                android:gravity="center_vertical"
+                android:text="اعلانات"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+            <ImageView
+                android:id="@+id/imageViewanotification"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:alpha="0.8"
+                android:visibility="visible"
+                app:srcCompat="@drawable/gradient_line" />
             <TextView
                 android:id="@+id/exit_btn"
                 android:layout_width="match_parent"

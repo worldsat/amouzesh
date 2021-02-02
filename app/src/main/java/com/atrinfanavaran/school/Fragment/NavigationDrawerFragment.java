@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.atrinfanavaran.school.Activity.New.ListAnnouncementActivity;
 import com.atrinfanavaran.school.Activity.New.ListAsatidActivity;
 import com.atrinfanavaran.school.Activity.New.ListBannerActivity;
 import com.atrinfanavaran.school.Activity.New.ListCategoryActivity;
@@ -59,7 +60,7 @@ public class NavigationDrawerFragment extends Fragment {
     public static final String PREF_FILE_NAME = "testpref";
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private ImageView drawer_pic1;
-    private TextView drawer1, drawer2, exitBtn, btn1, category_btn, mypost_btn, Banner_btn, teacherlist_btn, studentlist_btn, asatid_btn;
+    private TextView drawer1, drawer2, exitBtn, btn1, category_btn, mypost_btn, Banner_btn, teacherlist_btn, studentlist_btn, asatid_btn, notification_btn;
     private ActionBarDrawerToggle drawer_toggle;
     private LinearLayout btn2, btn3, btn4, btn5, btn6;
     private boolean m_userLearnedDrawer;
@@ -67,7 +68,7 @@ public class NavigationDrawerFragment extends Fragment {
     private AppDatabase db;
     private Controller controller;
     private BaseActivity baseActivity;
-    private ImageView imageViewCat, imageViewPost, imageViewBanner, imageViewteacher, imageViewStudent, imageViewasatid;
+    private ImageView imageViewCat, imageViewPost, imageViewBanner, imageViewteacher, imageViewStudent, imageViewasatid, imageViewnotification;
 
     public NavigationDrawerFragment() {
         // Required empty public constructor
@@ -143,12 +144,14 @@ public class NavigationDrawerFragment extends Fragment {
         teacherlist_btn = view.findViewById(R.id.teacherlist_btn);
         studentlist_btn = view.findViewById(R.id.studentlist_btn);
         asatid_btn = view.findViewById(R.id.asatid_btn);
+        notification_btn = view.findViewById(R.id.notification_btn);
         imageViewCat = view.findViewById(R.id.imageViewCat);
         imageViewPost = view.findViewById(R.id.imageViewPost);
         imageViewBanner = view.findViewById(R.id.imageViewBanner);
         imageViewteacher = view.findViewById(R.id.imageViewteacher);
         imageViewStudent = view.findViewById(R.id.imageViewStudent);
         imageViewasatid = view.findViewById(R.id.imageViewasatid);
+        imageViewnotification = view.findViewById(R.id.imageViewanotification);
 
 
         btn1.setOnClickListener(v -> {
@@ -164,6 +167,8 @@ public class NavigationDrawerFragment extends Fragment {
             Banner_btn.setVisibility(View.VISIBLE);
             studentlist_btn.setVisibility(View.VISIBLE);
             imageViewStudent.setVisibility(View.VISIBLE);
+            notification_btn.setVisibility(View.VISIBLE);
+            imageViewnotification.setVisibility(View.VISIBLE);
         } else {
             category_btn.setVisibility(View.GONE);
             imageViewCat.setVisibility(View.GONE);
@@ -173,6 +178,8 @@ public class NavigationDrawerFragment extends Fragment {
             Banner_btn.setVisibility(View.GONE);
             studentlist_btn.setVisibility(View.GONE);
             imageViewStudent.setVisibility(View.GONE);
+            notification_btn.setVisibility(View.GONE);
+            imageViewnotification.setVisibility(View.GONE);
         }
         if (settingsBll.getUserType() == 0) {
             teacherlist_btn.setVisibility(View.VISIBLE);
@@ -212,6 +219,10 @@ public class NavigationDrawerFragment extends Fragment {
 
         asatid_btn.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ListAsatidActivity.class);
+            startActivity(intent);
+        });
+        notification_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ListAnnouncementActivity.class);
             startActivity(intent);
         });
 //        asatid_btn.setVisibility(View.VISIBLE);

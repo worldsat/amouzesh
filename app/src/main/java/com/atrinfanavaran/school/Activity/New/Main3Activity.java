@@ -20,7 +20,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.atrinfanavaran.school.Adapter.New.AnnouncementGetForStudentListAdapter;
 import com.atrinfanavaran.school.Adapter.New.CategorySmallAdapter;
+import com.atrinfanavaran.school.Domain.New.AnnouncementGetForStudent;
 import com.atrinfanavaran.school.Domain.New.BannerGetAll;
 import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
@@ -45,8 +47,11 @@ public class Main3Activity extends BaseActivity {
     private Toolbar my_toolbar;
     private SliderLayout banner1, banner2;
     private RecyclerView recyclerviewCategorySmall;
+    private RecyclerView recyclerviewviewnotif;
     private ProgressBar progressBarCategory;
+    private ProgressBar progressBarnotif;
     private RecyclerView.Adapter adapterCategory;
+    private RecyclerView.Adapter adapternotif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +66,41 @@ public class Main3Activity extends BaseActivity {
         setBanner();
         RunPermissionDownload();
         getCategory();
+        getNotification();
+    }
+
+    private void getNotification() {
+        if (settingsBll.getUserType() == 2) {
+            String address = "api/Announcement/GetForStudent?Id=" + settingsBll().getApplicationUserId();
+            recyclerviewviewnotif.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            recyclerviewviewnotif.setNestedScrollingEnabled(false);
+            progressBarnotif.setVisibility(View.VISIBLE);
+            controller().GetFromApi2(address, new CallbackGetString() {
+                @Override
+                public void onSuccess(String resultStr) {
+                    Log.i(TAG, "notif: " + resultStr);
+                    AnnouncementGetForStudent announcementGetForStudent = gson().fromJson(resultStr, AnnouncementGetForStudent.class);
+
+
+                    adapternotif = new AnnouncementGetForStudentListAdapter(announcementGetForStudent.getData());
+                    recyclerviewviewnotif.setAdapter(adapternotif);
+                    progressBarnotif.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError(String error) {
+                    progressBarnotif.setVisibility(View.GONE);
+                    Toast.makeText(Main3Activity.this, error, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void getCategory() {
 
 
         String address = "api/Category/GetAll?UserId=" + settingsBll().getApplicationUserId();
-        recyclerviewCategorySmall.setLayoutManager( new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerviewCategorySmall.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerviewCategorySmall.setNestedScrollingEnabled(false);
         progressBarCategory.setVisibility(View.VISIBLE);
         controller().GetFromApi2(address, new CallbackGetString() {
@@ -244,7 +277,9 @@ public class Main3Activity extends BaseActivity {
 
     private void initView() {
         recyclerviewCategorySmall = findViewById(R.id.viewCategorySmall);
+        recyclerviewviewnotif = findViewById(R.id.viewnotif);
         progressBarCategory = findViewById(R.id.progressBarRow5);
+        progressBarnotif = findViewById(R.id.progressBarRow7);
 
         banner1 = findViewById(R.id.banner1);
         banner2 = findViewById(R.id.banner2);

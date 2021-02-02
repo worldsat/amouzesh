@@ -1,9 +1,11 @@
 package com.atrinfanavaran.school.Adapter.New;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +19,19 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.atrinfanavaran.school.Activity.New.SendPostActivity;
-import com.atrinfanavaran.school.Activity.New.ShowPostActivity;
+import com.atrinfanavaran.school.Activity.New.ListAnnouncementActivity;
+import com.atrinfanavaran.school.Activity.New.SendAnnouncementActivity;
 import com.atrinfanavaran.school.Domain.New.AnnouncementGetAll;
-import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
 import com.atrinfanavaran.school.Domain.New.ManageDomain;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
 import com.atrinfanavaran.school.Kernel.Controller.Controller;
-import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
+import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackOperation;
+import com.atrinfanavaran.school.Kernel.Helper.Waiting;
 import com.atrinfanavaran.school.R;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -36,7 +39,7 @@ public class AnnouncementListAdapter extends RecyclerView.Adapter<AnnouncementLi
 
     private final ArrayList<AnnouncementGetAll.Data> array_object;
     private Context context;
-
+    private JSONObject params = new JSONObject();
     private Handler mHandler = new Handler();
     private int mFileDuration;
 
@@ -62,18 +65,18 @@ public class AnnouncementListAdapter extends RecyclerView.Adapter<AnnouncementLi
 
         holder.icon.setVisibility(View.GONE);
 
-        holder.deleteBtn.setOnClickListener(v -> alertQuestion(context, holder));
+        holder.deleteBtn.setOnClickListener(v -> alertQuestion(context, array_object.get(position)));
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, SendPostActivity.class);
+                Intent intent = new Intent(context, SendAnnouncementActivity.class);
                 intent.putExtra("object", array_object.get(position));
                 context.startActivity(intent);
             }
         });
     }
 
-    private void alertQuestion(Context context, ViewHolder holder) {
+    private void alertQuestion(Context context, AnnouncementGetAll.Data object) {
         MaterialDialog question_dialog = new MaterialDialog.Builder(context)
                 .customView(R.layout.alert_question, false)
                 .autoDismiss(false)
@@ -90,30 +93,43 @@ public class AnnouncementListAdapter extends RecyclerView.Adapter<AnnouncementLi
             @Override
             public void onClick(View v) {
                 question_dialog.dismiss();
+                SettingsBll settingsBll = new SettingsBll(context);
+
+                try {
+                    params.put("id", object.getId());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Log.i("moh3n", "onClick: " + params.toString());
+                MaterialDialog wait = new Waiting(context).alertWaiting();
+                wait.show();
                 Controller controller = new Controller(context);
-                controller.GetFromApi2("api/Announcement/Remove?Id=" + array_object.get(holder.getAdapterPosition()).getId(), new CallbackGetString() {
+                controller.operationProcess(context, "Api/Announcement/Remove", params.toString(), new CallbackOperation() {
                     @Override
-                    public void onSuccess(String resultStr) {
+                    public void onSuccess(String result) {
                         try {
                             Gson gson = new Gson();
-                            ManageDomain manageDomain = gson.fromJson(resultStr, ManageDomain.class);
+                            ManageDomain manageDomain = gson.fromJson(result, ManageDomain.class);
                             Toast.makeText(context, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
                             if (manageDomain.isSuccess()) {
-
-                                array_object.remove(holder.getAdapterPosition());
-                                notifyItemRemoved(holder.getAdapterPosition());
-                                notifyItemRangeChanged(holder.getAdapterPosition(), array_object.size());
-
+                                ((Activity) context).finish();
+                                Intent intent = new Intent(context, ListAnnouncementActivity.class);
+//                                   intent.putExtra("EducationPostId",Integer.valueOf(EducationPostId));
+                                ((Activity) context).startActivity(intent);
                             }
 
                         } catch (Exception e) {
                             Toast.makeText(context, "" + e.toString(), Toast.LENGTH_SHORT).show();
                         }
+                        wait.dismiss();
                     }
 
                     @Override
                     public void onError(String error) {
-
+                        wait.dismiss();
+                        Toast.makeText(context, "" + error, Toast.LENGTH_SHORT).show();
                     }
                 });
 

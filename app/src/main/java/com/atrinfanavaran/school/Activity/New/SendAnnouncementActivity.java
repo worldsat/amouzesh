@@ -15,8 +15,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.school.Domain.New.AnnouncementGetAll;
-import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
-import com.atrinfanavaran.school.Domain.New.CustomGroup;
 import com.atrinfanavaran.school.Domain.New.ManageDomain;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
@@ -35,7 +33,7 @@ public class SendAnnouncementActivity extends BaseActivity {
     private Toolbar my_toolbar;
     private TextView titleTxt;
     private EditText edt1;
-    private LinearLayout saveBtn;
+    private LinearLayout saveBtn, backBtn;
     private JSONObject params = new JSONObject();
     private AnnouncementGetAll.Data object;
 
@@ -62,7 +60,7 @@ public class SendAnnouncementActivity extends BaseActivity {
             edt1.setText(object.getText());
 
             try {
-                params.put("text", object.getId());
+                params.put("id", object.getId());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -86,7 +84,7 @@ public class SendAnnouncementActivity extends BaseActivity {
 
 
     private void setVariable() {
-//        titleTxt.setText("گروه دانش آموزان");
+        titleTxt.setText("ثبت اعلان");
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,16 +135,22 @@ public class SendAnnouncementActivity extends BaseActivity {
                 }
             }
         });
-
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 
     private void initView() {
 
         my_toolbar = findViewById(R.id.toolbar);
-        titleTxt = findViewById(R.id.titleTxt);
+        titleTxt = findViewById(R.id.textView8);
         edt1 = findViewById(R.id.edt1);
         saveBtn = findViewById(R.id.sendBtn);
+        backBtn = findViewById(R.id.backBtn);
 
     }
 

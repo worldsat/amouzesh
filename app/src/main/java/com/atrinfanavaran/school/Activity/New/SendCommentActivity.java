@@ -33,7 +33,7 @@ public class SendCommentActivity extends BaseActivity {
     private Toolbar my_toolbar;
     private TextView titleTxt;
     private EditText edt1;
-    private LinearLayout saveBtn;
+    private LinearLayout saveBtn, backBtn;
     private JSONObject params = new JSONObject();
 
     private CustomGroup.data object;
@@ -118,7 +118,7 @@ public class SendCommentActivity extends BaseActivity {
                                 if (manageDomain.isSuccess()) {
                                     finish();
                                     Intent intent = new Intent(SendCommentActivity.this, ListCommentActivity.class);
-                                   intent.putExtra("EducationPostId",Integer.valueOf(EducationPostId));
+                                    intent.putExtra("EducationPostId", Integer.valueOf(EducationPostId));
                                     startActivity(intent);
                                 }
 
@@ -138,7 +138,12 @@ public class SendCommentActivity extends BaseActivity {
                 }
             }
         });
-
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 
@@ -148,7 +153,7 @@ public class SendCommentActivity extends BaseActivity {
         titleTxt = findViewById(R.id.titleTxt);
         edt1 = findViewById(R.id.edt1);
         saveBtn = findViewById(R.id.sendBtn);
-
+        backBtn = findViewById(R.id.backBtn);
     }
 
     private void bottomView() {
@@ -190,7 +195,7 @@ public class SendCommentActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(SendCommentActivity.this,BookmarkListActivity.class);
+            Intent intent = new Intent(SendCommentActivity.this, BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
