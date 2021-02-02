@@ -2,7 +2,6 @@ package com.atrinfanavaran.school.Domain.New;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AnnouncementGetAll {
 
@@ -64,6 +63,7 @@ public class AnnouncementGetAll {
         private String createDate;
         private String applicationUserId;
         private String applicationUser;
+        private int AvailableDays;
 
         public int getId() {
             return id;
@@ -75,6 +75,14 @@ public class AnnouncementGetAll {
 
         public String getText() {
             return text;
+        }
+
+        public int getAvailableDays() {
+            return AvailableDays;
+        }
+
+        public void setAvailableDays(int availableDays) {
+            AvailableDays = availableDays;
         }
 
         public void setText(String text) {

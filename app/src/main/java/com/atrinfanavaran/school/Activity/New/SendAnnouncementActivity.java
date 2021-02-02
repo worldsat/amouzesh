@@ -33,6 +33,7 @@ public class SendAnnouncementActivity extends BaseActivity {
     private Toolbar my_toolbar;
     private TextView titleTxt;
     private EditText edt1;
+    private EditText edt2;
     private LinearLayout saveBtn, backBtn;
     private JSONObject params = new JSONObject();
     private AnnouncementGetAll.Data object;
@@ -41,7 +42,7 @@ public class SendAnnouncementActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_comment);
+        setContentView(R.layout.activity_send_notif);
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
         initView();
@@ -58,7 +59,9 @@ public class SendAnnouncementActivity extends BaseActivity {
 
         if (object != null) {
             edt1.setText(object.getText());
-
+            if (object.getAvailableDays() != 0) {
+                edt2.setText(object.getAvailableDays());
+            }
             try {
                 params.put("id", object.getId());
             } catch (JSONException e) {
@@ -97,6 +100,9 @@ public class SendAnnouncementActivity extends BaseActivity {
 
                     try {
                         params.put("Text", edt1.getText().toString().trim());
+                        if (!edt2.getText().toString().isEmpty()) {
+                            params.put("AvailableDays", edt2.getText().toString().trim());
+                        }
                         params.put("ApplicationUserId", settingsBll.getApplicationUserId());
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -149,6 +155,7 @@ public class SendAnnouncementActivity extends BaseActivity {
         my_toolbar = findViewById(R.id.toolbar);
         titleTxt = findViewById(R.id.textView8);
         edt1 = findViewById(R.id.edt1);
+        edt2 = findViewById(R.id.edt2);
         saveBtn = findViewById(R.id.sendBtn);
         backBtn = findViewById(R.id.backBtn);
 
