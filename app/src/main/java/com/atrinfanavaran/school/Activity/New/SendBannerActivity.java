@@ -33,6 +33,7 @@ import com.atrinfanavaran.school.Adapter.New.PositionAdapter;
 import com.atrinfanavaran.school.Adapter.New.PostMiniListAdapter;
 import com.atrinfanavaran.school.Domain.New.AttachFile;
 import com.atrinfanavaran.school.Domain.New.BannerGetAll;
+import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
 import com.atrinfanavaran.school.Domain.New.DropdownList;
 import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
@@ -481,13 +482,35 @@ public class SendBannerActivity extends BaseActivity {
 
     private ArrayList<DropdownList> CategoryList() {
 
-        ArrayList<DropdownList> array_object = new ArrayList<>();
-        array_object.add(new DropdownList("ریاضی", 0, true));
-        array_object.add(new DropdownList("علوم پایه", 1, false));
-        array_object.add(new DropdownList("جغرافیا", 2, false));
-        array_object.add(new DropdownList("زیست", 3, false));
+//        ArrayList<DropdownList> array_object = new ArrayList<>();
+//        array_object.add(new DropdownList("ریاضی", 0, false));
+//        array_object.add(new DropdownList("علوم پایه", 1, false));
+//        array_object.add(new DropdownList("جغرافیا", 2, false));
+//        array_object.add(new DropdownList("زیست", 3, false));
 
-        params.put("CategoryId", 0);
+//        params.put("CategoryId", 0);
+
+        ArrayList<DropdownList> array_object = new ArrayList<>();
+
+        controller().GetFromApi2("api/Category/GetAll?Id=" + settingsBll().getApplicationUserId(), new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                CategoryGetAll categoryGetAll = gson().fromJson(resultStr, CategoryGetAll.class);
+                for (int i = 0; i < categoryGetAll.getData().size(); i++) {
+                    boolean tick = false;
+//                    if (i == 0) tick = true;
+                    array_object.add(new DropdownList(
+                            categoryGetAll.getData().get(i).getName()
+                            , categoryGetAll.getData().get(i).getId(),
+                            tick));
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(SendBannerActivity.this, error, Toast.LENGTH_SHORT).show();
+            }
+        });
         return array_object;
     }
 

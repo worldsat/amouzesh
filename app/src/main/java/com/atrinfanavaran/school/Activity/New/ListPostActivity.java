@@ -68,13 +68,13 @@ public class ListPostActivity extends BaseActivity {
 
     private void getData() {
         progressBar.setVisibility(View.VISIBLE);
-        if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
-            warningTxt.setVisibility(View.VISIBLE);
-            floatingActionMenu.setVisibility(View.GONE);
-            warningTxt.setText("شما دسترسی لازم برای این قسمت را ندارید");
-            progressBar.setVisibility(View.GONE);
-            return;
-        }
+//        if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
+//            warningTxt.setVisibility(View.VISIBLE);
+//            floatingActionMenu.setVisibility(View.GONE);
+//            warningTxt.setText("شما دسترسی لازم برای این قسمت را ندارید");
+//            progressBar.setVisibility(View.GONE);
+//            return;
+//        }
 
         recyclerViewlistPost.setVisibility(View.GONE);
         warningTxt.setVisibility(View.GONE);

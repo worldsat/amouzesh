@@ -19,9 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.atrinfanavaran.school.Activity.New.ListCommentActivity;
 import com.atrinfanavaran.school.Activity.New.ListCommentTeacherActivity;
-import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
 import com.atrinfanavaran.school.Domain.New.CommentsGetAll;
 import com.atrinfanavaran.school.Domain.New.ManageDomain;
 import com.atrinfanavaran.school.Kernel.Bll.SettingsBll;
@@ -63,6 +61,8 @@ public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeach
 
         context = holder.itemView.getContext();
         holder.title.setText(array_object.get(position).getText());
+        holder.t1.setText(array_object.get(position).getStudents());
+        holder.t2.setText(array_object.get(position).getDate());
         if (array_object.get(position).getCommentStatus() == 0) {
             holder.statusTxt.setText("تاییده شده");
             holder.statusTxt.setTextColor(context.getResources().getColor(R.color.green_A700));
@@ -201,7 +201,7 @@ public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeach
         ImageView icon;
         CheckBox checkBox;
         LinearLayout approve, unapprove, deleteBtn;
-
+TextView t1,t2;
         private ViewHolder(View itemView) {
             super(itemView);
 
@@ -214,6 +214,8 @@ public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeach
             approve = itemView.findViewById(R.id.sendBtn);
             unapprove = itemView.findViewById(R.id.backBtn);
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
+            t1 = itemView.findViewById(R.id.t1);
+            t2 = itemView.findViewById(R.id.t2);
         }
     }
 

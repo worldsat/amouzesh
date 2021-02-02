@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
 import com.atrinfanavaran.school.Domain.New.GetRelatedComment;
 import com.atrinfanavaran.school.R;
 
@@ -46,6 +45,8 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
 
         context = holder.itemView.getContext();
         holder.title.setText(array_object.get(position).getText());
+        holder.t1.setText(array_object.get(position).getStudents());
+        holder.t2.setText(array_object.get(position).getDate());
 
 
     }
@@ -70,6 +71,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView title, rowNumber, size;
+        TextView t1,t2;
         ConstraintLayout card;
         ImageView icon;
         CheckBox checkBox;
@@ -83,6 +85,8 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
             card = itemView.findViewById(R.id.item);
             icon = itemView.findViewById(R.id.icon);
             checkBox = itemView.findViewById(R.id.checkBox);
+            t1 = itemView.findViewById(R.id.t1);
+            t2 = itemView.findViewById(R.id.t2);
 
 
         }

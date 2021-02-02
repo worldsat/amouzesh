@@ -2,15 +2,15 @@ package com.atrinfanavaran.school.Domain.New;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class BannerGetAll {
+
 
     /**
      * success : true
      * status : 200
      * message : عملیات انجام شد
-     * data : [{"id":2,"description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;test&lt;/p&gt;","socialNetWorkLink":null,"url":"/Upload/Banner/File/c7a74fb40120b04c980822a0ea5e081d4869.jpg","createDate":"2020-12-05T15:07:31.7173214","availableDate":"2020-12-05T15:07:31.7173628","creditDays":3,"bannerPlace":0,"bannerToPosts":[],"categoryId":null,"category":null,"applicationUserId":"708c6bf2-2d90-44f5-bfa8-9729224d598e","applicationUser":null,"showOnMainPage":true}]
+     * data : [{"id":6,"description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;","socialNetWorkLink":null,"url":"/Upload/Banner/File/3c09d85a0006c0497f0ad560271b4fb5085c.jpg","createDate":"2020-12-19T00:25:33.5943932","availableDate":"2020-12-19T00:25:33.5943987","creditDays":100,"bannerPlace":1,"bannerToPosts":null,"postsInBanner":[],"categoryId":null,"category":null,"applicationUserId":"aea11655-c2bc-49fb-a2bb-79a92c0d0fd6","applicationUser":null,"showOnMainPage":true,"bannerStatus":0,"pin":false},{"id":5,"description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;","socialNetWorkLink":null,"url":"/Upload/Banner/File/7e3edb4c0b59004d8a09af304c70fab38626.jpg","createDate":"0001-01-01T00:00:00","availableDate":"2020-12-19T00:24:43.2516779","creditDays":100,"bannerPlace":0,"bannerToPosts":null,"postsInBanner":[],"categoryId":null,"category":null,"applicationUserId":"aea11655-c2bc-49fb-a2bb-79a92c0d0fd6","applicationUser":null,"showOnMainPage":true,"bannerStatus":0,"pin":false},{"id":3,"description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;","socialNetWorkLink":null,"url":"/Upload/Banner/File/6bf1ecdb02e40049050a41909882f201f30f.jpg","createDate":"2020-12-19T00:23:24.5449465","availableDate":"2020-12-19T00:23:24.5449509","creditDays":100,"bannerPlace":0,"bannerToPosts":null,"postsInBanner":[],"categoryId":null,"category":null,"applicationUserId":"aea11655-c2bc-49fb-a2bb-79a92c0d0fd6","applicationUser":null,"showOnMainPage":true,"bannerStatus":0,"pin":false},{"id":2,"description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;","socialNetWorkLink":null,"url":"/Upload/Banner/File/164a12350f3500444e088740059eb019a7d4.jpg","createDate":"2020-12-19T00:22:47.4808947","availableDate":"2020-12-19T00:22:47.4808996","creditDays":100,"bannerPlace":0,"bannerToPosts":null,"postsInBanner":[],"categoryId":null,"category":null,"applicationUserId":"aea11655-c2bc-49fb-a2bb-79a92c0d0fd6","applicationUser":null,"showOnMainPage":true,"bannerStatus":0,"pin":false},{"id":1,"description":"&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;سلام&lt;/p&gt;&lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;","socialNetWorkLink":null,"url":"/Upload/Banner/File/b982607308c2304e64081070b39d17e2ec38.jpg","createDate":"2020-12-18T23:49:49.9972938","availableDate":"2020-12-18T23:49:49.9973651","creditDays":100,"bannerPlace":0,"bannerToPosts":null,"postsInBanner":[{"id":1,"bannerId":1,"educationPostId":21,"educationPost":null}],"categoryId":null,"category":null,"applicationUserId":"aea11655-c2bc-49fb-a2bb-79a92c0d0fd6","applicationUser":null,"showOnMainPage":true,"bannerStatus":0,"pin":false}]
      */
 
     private boolean success;
@@ -52,36 +52,42 @@ public class BannerGetAll {
 
     public static class Data implements Serializable {
         /**
-         * id : 2
-         * description : &lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;test&lt;/p&gt;
+         * id : 6
+         * description : &lt;p data-tag=&quot;input&quot; style=&quot;color:#000000;&quot;&gt;&lt;/p&gt;
          * socialNetWorkLink : null
-         * url : /Upload/Banner/File/c7a74fb40120b04c980822a0ea5e081d4869.jpg
-         * createDate : 2020-12-05T15:07:31.7173214
-         * availableDate : 2020-12-05T15:07:31.7173628
-         * creditDays : 3
-         * bannerPlace : 0
-         * bannerToPosts : []
+         * url : /Upload/Banner/File/3c09d85a0006c0497f0ad560271b4fb5085c.jpg
+         * createDate : 2020-12-19T00:25:33.5943932
+         * availableDate : 2020-12-19T00:25:33.5943987
+         * creditDays : 100
+         * bannerPlace : 1
+         * bannerToPosts : null
+         * postsInBanner : []
          * categoryId : null
          * category : null
-         * applicationUserId : 708c6bf2-2d90-44f5-bfa8-9729224d598e
+         * applicationUserId : aea11655-c2bc-49fb-a2bb-79a92c0d0fd6
          * applicationUser : null
          * showOnMainPage : true
+         * bannerStatus : 0
+         * pin : false
          */
 
         private int id;
         private String description;
-        private String socialNetWorkLink;
+        private Object socialNetWorkLink;
         private String url;
         private String createDate;
         private String availableDate;
         private int creditDays;
         private int bannerPlace;
-        private int categoryId;
+        private Object bannerToPosts;
+        private Object categoryId;
         private Object category;
         private String applicationUserId;
         private Object applicationUser;
         private boolean showOnMainPage;
-        private List<?> bannerToPosts;
+        private int bannerStatus;
+        private boolean pin;
+        private ArrayList<?> postsInBanner;
 
         public int getId() {
             return id;
@@ -99,11 +105,11 @@ public class BannerGetAll {
             this.description = description;
         }
 
-        public String getSocialNetWorkLink() {
+        public Object getSocialNetWorkLink() {
             return socialNetWorkLink;
         }
 
-        public void setSocialNetWorkLink(String socialNetWorkLink) {
+        public void setSocialNetWorkLink(Object socialNetWorkLink) {
             this.socialNetWorkLink = socialNetWorkLink;
         }
 
@@ -147,11 +153,19 @@ public class BannerGetAll {
             this.bannerPlace = bannerPlace;
         }
 
-        public int getCategoryId() {
+        public Object getBannerToPosts() {
+            return bannerToPosts;
+        }
+
+        public void setBannerToPosts(Object bannerToPosts) {
+            this.bannerToPosts = bannerToPosts;
+        }
+
+        public Object getCategoryId() {
             return categoryId;
         }
 
-        public void setCategoryId(int categoryId) {
+        public void setCategoryId(Object categoryId) {
             this.categoryId = categoryId;
         }
 
@@ -187,12 +201,28 @@ public class BannerGetAll {
             this.showOnMainPage = showOnMainPage;
         }
 
-        public List<?> getBannerToPosts() {
-            return bannerToPosts;
+        public int getBannerStatus() {
+            return bannerStatus;
         }
 
-        public void setBannerToPosts(List<?> bannerToPosts) {
-            this.bannerToPosts = bannerToPosts;
+        public void setBannerStatus(int bannerStatus) {
+            this.bannerStatus = bannerStatus;
+        }
+
+        public boolean isPin() {
+            return pin;
+        }
+
+        public void setPin(boolean pin) {
+            this.pin = pin;
+        }
+
+        public ArrayList<?> getPostsInBanner() {
+            return postsInBanner;
+        }
+
+        public void setPostsInBanner(ArrayList<?> postsInBanner) {
+            this.postsInBanner = postsInBanner;
         }
     }
 }

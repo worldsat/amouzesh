@@ -109,7 +109,6 @@ public class Main3Activity extends BaseActivity {
                 Log.i(TAG, "category: " + resultStr);
                 CategoryGetAll categoryGetAll = gson().fromJson(resultStr, CategoryGetAll.class);
 
-
                 adapterCategory = new CategorySmallAdapter(categoryGetAll.getData());
                 recyclerviewCategorySmall.setAdapter(adapterCategory);
                 progressBarCategory.setVisibility(View.GONE);
@@ -201,11 +200,12 @@ public class Main3Activity extends BaseActivity {
                                 banner1.setVisibility(View.VISIBLE);
 
                                 DefaultSliderView DefaultSliderView = new DefaultSliderView(getActivity());
+                                int finalI = i;
                                 DefaultSliderView
                                         .setOnSliderClickListener(slider -> {
-//                                            Intent i1 = new Intent(Intent.ACTION_VIEW);
-//                                                i1.setData(Uri.parse(Url));
-//                                            startActivity(i1);
+                                            Intent i1 = new Intent(Main3Activity.this, ShowPostActivity.class);
+                                            i1.putExtra("Id", result.getData().get(finalI).getPostsInBanner());
+                                            startActivity(i1);
                                         })
                                         .image(settingsBll().getUrlAddress() + "/" + result.getData().get(i).getUrl())
                                         .setScaleType(BaseSliderView.ScaleType.Fit);
