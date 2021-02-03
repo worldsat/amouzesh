@@ -73,14 +73,14 @@ public class BannerGetAll {
 
         private int id;
         private String description;
-        private Object socialNetWorkLink;
+        private String socialNetWorkLink;
         private String url;
         private String createDate;
         private String availableDate;
         private int creditDays;
         private int bannerPlace;
         private Object bannerToPosts;
-        private Object categoryId;
+        private int categoryId;
         private Object category;
         private String applicationUserId;
         private Object applicationUser;
@@ -105,11 +105,11 @@ public class BannerGetAll {
             this.description = description;
         }
 
-        public Object getSocialNetWorkLink() {
+        public String getSocialNetWorkLink() {
             return socialNetWorkLink;
         }
 
-        public void setSocialNetWorkLink(Object socialNetWorkLink) {
+        public void setSocialNetWorkLink(String socialNetWorkLink) {
             this.socialNetWorkLink = socialNetWorkLink;
         }
 
@@ -161,11 +161,11 @@ public class BannerGetAll {
             this.bannerToPosts = bannerToPosts;
         }
 
-        public Object getCategoryId() {
+        public int getCategoryId() {
             return categoryId;
         }
 
-        public void setCategoryId(Object categoryId) {
+        public void setCategoryId(int categoryId) {
             this.categoryId = categoryId;
         }
 

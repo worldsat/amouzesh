@@ -36,6 +36,7 @@
                 android:fontFamily="@font/iranyekanmedium"
                 android:text="TextView"
                 android:textColor="@color/blue_grey_600"
+                android:textDirection="rtl"
                 android:textSize="12sp" />
 
             <TextView
@@ -45,12 +46,24 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/iranyekanmedium"
+                android:gravity="end"
                 android:text="TextView"
                 android:textColor="@color/blue_grey_600"
                 android:textDirection="rtl"
                 android:textSize="12sp" />
         </LinearLayout>
-
+        <View
+            android:id="@+id/view6"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.5"
+            android:background="@color/grey_400"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -45,8 +45,8 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
 
         context = holder.itemView.getContext();
         holder.title.setText(array_object.get(position).getText());
-        holder.t1.setText(array_object.get(position).getStudents());
-        holder.t2.setText(array_object.get(position).getDate());
+        holder.t2.setText(array_object.get(position).getStudents().getFullName());
+        holder.t1.setText(array_object.get(position).getDate());
 
 
     }

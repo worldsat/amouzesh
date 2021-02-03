@@ -173,6 +173,7 @@ public class SendPostActivity extends BaseActivity {
             public void onClick(View v) {
                 if (titlePostEdt.getText().toString().isEmpty()) {
                     SnakBar("لطفا عنوان را وارد نمائید");
+                    return;
                 } else {
                     params.put("Title", titlePostEdt.getText().toString());
                 }

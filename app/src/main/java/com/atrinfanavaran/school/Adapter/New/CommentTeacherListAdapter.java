@@ -61,16 +61,15 @@ public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeach
 
         context = holder.itemView.getContext();
         holder.title.setText(array_object.get(position).getText());
-        holder.t1.setText(array_object.get(position).getStudents());
-        holder.t2.setText(array_object.get(position).getDate());
+        holder.t2.setText(array_object.get(position).getStudents().getFullName());
+        holder.t1.setText(array_object.get(position).getDate());
         if (array_object.get(position).getCommentStatus() == 0) {
             holder.statusTxt.setText("تاییده شده");
             holder.statusTxt.setTextColor(context.getResources().getColor(R.color.green_A700));
         } else if (array_object.get(position).getCommentStatus() == 1) {
             holder.statusTxt.setText("در حال انتظار");
             holder.statusTxt.setTextColor(context.getResources().getColor(R.color.brown_700));
-        }
-        else if (array_object.get(position).getCommentStatus() == 2) {
+        } else if (array_object.get(position).getCommentStatus() == 2) {
             holder.statusTxt.setText("عدم تایید");
             holder.statusTxt.setTextColor(context.getResources().getColor(R.color.red_700));
         }
@@ -201,7 +200,8 @@ public class CommentTeacherListAdapter extends RecyclerView.Adapter<CommentTeach
         ImageView icon;
         CheckBox checkBox;
         LinearLayout approve, unapprove, deleteBtn;
-TextView t1,t2;
+        TextView t1, t2;
+
         private ViewHolder(View itemView) {
             super(itemView);
 

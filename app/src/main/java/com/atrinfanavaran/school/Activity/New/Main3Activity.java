@@ -78,6 +78,9 @@ public class Main3Activity extends BaseActivity {
             controller().GetFromApi2(address, new CallbackGetString() {
                 @Override
                 public void onSuccess(String resultStr) {
+                    try {
+
+
                     Log.i(TAG, "notif: " + resultStr);
                     AnnouncementGetForStudent announcementGetForStudent = gson().fromJson(resultStr, AnnouncementGetForStudent.class);
 
@@ -85,6 +88,9 @@ public class Main3Activity extends BaseActivity {
                     adapternotif = new AnnouncementGetForStudentListAdapter(announcementGetForStudent.getData());
                     recyclerviewviewnotif.setAdapter(adapternotif);
                     progressBarnotif.setVisibility(View.GONE);
+                    }catch (Exception e){
+                        Toast.makeText(Main3Activity.this, ""+e, Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
@@ -187,69 +193,79 @@ public class Main3Activity extends BaseActivity {
         controller().GetFromApi2("api/Banner/GetAll?Id=" + settingsBll().getApplicationUserId(), new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
-                BannerGetAll result = gson().fromJson(resultStr, BannerGetAll.class);
+                try {
+                    BannerGetAll result = gson().fromJson(resultStr, BannerGetAll.class);
 
-                if (result.getData().size() > 0) {
-                    int n = 0;
-                    int z = 0;
-                    for (int i = 0; i < result.getData().size(); i++) {
-                        if (result.getData().get(i).isShowOnMainPage()) {
+                    if (result.getData().size() > 0) {
+                        int n = 0;
+                        int z = 0;
+                        for (int i = 0; i < result.getData().size(); i++) {
+                            if (result.getData().get(i).isShowOnMainPage()) {
 
-                            if (result.getData().get(i).getBannerPlace() == 0) {
-                                n++;
-                                banner1.setVisibility(View.VISIBLE);
+                                if (result.getData().get(i).getBannerPlace() == 0) {
+                                    n++;
+                                    banner1.setVisibility(View.VISIBLE);
 
-                                DefaultSliderView DefaultSliderView = new DefaultSliderView(getActivity());
-                                int finalI = i;
-                                DefaultSliderView
-                                        .setOnSliderClickListener(slider -> {
-                                            Intent i1 = new Intent(Main3Activity.this, ShowPostActivity.class);
-                                            i1.putExtra("Id", result.getData().get(finalI).getPostsInBanner());
-                                            startActivity(i1);
-                                        })
-                                        .image(settingsBll().getUrlAddress() + "/" + result.getData().get(i).getUrl())
-                                        .setScaleType(BaseSliderView.ScaleType.Fit);
+                                    DefaultSliderView DefaultSliderView = new DefaultSliderView(getActivity());
+                                    int finalI = i;
+                                    DefaultSliderView
+                                            .setOnSliderClickListener(slider -> {
+                                                Intent i1 = new Intent(Main3Activity.this, ListPostActivity.class);
+                                                if (result.getData().get(finalI).getCategoryId() != 0) {
+                                                    i1.putExtra("Id", result.getData().get(finalI).getCategoryId());
+                                                    i1.putExtra("kind", "categoryId");
+                                                } else if (result.getData().get(finalI).getPostsInBanner() != null) {
+                                                    i1.putExtra("Id", result.getData().get(finalI).getPostsInBanner());
+                                                    i1.putExtra("kind", "PostsInBanner");
+                                                }
+                                                startActivity(i1);
+                                            })
+                                            .image(settingsBll().getUrlAddress() + "/" + result.getData().get(i).getUrl())
+                                            .setScaleType(BaseSliderView.ScaleType.Fit);
 
-                                banner1.addSlider(DefaultSliderView);
+                                    banner1.addSlider(DefaultSliderView);
 
-                                if (n < 2) {
-                                    banner1.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
-                                    banner1.stopAutoCycle();
-                                } else {
-                                    banner1.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
-                                    banner1.startAutoCycle();
+                                    if (n < 2) {
+                                        banner1.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
+                                        banner1.stopAutoCycle();
+                                    } else {
+                                        banner1.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
+                                        banner1.startAutoCycle();
 
-                                }
-                                banner1.setDuration(6000);
-                            } else if (result.getData().get(i).getBannerPlace() == 1) {
-                                z++;
-                                banner2.setVisibility(View.VISIBLE);
+                                    }
+                                    banner1.setDuration(6000);
+                                } else if (result.getData().get(i).getBannerPlace() == 1) {
+                                    z++;
+                                    banner2.setVisibility(View.VISIBLE);
 
-                                DefaultSliderView DefaultSliderView = new DefaultSliderView(getActivity());
-                                DefaultSliderView
-                                        .setOnSliderClickListener(slider -> {
+                                    DefaultSliderView DefaultSliderView = new DefaultSliderView(getActivity());
+                                    DefaultSliderView
+                                            .setOnSliderClickListener(slider -> {
 //                                            Intent i1 = new Intent(Intent.ACTION_VIEW);
 //                                                i1.setData(Uri.parse(Url));
 //                                            startActivity(i1);
-                                        })
-                                        .image(settingsBll().getUrlAddress() + "/" + result.getData().get(i).getUrl())
-                                        .setScaleType(BaseSliderView.ScaleType.Fit);
+                                            })
+                                            .image(settingsBll().getUrlAddress() + "/" + result.getData().get(i).getUrl())
+                                            .setScaleType(BaseSliderView.ScaleType.Fit);
 
-                                banner2.addSlider(DefaultSliderView);
+                                    banner2.addSlider(DefaultSliderView);
 
-                                if (z < 2) {
-                                    banner2.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
-                                    banner2.stopAutoCycle();
-                                } else {
-                                    banner2.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
-                                    banner2.startAutoCycle();
+                                    if (z < 2) {
+                                        banner2.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
+                                        banner2.stopAutoCycle();
+                                    } else {
+                                        banner2.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Visible);
+                                        banner2.startAutoCycle();
+                                    }
+                                    banner2.setDuration(5000);
+
                                 }
-                                banner2.setDuration(5000);
-
                             }
-                        }
 
+                        }
                     }
+                }catch (Exception e){
+                    Toast.makeText(Main3Activity.this, ""+e, Toast.LENGTH_SHORT).show();
                 }
 
             }

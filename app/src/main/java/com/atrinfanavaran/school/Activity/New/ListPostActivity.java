@@ -36,6 +36,7 @@ public class ListPostActivity extends BaseActivity {
     private TextView titleTxt;
     private int CategoryId;
     private SettingsBll settingsBll;
+    private String kind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +82,15 @@ public class ListPostActivity extends BaseActivity {
         warningTxt.setText(R.string.noData);
         String address = "";
         CategoryId = getIntent().getIntExtra("CategoryId", 0);
+        kind = getIntent().getStringExtra("kind");
         if (CategoryId != 0) {
             address = "api/EducationPost/GetByCategory?Id=" + CategoryId;
-        } else {
+        } else if(kind!=null && kind.equals("categoryId")) {
+            address = "api/GetRelatedPostsByCategory/GetAll?Id=" + settingsBll().getApplicationUserId();
+        } else if(kind!=null && kind.equals("PostsInBanner")) {
             address = "api/EducationPost/GetAll?Id=" + settingsBll().getApplicationUserId();
+        }else{
+            address = "api/GetRelatedPostsByCategory/GetAll?Id=" + settingsBll().getApplicationUserId();
         }
 
         controller().GetFromApi2(address, new CallbackGetString() {
@@ -178,12 +184,12 @@ public class ListPostActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListPostActivity.this,BookmarkListActivity.class);
+            Intent intent = new Intent(ListPostActivity.this, BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
-        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        ConstraintLayout postLayout = findViewById(R.id.postlayout);
         if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
             postLayout.setVisibility(View.GONE);
         }

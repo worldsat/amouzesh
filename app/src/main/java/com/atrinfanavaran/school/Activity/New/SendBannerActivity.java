@@ -465,6 +465,16 @@ public class SendBannerActivity extends BaseActivity {
                 for (int i = 0; i < educationPostGetAll.getData().size(); i++) {
                     boolean tick = false;
 //                    if (i == 0) tick = true;
+                    if (object != null && object.getBannerToPosts() != null) {
+                        String[] id = object.getBannerToPosts().toString().replace("[", "").replace("]", "").split(",");
+                        if (id.length > 0) {
+                            for (int j = 0; j < id.length; j++) {
+                                if (id.equals(String.valueOf(educationPostGetAll.getData().get(i).getId()))) {
+                                    tick = true;
+                                }
+                            }
+                        }
+                    }
                     array_object.add(new DropdownList(
                             educationPostGetAll.getData().get(i).getTitle()
                             , educationPostGetAll.getData().get(i).getId(),
@@ -498,7 +508,10 @@ public class SendBannerActivity extends BaseActivity {
                 CategoryGetAll categoryGetAll = gson().fromJson(resultStr, CategoryGetAll.class);
                 for (int i = 0; i < categoryGetAll.getData().size(); i++) {
                     boolean tick = false;
-//                    if (i == 0) tick = true;
+
+                    if (object != null && object.getCategoryId() == (categoryGetAll.getData().get(i).getId())) {
+                        tick = true;
+                    }
                     array_object.add(new DropdownList(
                             categoryGetAll.getData().get(i).getName()
                             , categoryGetAll.getData().get(i).getId(),
