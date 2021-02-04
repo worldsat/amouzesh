@@ -465,12 +465,13 @@ public class SendBannerActivity extends BaseActivity {
                 for (int i = 0; i < educationPostGetAll.getData().size(); i++) {
                     boolean tick = false;
 //                    if (i == 0) tick = true;
-                    if (object != null && object.getBannerToPosts() != null) {
-                        String[] id = object.getBannerToPosts().toString().replace("[", "").replace("]", "").split(",");
+                    if (object != null && object.getPostsInBanner() != null) {
+                        String[] id = object.getPostsInBanner().toString().replace("[", "").replace("]", "").split(",");
                         if (id.length > 0) {
                             for (int j = 0; j < id.length; j++) {
-                                if (id.equals(String.valueOf(educationPostGetAll.getData().get(i).getId()))) {
+                                if (id[j].equals(String.valueOf(educationPostGetAll.getData().get(i).getId()))) {
                                     tick = true;
+                                    PostSelectIds.add(Integer.valueOf(id[j]));
                                 }
                             }
                         }
@@ -511,6 +512,7 @@ public class SendBannerActivity extends BaseActivity {
 
                     if (object != null && object.getCategoryId() == (categoryGetAll.getData().get(i).getId())) {
                         tick = true;
+                        params.put("CategoryId", object.getCategoryId());
                     }
                     array_object.add(new DropdownList(
                             categoryGetAll.getData().get(i).getName()

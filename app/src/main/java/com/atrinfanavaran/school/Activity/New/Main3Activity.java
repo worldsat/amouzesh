@@ -81,15 +81,15 @@ public class Main3Activity extends BaseActivity {
                     try {
 
 
-                    Log.i(TAG, "notif: " + resultStr);
-                    AnnouncementGetForStudent announcementGetForStudent = gson().fromJson(resultStr, AnnouncementGetForStudent.class);
+                        Log.i(TAG, "notif: " + resultStr);
+                        AnnouncementGetForStudent announcementGetForStudent = gson().fromJson(resultStr, AnnouncementGetForStudent.class);
 
 
-                    adapternotif = new AnnouncementGetForStudentListAdapter(announcementGetForStudent.getData());
-                    recyclerviewviewnotif.setAdapter(adapternotif);
-                    progressBarnotif.setVisibility(View.GONE);
-                    }catch (Exception e){
-                        Toast.makeText(Main3Activity.this, ""+e, Toast.LENGTH_SHORT).show();
+                        adapternotif = new AnnouncementGetForStudentListAdapter(announcementGetForStudent.getData());
+                        recyclerviewviewnotif.setAdapter(adapternotif);
+                        progressBarnotif.setVisibility(View.GONE);
+                    } catch (Exception e) {
+                        Toast.makeText(Main3Activity.this, "" + e, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -210,15 +210,21 @@ public class Main3Activity extends BaseActivity {
                                     int finalI = i;
                                     DefaultSliderView
                                             .setOnSliderClickListener(slider -> {
-                                                Intent i1 = new Intent(Main3Activity.this, ListPostActivity.class);
+
                                                 if (result.getData().get(finalI).getCategoryId() != 0) {
+                                                    Intent i1 = new Intent(Main3Activity.this, ListPostActivity.class);
                                                     i1.putExtra("Id", result.getData().get(finalI).getCategoryId());
                                                     i1.putExtra("kind", "categoryId");
-                                                } else if (result.getData().get(finalI).getPostsInBanner() != null) {
-                                                    i1.putExtra("Id", result.getData().get(finalI).getPostsInBanner());
+                                                    startActivity(i1);
+                                                } else if (result.getData().get(finalI).getPostsInBanner().size() != 0) {
+                                                    Intent i1 = new Intent(Main3Activity.this, ListPostActivity.class);
+                                                    Log.i(TAG, "onSuccess: "+result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", ""));
+                                                    i1.putExtra("Id",result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", ""));
+
                                                     i1.putExtra("kind", "PostsInBanner");
+                                                    startActivity(i1);
                                                 }
-                                                startActivity(i1);
+
                                             })
                                             .image(settingsBll().getUrlAddress() + "/" + result.getData().get(i).getUrl())
                                             .setScaleType(BaseSliderView.ScaleType.Fit);
@@ -236,14 +242,25 @@ public class Main3Activity extends BaseActivity {
                                     banner1.setDuration(6000);
                                 } else if (result.getData().get(i).getBannerPlace() == 1) {
                                     z++;
+                                    int finalI = i;
                                     banner2.setVisibility(View.VISIBLE);
 
                                     DefaultSliderView DefaultSliderView = new DefaultSliderView(getActivity());
                                     DefaultSliderView
                                             .setOnSliderClickListener(slider -> {
-//                                            Intent i1 = new Intent(Intent.ACTION_VIEW);
-//                                                i1.setData(Uri.parse(Url));
-//                                            startActivity(i1);
+                                                if (result.getData().get(finalI).getCategoryId() != 0) {
+                                                    Intent i1 = new Intent(Main3Activity.this, ListPostActivity.class);
+                                                    i1.putExtra("Id", result.getData().get(finalI).getCategoryId());
+                                                    i1.putExtra("kind", "categoryId");
+                                                    startActivity(i1);
+                                                } else if (result.getData().get(finalI).getPostsInBanner().size() != 0) {
+                                                    Intent i1 = new Intent(Main3Activity.this, ListPostActivity.class);
+                                                    Log.i(TAG, "onSuccess: "+result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", ""));
+                                                    i1.putExtra("Id",result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", ""));
+
+                                                    i1.putExtra("kind", "PostsInBanner");
+                                                    startActivity(i1);
+                                                }
                                             })
                                             .image(settingsBll().getUrlAddress() + "/" + result.getData().get(i).getUrl())
                                             .setScaleType(BaseSliderView.ScaleType.Fit);
@@ -264,8 +281,8 @@ public class Main3Activity extends BaseActivity {
 
                         }
                     }
-                }catch (Exception e){
-                    Toast.makeText(Main3Activity.this, ""+e, Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(Main3Activity.this, "" + e, Toast.LENGTH_SHORT).show();
                 }
 
             }

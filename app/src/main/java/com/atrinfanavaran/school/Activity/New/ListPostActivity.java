@@ -36,7 +36,7 @@ public class ListPostActivity extends BaseActivity {
     private TextView titleTxt;
     private int CategoryId;
     private SettingsBll settingsBll;
-    private String kind;
+    private String kind,data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,14 +83,15 @@ public class ListPostActivity extends BaseActivity {
         String address = "";
         CategoryId = getIntent().getIntExtra("CategoryId", 0);
         kind = getIntent().getStringExtra("kind");
+        data = getIntent().getStringExtra("Id");
         if (CategoryId != 0) {
             address = "api/EducationPost/GetByCategory?Id=" + CategoryId;
         } else if(kind!=null && kind.equals("categoryId")) {
-            address = "api/GetRelatedPostsByCategory/GetAll?Id=" + settingsBll().getApplicationUserId();
+            address = "api/EducationPost/GetCollectionPosts?Id=" + data;
         } else if(kind!=null && kind.equals("PostsInBanner")) {
-            address = "api/EducationPost/GetAll?Id=" + settingsBll().getApplicationUserId();
+            address = "api/EducationPost/GetRelatedPostsByCategory?Id=" + data;
         }else{
-            address = "api/GetRelatedPostsByCategory/GetAll?Id=" + settingsBll().getApplicationUserId();
+            address = "api/EducationPost/GetAll?Id=" + settingsBll().getApplicationUserId();
         }
 
         controller().GetFromApi2(address, new CallbackGetString() {
@@ -99,7 +100,7 @@ public class ListPostActivity extends BaseActivity {
                 try {
                     EducationPostGetAll educationPostGetAll = gson().fromJson(resultStr, EducationPostGetAll.class);
 
-                    if (educationPostGetAll.getData().size() > 0) {
+                    if (educationPostGetAll.getData()!=null && educationPostGetAll.getData().size() > 0) {
                         warningTxt.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                         recyclerViewlistPost.setVisibility(View.VISIBLE);
