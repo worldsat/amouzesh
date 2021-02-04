@@ -38,10 +38,7 @@
         <activity android:name=".Activity.New.ListCategoryActivity"></activity>
         <activity android:name=".Activity.New.ListBannerActivity" />
         <activity android:name=".Activity.New.SendCategoryActivity" />
-        <activity android:name=".Activity.New.Main1Activity" />
         <activity android:name=".Activity.New.Main2Activity" />
-        <activity android:name=".Activity.New.Main4Activity" />
-        <activity android:name=".Activity.New.Main5Activity" />
         <activity android:name=".Activity.New.Main3Activity" />
         <activity android:name=".Activity.New.SoundActivity" />
         <activity android:name=".Activity.New.ListAnnouncementActivity" />

@@ -71,7 +71,8 @@ public class Main3Activity extends BaseActivity {
 
     private void getNotification() {
         if (settingsBll.getUserType() == 2) {
-            String address = "api/Announcement/GetForStudent?Id=" + settingsBll().getApplicationUserId();
+            String address = "api/Announcement/GetForMainPage?Id=" + settingsBll().getApplicationUserId();
+            recyclerviewviewnotif.setVisibility(View.GONE);
             recyclerviewviewnotif.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             recyclerviewviewnotif.setNestedScrollingEnabled(false);
             progressBarnotif.setVisibility(View.VISIBLE);
@@ -105,7 +106,7 @@ public class Main3Activity extends BaseActivity {
     private void getCategory() {
 
 
-        String address = "api/Category/GetAll?UserId=" + settingsBll().getApplicationUserId();
+        String address = "api/Category/GetForMainPage?UserId=" + settingsBll().getApplicationUserId();
         recyclerviewCategorySmall.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerviewCategorySmall.setNestedScrollingEnabled(false);
         progressBarCategory.setVisibility(View.VISIBLE);
@@ -189,8 +190,10 @@ public class Main3Activity extends BaseActivity {
 
     private void setBanner() {
         banner1.stopAutoCycle();
+        banner1.setVisibility(View.GONE);
         banner2.stopAutoCycle();
-        controller().GetFromApi2("api/Banner/GetAll?Id=" + settingsBll().getApplicationUserId(), new CallbackGetString() {
+        banner2.setVisibility(View.GONE);
+        controller().GetFromApi2("api/Banner/GetForMainPage?Id=" + settingsBll().getApplicationUserId(), new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
                 try {
