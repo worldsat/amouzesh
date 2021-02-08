@@ -1,7 +1,10 @@
 package com.atrinfanavaran.school.Domain.New;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EducationPostGetAll implements Serializable {
 
@@ -76,6 +79,7 @@ public class EducationPostGetAll implements Serializable {
         private int number;
         private int accessType;
         private boolean pin;
+        private boolean isOnlyForTeacher;
         private int categoryId;
         private Object category;
         private String applicationUserId;
@@ -85,7 +89,60 @@ public class EducationPostGetAll implements Serializable {
         private int status;
         private ArrayList<Medias> medias;
         private ArrayList<Integer> students;
+        private ArrayList<String> teachers;
+        private List<CustomGroupsToEducationPosts> customGroupsToEducationPosts;
 
+        public List<CustomGroupsToEducationPosts> getCustomGroupsToEducationPosts() {
+            return customGroupsToEducationPosts;
+        }
+
+        public void setCustomGroupsToEducationPosts(List<CustomGroupsToEducationPosts> customGroupsToEducationPosts) {
+            this.customGroupsToEducationPosts = customGroupsToEducationPosts;
+        }
+
+        public static class CustomGroupsToEducationPosts implements Serializable {
+            /**
+             * id : 17
+             * isForStudent : true
+             * idHelper : 785478
+             */
+
+            @SerializedName("id")
+            private int idX;
+            private boolean isForStudent;
+            private int idHelper;
+
+            public int getIdX() {
+                return idX;
+            }
+
+            public void setIdX(int idX) {
+                this.idX = idX;
+            }
+
+            public boolean isIsForStudent() {
+                return isForStudent;
+            }
+
+            public void setIsForStudent(boolean isForStudent) {
+                this.isForStudent = isForStudent;
+            }
+
+            public int getIdHelper() {
+                return idHelper;
+            }
+
+            public void setIdHelper(int idHelper) {
+                this.idHelper = idHelper;
+            }
+        }
+        public boolean isIsOnlyForTeacher() {
+            return isOnlyForTeacher;
+        }
+
+        public void setIsOnlyForTeacher(boolean isOnlyForTeacher) {
+            this.isOnlyForTeacher = isOnlyForTeacher;
+        }
         public int getId() {
             return id;
         }
@@ -210,8 +267,16 @@ public class EducationPostGetAll implements Serializable {
             return students;
         }
 
-        public void setStudents(ArrayList<Integer> students) {
-            this.students = students;
+        public void setStudents(ArrayList<Integer> teachers) {
+            this.students = teachers;
+        }
+
+        public ArrayList<String> getTeachers() {
+            return teachers;
+        }
+
+        public void setTeachers(ArrayList<String> teachers) {
+            this.teachers = teachers;
         }
 
         public static class Medias implements Serializable{
@@ -552,4 +617,5 @@ public class EducationPostGetAll implements Serializable {
             }
         }
     }
+
 }

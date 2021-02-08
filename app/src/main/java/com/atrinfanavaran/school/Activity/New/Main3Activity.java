@@ -114,11 +114,15 @@ public class Main3Activity extends BaseActivity {
             @Override
             public void onSuccess(String resultStr) {
                 Log.i(TAG, "category: " + resultStr);
-                CategoryGetAll categoryGetAll = gson().fromJson(resultStr, CategoryGetAll.class);
+                try {
+                    CategoryGetAll categoryGetAll = gson().fromJson(resultStr, CategoryGetAll.class);
 
-                adapterCategory = new CategorySmallAdapter(categoryGetAll.getData());
-                recyclerviewCategorySmall.setAdapter(adapterCategory);
-                progressBarCategory.setVisibility(View.GONE);
+                    adapterCategory = new CategorySmallAdapter(categoryGetAll.getData());
+                    recyclerviewCategorySmall.setAdapter(adapterCategory);
+                    progressBarCategory.setVisibility(View.GONE);
+                }catch (Exception e){
+                    Toast.makeText(Main3Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -230,9 +234,20 @@ public class Main3Activity extends BaseActivity {
 
                                             })
                                             .image(settingsBll().getUrlAddress() + "/" + result.getData().get(i).getUrl())
-                                            .setScaleType(BaseSliderView.ScaleType.Fit);
+                                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                                            .setOnImageLoadListener(new BaseSliderView.ImageLoadListener() {
+                                                @Override
+                                                public void onStart(BaseSliderView target) {
 
+                                                }
+
+                                                @Override
+                                                public void onEnd(boolean result, BaseSliderView target) {
+
+                                                }
+                                            });
                                     banner1.addSlider(DefaultSliderView);
+
 
                                     if (n < 2) {
                                         banner1.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
@@ -266,9 +281,20 @@ public class Main3Activity extends BaseActivity {
                                                 }
                                             })
                                             .image(settingsBll().getUrlAddress() + "/" + result.getData().get(i).getUrl())
-                                            .setScaleType(BaseSliderView.ScaleType.Fit);
+                                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                                    .setOnImageLoadListener(new BaseSliderView.ImageLoadListener() {
+                                        @Override
+                                        public void onStart(BaseSliderView target) {
 
+                                        }
+
+                                        @Override
+                                        public void onEnd(boolean result, BaseSliderView target) {
+
+                                        }
+                                    });
                                     banner2.addSlider(DefaultSliderView);
+
 
                                     if (z < 2) {
                                         banner2.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);

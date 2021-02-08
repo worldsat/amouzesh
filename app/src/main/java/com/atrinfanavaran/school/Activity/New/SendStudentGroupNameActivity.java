@@ -40,7 +40,7 @@ public class SendStudentGroupNameActivity extends BaseActivity {
     private String selectedFilePath;
     private ImageView toggle_icon;
     private LinearLayout iconBtn;
-    private CustomGroup.data object;
+    private CustomGroup.Data object;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class SendStudentGroupNameActivity extends BaseActivity {
     }
 
     private void getBundle() {
-        object = (CustomGroup.data) getIntent().getSerializableExtra("object");
+        object = (CustomGroup.Data) getIntent().getSerializableExtra("object");
 
         if (object != null) {
             edt1.setText(object.getName());
@@ -102,6 +102,7 @@ public class SendStudentGroupNameActivity extends BaseActivity {
                     try {
                         params.put("Name", edt1.getText().toString().trim());
                         params.put("ApplicationUserId", settingsBll.getApplicationUserId());
+                        params.put("IsForTeacher", false);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

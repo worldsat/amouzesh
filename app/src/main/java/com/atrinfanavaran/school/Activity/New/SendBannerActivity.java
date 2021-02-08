@@ -99,13 +99,14 @@ public class SendBannerActivity extends BaseActivity {
     private Switch pinnedSwitch;
     private EditText socialNetworkPostEdt;
     private Editor editor;
-    private LinearLayout PostListBtn, CategoryListBtn, positionBtn, layoutShowTime, timeBtn;
+    private LinearLayout teacherswitchlayout, PostListBtn, CategoryListBtn, positionBtn, layoutShowTime, timeBtn;
     private ImageView toggle_category, toggle_dastresi, toggle_icon, toggle_position, toggle_time;
     private BannerGetAll.Data object;
     private EditText dayShowBanner;
     private ConstraintLayout calendarBtn;
     private TextView dateShowTime;
     private ArrayList<Integer> PostSelectIds = new ArrayList<>();
+    private Switch teacherSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +152,7 @@ public class SendBannerActivity extends BaseActivity {
         if (object != null) {
             socialNetworkPostEdt.setText(object.getSocialNetWorkLink());
             dayShowBanner.setText("" + object.getCreditDays());
+            teacherSwitch.setChecked(object.isIsOnlyForTeacher());
             String availables[] = object.getAvailableDate().split("T");
             if (availables != null && availables.length > 0) {
                 roozh roozh = new roozh();
@@ -224,6 +226,7 @@ public class SendBannerActivity extends BaseActivity {
                 } else {
                     params.put("ShowOnMainPage", false);
                 }
+                params.put("IsOnlyForTeacher", teacherSwitch.isChecked());
                 SettingsBll settingsBll = new SettingsBll(SendBannerActivity.this);
                 params.put("Description", StringEscapeUtils.escapeHtml4(editor.getContentAsHTML()));
                 params.put("ApplicationUserId", settingsBll.getApplicationUserId());
@@ -503,21 +506,27 @@ public class SendBannerActivity extends BaseActivity {
 
         ArrayList<DropdownList> array_object = new ArrayList<>();
 
-        controller().GetFromApi2("api/Category/GetAll?Id=" + settingsBll().getApplicationUserId(), new CallbackGetString() {
+        controller().GetFromApi2("api/Category/GetAll?UserId=" + settingsBll().getApplicationUserId(), new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
-                CategoryGetAll categoryGetAll = gson().fromJson(resultStr, CategoryGetAll.class);
-                for (int i = 0; i < categoryGetAll.getData().size(); i++) {
-                    boolean tick = false;
+                try {
 
-                    if (object != null && object.getCategoryId() == (categoryGetAll.getData().get(i).getId())) {
-                        tick = true;
-                        params.put("CategoryId", object.getCategoryId());
+
+                    CategoryGetAll categoryGetAll = gson().fromJson(resultStr, CategoryGetAll.class);
+                    for (int i = 0; i < categoryGetAll.getData().size(); i++) {
+                        boolean tick = false;
+
+                        if (object != null && object.getCategoryId() == (categoryGetAll.getData().get(i).getId())) {
+                            tick = true;
+                            params.put("CategoryId", object.getCategoryId());
+                        }
+                        array_object.add(new DropdownList(
+                                categoryGetAll.getData().get(i).getName()
+                                , categoryGetAll.getData().get(i).getId(),
+                                tick));
                     }
-                    array_object.add(new DropdownList(
-                            categoryGetAll.getData().get(i).getName()
-                            , categoryGetAll.getData().get(i).getId(),
-                            tick));
+                } catch (Exception e) {
+                    Toast.makeText(SendBannerActivity.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -563,7 +572,15 @@ public class SendBannerActivity extends BaseActivity {
         dayShowBanner = findViewById(R.id.dayShowBanner);
         calendarBtn = findViewById(R.id.icon_background);
         dateShowTime = findViewById(R.id.dateShowTime);
+        teacherSwitch = findViewById(R.id.switch11);
+        teacherswitchlayout = findViewById(R.id.teacherswitchlayout);
 
+
+        if (settingsBll.getUserType() == 0) {
+            teacherswitchlayout.setVisibility(View.VISIBLE);
+        } else {
+            teacherswitchlayout.setVisibility(View.GONE);
+        }
     }
 
     private void NavigationDrawer() {

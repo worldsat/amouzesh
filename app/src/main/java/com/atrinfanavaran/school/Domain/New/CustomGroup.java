@@ -2,7 +2,6 @@ package com.atrinfanavaran.school.Domain.New;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CustomGroup {
 
@@ -10,13 +9,13 @@ public class CustomGroup {
      * success : true
      * status : 200
      * message : عملیات انجام شد
-     * data : [{"id":2,"name":"Test1","date":"2021-01-18T13:09:11.9879505","applicationUserId":"d4801771-5087-463f-be54-6d70d2466f39","applicationUser":null,"usersToCustomGroups":null}]
+     * data : [{"id":14,"name":"MainOwnerTest1","isForTeacher":false,"date":"2021-02-07T14:52:37.8825469","applicationUserId":"02174cf0\u20139412\u20134cfe-afbf-59f706d72cf6","applicationUser":null,"usersToCustomGroups":null},{"id":15,"name":"MainOwnerTest2","isForTeacher":false,"date":"2021-02-07T14:53:56.8588091","applicationUserId":"02174cf0\u20139412\u20134cfe-afbf-59f706d72cf6","applicationUser":null,"usersToCustomGroups":null}]
      */
 
     private boolean success;
     private int status;
     private String message;
-    private ArrayList<data> data;
+    private ArrayList<Data> data;
 
     public boolean isSuccess() {
         return success;
@@ -42,30 +41,32 @@ public class CustomGroup {
         this.message = message;
     }
 
-    public ArrayList<data> getData() {
+    public ArrayList<Data> getData() {
         return data;
     }
 
-    public void setData(ArrayList<data> data) {
+    public void setData(ArrayList<Data> data) {
         this.data = data;
     }
 
-    public static class data implements Serializable {
+    public static class Data implements Serializable {
         /**
-         * id : 2
-         * name : Test1
-         * date : 2021-01-18T13:09:11.9879505
-         * applicationUserId : d4801771-5087-463f-be54-6d70d2466f39
+         * id : 14
+         * name : MainOwnerTest1
+         * isForTeacher : false
+         * date : 2021-02-07T14:52:37.8825469
+         * applicationUserId : 02174cf0–9412–4cfe-afbf-59f706d72cf6
          * applicationUser : null
          * usersToCustomGroups : null
          */
 
         private int id;
         private String name;
+        private boolean isForTeacher;
         private String date;
         private String applicationUserId;
-        private String applicationUser;
-        private String usersToCustomGroups;
+        private Object applicationUser;
+        private Object usersToCustomGroups;
 
         public int getId() {
             return id;
@@ -81,6 +82,14 @@ public class CustomGroup {
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public boolean isIsForTeacher() {
+            return isForTeacher;
+        }
+
+        public void setIsForTeacher(boolean isForTeacher) {
+            this.isForTeacher = isForTeacher;
         }
 
         public String getDate() {
@@ -99,19 +108,19 @@ public class CustomGroup {
             this.applicationUserId = applicationUserId;
         }
 
-        public String getApplicationUser() {
+        public Object getApplicationUser() {
             return applicationUser;
         }
 
-        public void setApplicationUser(String applicationUser) {
+        public void setApplicationUser(Object applicationUser) {
             this.applicationUser = applicationUser;
         }
 
-        public String getUsersToCustomGroups() {
+        public Object getUsersToCustomGroups() {
             return usersToCustomGroups;
         }
 
-        public void setUsersToCustomGroups(String usersToCustomGroups) {
+        public void setUsersToCustomGroups(Object usersToCustomGroups) {
             this.usersToCustomGroups = usersToCustomGroups;
         }
     }

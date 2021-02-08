@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,10 +35,10 @@ public class SendAnnouncementActivity extends BaseActivity {
     private TextView titleTxt;
     private EditText edt1;
     private EditText edt2;
-    private LinearLayout saveBtn, backBtn;
+    private LinearLayout saveBtn, backBtn,teacherswitchlayout;
     private JSONObject params = new JSONObject();
     private AnnouncementGetAll.Data object;
-
+private Switch aSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,9 @@ public class SendAnnouncementActivity extends BaseActivity {
 
         if (object != null) {
             edt1.setText(object.getText());
+            if (object.isIsOnlyForTeacher()) {
+                aSwitch.setChecked(true);
+            }
             if (object.getAvailableDays() != 0) {
                 edt2.setText(object.getAvailableDays());
             }
@@ -104,6 +108,7 @@ public class SendAnnouncementActivity extends BaseActivity {
                             params.put("AvailableDays", edt2.getText().toString().trim());
                         }
                         params.put("ApplicationUserId", settingsBll.getApplicationUserId());
+                        params.put("IsOnlyForTeacher", aSwitch.isChecked());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -158,7 +163,16 @@ public class SendAnnouncementActivity extends BaseActivity {
         edt2 = findViewById(R.id.edt2);
         saveBtn = findViewById(R.id.sendBtn);
         backBtn = findViewById(R.id.backBtn);
+        aSwitch = findViewById(R.id.switch10);
 
+        teacherswitchlayout = findViewById(R.id.teacherswitchlayout);
+
+
+        if(settingsBll.getUserType()==0){
+            teacherswitchlayout.setVisibility(View.VISIBLE);
+        }else{
+            teacherswitchlayout.setVisibility(View.GONE);
+        }
     }
 
     private void bottomView() {

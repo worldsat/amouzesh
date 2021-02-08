@@ -19,11 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.school.Adapter.New.PostMiniListAdapter;
-import com.atrinfanavaran.school.Adapter.New.StudentNameListSelectedAdapter;
-import com.atrinfanavaran.school.Adapter.New.StudentNameListUnSelectedAdapter;
+import com.atrinfanavaran.school.Adapter.New.TeacherNameListSelectedAdapter;
+import com.atrinfanavaran.school.Adapter.New.TeacherNameListUnSelectedAdapter;
 import com.atrinfanavaran.school.Domain.New.CustomGroup;
 import com.atrinfanavaran.school.Domain.New.CustomGroupGetById;
-import com.atrinfanavaran.school.Domain.New.GetRelatedStudentsFromCustomGroup;
+import com.atrinfanavaran.school.Domain.New.GetRelatedTeachersFromCustomGroup;
 import com.atrinfanavaran.school.Domain.New.ManageDomain;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
@@ -39,7 +39,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ListStudentNameActivity extends BaseActivity {
+public class ListTeacherNameActivity extends BaseActivity {
     private RecyclerView recyclerViewlistPost;
     private RecyclerView.Adapter adapter;
 
@@ -54,7 +54,7 @@ public class ListStudentNameActivity extends BaseActivity {
     private CustomGroup.Data object;
     private LinearLayout SendBtn;
     private TextView titleBtn;
-    private ArrayList<Integer> SelectedStudentId = new ArrayList<>();
+    private ArrayList<Integer> SelectedTeacherId = new ArrayList<>();
     private HashMap<String, Object> param = new HashMap<>();
 
     @Override
@@ -123,30 +123,30 @@ public class ListStudentNameActivity extends BaseActivity {
                         progressBar.setVisibility(View.GONE);
                         recyclerViewlistPost.setVisibility(View.VISIBLE);
 
-                        adapter = new StudentNameListSelectedAdapter(list.getData().getUsersToCustomGroups(), new PostMiniListAdapter.SelectCallBack() {
+                        adapter = new TeacherNameListSelectedAdapter(list.getData().getUsersToCustomGroups(), new PostMiniListAdapter.SelectCallBack() {
                             @Override
                             public void Id(int num, boolean allSelect) {
 
-                                if (SelectedStudentId.contains(num)) {
-                                    for (int i = 0; i < SelectedStudentId.size(); i++) {
-                                        if (SelectedStudentId.get(i) == num) {
-                                            SelectedStudentId.remove(i);
+                                if (SelectedTeacherId.contains(num)) {
+                                    for (int i = 0; i < SelectedTeacherId.size(); i++) {
+                                        if (SelectedTeacherId.get(i) == num) {
+                                            SelectedTeacherId.remove(i);
                                             break;
                                         }
                                     }
                                 } else {
-                                    SelectedStudentId.add(num);
+                                    SelectedTeacherId.add(num);
                                 }
 
-                                Log.i(TAG, "StudentSelectedId: " + SelectedStudentId.toString().replace(" ", ""));
-                                if (SelectedStudentId.size() > 0) {
-                                    param.put("StudentId", SelectedStudentId.toString().replace(" ", ""));
+                                Log.i(TAG, "TeacherSelectedId: " + SelectedTeacherId.toString().replace(" ", ""));
+                                if (SelectedTeacherId.size() > 0) {
+                                    param.put("TeacherId", SelectedTeacherId.toString().replace(" ", ""));
                                 } else {
-                                    if (param.get("StudentId") != null) {
-                                        param.remove("StudentId");
+                                    if (param.get("TeacherId") != null) {
+                                        param.remove("TeacherId");
                                     }
                                 }
-                                Log.i(TAG, "StudentSelectedId: " + param.get("StudentId"));
+                                Log.i(TAG, "StudentSelectedId: " + param.get("TeacherId"));
                             }
                         });
                         recyclerViewlistPost.setAdapter(adapter);
@@ -162,7 +162,7 @@ public class ListStudentNameActivity extends BaseActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListStudentNameActivity.this, error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListTeacherNameActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -171,7 +171,7 @@ public class ListStudentNameActivity extends BaseActivity {
         progressBar.setVisibility(View.VISIBLE);
         recyclerViewlistPost.setVisibility(View.GONE);
         warningTxt.setVisibility(View.GONE);
-        String address = "api/CustomGroup/GetRelatedStudentsFromCustomGroup?groupId=" + object.getId() + "&UserId=" + settingsBll().getApplicationUserId();
+        String address = "api/CustomGroup/GetRelatedTeachersFromCustomGroup?groupId=" + object.getId() + "&UserId=" + settingsBll().getApplicationUserId();
         if (search) {
             address = "api/CustomGroup/Search?txtSearch=" + edtSearch.getText().toString().trim() + "&UserId=" + settingsBll().getApplicationUserId();
         }
@@ -179,37 +179,37 @@ public class ListStudentNameActivity extends BaseActivity {
             @Override
             public void onSuccess(String resultStr) {
                 try {
-                    GetRelatedStudentsFromCustomGroup list = gson().fromJson(resultStr, GetRelatedStudentsFromCustomGroup.class);
+                    GetRelatedTeachersFromCustomGroup list = gson().fromJson(resultStr, GetRelatedTeachersFromCustomGroup.class);
 
                     if (list.getData().size() > 0) {
                         warningTxt.setVisibility(View.GONE);
                         progressBar.setVisibility(View.GONE);
                         recyclerViewlistPost.setVisibility(View.VISIBLE);
 
-                        adapter = new StudentNameListUnSelectedAdapter(list.getData(), new PostMiniListAdapter.SelectCallBack() {
+                        adapter = new TeacherNameListUnSelectedAdapter(list.getData(), new PostMiniListAdapter.SelectCallBack() {
                             @Override
                             public void Id(int num, boolean allSelect) {
 
-                                if (SelectedStudentId.contains(num)) {
-                                    for (int i = 0; i < SelectedStudentId.size(); i++) {
-                                        if (SelectedStudentId.get(i) == num) {
-                                            SelectedStudentId.remove(i);
+                                if (SelectedTeacherId.contains(num)) {
+                                    for (int i = 0; i < SelectedTeacherId.size(); i++) {
+                                        if (SelectedTeacherId.get(i) == num) {
+                                            SelectedTeacherId.remove(i);
                                             break;
                                         }
                                     }
                                 } else {
-                                    SelectedStudentId.add(num);
+                                    SelectedTeacherId.add(num);
                                 }
 
-                                Log.i(TAG, "StudentSelectedId: " + SelectedStudentId.toString().replace(" ", ""));
-                                if (SelectedStudentId.size() > 0) {
-                                    param.put("StudentId", SelectedStudentId.toString().replace(" ", ""));
+                                Log.i(TAG, "StudentSelectedId: " + SelectedTeacherId.toString().replace(" ", ""));
+                                if (SelectedTeacherId.size() > 0) {
+                                    param.put("TeacherId", SelectedTeacherId.toString().replace(" ", ""));
                                 } else {
-                                    if (param.get("StudentId") != null) {
-                                        param.remove("StudentId");
+                                    if (param.get("TeacherId") != null) {
+                                        param.remove("TeacherId");
                                     }
                                 }
-                                Log.i(TAG, "StudentSelectedId: " + param.get("StudentId"));
+                                Log.i(TAG, "StudentSelectedId: " + param.get("TeacherId"));
                             }
                         });
                         recyclerViewlistPost.setAdapter(adapter);
@@ -225,7 +225,7 @@ public class ListStudentNameActivity extends BaseActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListStudentNameActivity.this, error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListTeacherNameActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -248,8 +248,8 @@ public class ListStudentNameActivity extends BaseActivity {
         SendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (param.get("StudentId") == null) {
-                    Toast.makeText(ListStudentNameActivity.this, "هیچ مورد انتخاب نشده است", Toast.LENGTH_SHORT).show();
+                if (param.get("TeacherId") == null) {
+                    Toast.makeText(ListTeacherNameActivity.this, "هیچ مورد انتخاب نشده است", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (Action.equals("Select")) {
@@ -265,35 +265,35 @@ public class ListStudentNameActivity extends BaseActivity {
     private void SendToSelected() {
         JSONObject params = new JSONObject();
         try {
-            params.put("StudentId", param.get("StudentId").toString().replace("\"", ""));
+            params.put("TeacherId", param.get("TeacherId").toString().replace("\"", ""));
             params.put("GroupId", object.getId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        MaterialDialog wait = new Waiting(ListStudentNameActivity.this).alertWaiting();
+        MaterialDialog wait = new Waiting(ListTeacherNameActivity.this).alertWaiting();
         wait.show();
-        controller().operationProcess(ListStudentNameActivity.this, "api/CustomGroup/AddStudentToGroup", params.toString().replace("\"[", "[").replace("]\"", "]"), new CallbackOperation() {
+        controller().operationProcess(ListTeacherNameActivity.this, "api/CustomGroup/AddTeacherToGroup", params.toString().replace("\"[", "[").replace("]\"", "]"), new CallbackOperation() {
             @Override
             public void onSuccess(String result) {
                 try {
                     Gson gson = new Gson();
                     ManageDomain manageDomain = gson.fromJson(result, ManageDomain.class);
-                    Toast.makeText(ListStudentNameActivity.this, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ListTeacherNameActivity.this, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
                     if (manageDomain.isSuccess()) {
                         finish();
-                        Intent intent = new Intent(ListStudentNameActivity.this, ListStudentActivity.class);
+                        Intent intent = new Intent(ListTeacherNameActivity.this, ListStudentActivity.class);
                         startActivity(intent);
                     }
 
                 } catch (Exception e) {
-                    Toast.makeText(ListStudentNameActivity.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ListTeacherNameActivity.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
                 }
                 wait.dismiss();
             }
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListStudentNameActivity.this, error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListTeacherNameActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -303,35 +303,35 @@ public class ListStudentNameActivity extends BaseActivity {
     private void SendToUnSelected() {
         JSONObject params = new JSONObject();
         try {
-            params.put("UsersId", param.get("StudentId").toString().replace("\"", ""));
+            params.put("UsersId", param.get("TeacherId").toString().replace("\"", ""));
             params.put("CustomGrupId", object.getId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        MaterialDialog wait = new Waiting(ListStudentNameActivity.this).alertWaiting();
+        MaterialDialog wait = new Waiting(ListTeacherNameActivity.this).alertWaiting();
         wait.show();
-        controller().operationProcess(ListStudentNameActivity.this, "api/CustomGroup/RemoveStudentFromGroup", params.toString().replace("\"[", "[").replace("]\"", "]"), new CallbackOperation() {
+        controller().operationProcess(ListTeacherNameActivity.this, "api/CustomGroup/RemoveTeacherFromGroup", params.toString().replace("\"[", "[").replace("]\"", "]"), new CallbackOperation() {
             @Override
             public void onSuccess(String result) {
                 try {
                     Gson gson = new Gson();
                     ManageDomain manageDomain = gson.fromJson(result, ManageDomain.class);
-                    Toast.makeText(ListStudentNameActivity.this, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ListTeacherNameActivity.this, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
                     if (manageDomain.isSuccess()) {
                         finish();
-                        Intent intent = new Intent(ListStudentNameActivity.this, ListStudentActivity.class);
+                        Intent intent = new Intent(ListTeacherNameActivity.this, ListStudentActivity.class);
                         startActivity(intent);
                     }
 
                 } catch (Exception e) {
-                    Toast.makeText(ListStudentNameActivity.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ListTeacherNameActivity.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
                 }
                 wait.dismiss();
             }
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListStudentNameActivity.this, error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListTeacherNameActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -366,31 +366,31 @@ public class ListStudentNameActivity extends BaseActivity {
         view3.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentNameActivity.this, ProfileActivity.class);
+            Intent intent = new Intent(ListTeacherNameActivity.this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn2.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentNameActivity.this, Main2Activity.class);
+            Intent intent = new Intent(ListTeacherNameActivity.this, Main2Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn3.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentNameActivity.this, Main3Activity.class);
+            Intent intent = new Intent(ListTeacherNameActivity.this, Main3Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentNameActivity.this, ListPostActivity.class);
+            Intent intent = new Intent(ListTeacherNameActivity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentNameActivity.this,BookmarkListActivity.class);
+            Intent intent = new Intent(ListTeacherNameActivity.this,BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

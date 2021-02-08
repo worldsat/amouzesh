@@ -28,7 +28,7 @@ import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.ArrayList;
 
-public class ListStudentActivity extends BaseActivity {
+public class ListTeacher2Activity extends BaseActivity {
     private RecyclerView recyclerViewlistPost;
     private RecyclerView.Adapter adapter;
     private FloatingActionButton floatingActionButton1;
@@ -89,7 +89,7 @@ public class ListStudentActivity extends BaseActivity {
                         CustomGroup listTeacher = new CustomGroup();
                         ArrayList<CustomGroup.Data> list2=new ArrayList<>();
                         for (int i = 0; i < list.getData().size(); i++) {
-                            if (!list.getData().get(i).isIsForTeacher()) {
+                            if (list.getData().get(i).isIsForTeacher()) {
                                 list2.add(list.getData().get(i));
                             }
                             listTeacher.setData(list2);
@@ -108,22 +108,21 @@ public class ListStudentActivity extends BaseActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ListStudentActivity.this, error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListTeacher2Activity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
-
     private void setVariable() {
-        titleTxt.setText("لیست دانش آموزان");
+        titleTxt.setText("لیست دبیران");
         recyclerViewlistPost.setLayoutManager(new LinearLayoutManager(this));
         floatingActionMenu.setVisibility(View.VISIBLE);
         floatingActionButton1.setVisibility(View.VISIBLE);
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ListStudentActivity.this, SendStudentGroupNameActivity.class));
+                startActivity(new Intent(ListTeacher2Activity.this, SendTeacherGroupNameActivity.class));
             }
         });
         searchIcon.setOnClickListener(new View.OnClickListener() {
@@ -167,36 +166,36 @@ public class ListStudentActivity extends BaseActivity {
         view3.setVisibility(View.VISIBLE);
 
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentActivity.this, ProfileActivity.class);
+            Intent intent = new Intent(ListTeacher2Activity.this, ProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn2.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentActivity.this, Main2Activity.class);
+            Intent intent = new Intent(ListTeacher2Activity.this, Main2Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn3.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentActivity.this, Main3Activity.class);
+            Intent intent = new Intent(ListTeacher2Activity.this, Main3Activity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn4.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentActivity.this, ListPostActivity.class);
+            Intent intent = new Intent(ListTeacher2Activity.this, ListPostActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(ListStudentActivity.this,BookmarkListActivity.class);
+            Intent intent = new Intent(ListTeacher2Activity.this, BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
-        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        ConstraintLayout postLayout = findViewById(R.id.postlayout);
         if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
             postLayout.setVisibility(View.GONE);
         }

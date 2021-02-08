@@ -17,6 +17,7 @@ public class AnnouncementGetAll {
     private String message;
     private ArrayList<Data> data;
 
+
     public boolean isSuccess() {
         return success;
     }
@@ -64,7 +65,15 @@ public class AnnouncementGetAll {
         private String applicationUserId;
         private String applicationUser;
         private int AvailableDays;
+        private boolean isOnlyForTeacher;
 
+        public boolean isIsOnlyForTeacher() {
+            return isOnlyForTeacher;
+        }
+
+        public void setIsOnlyForTeacher(boolean isOnlyForTeacher) {
+            this.isOnlyForTeacher = isOnlyForTeacher;
+        }
         public int getId() {
             return id;
         }

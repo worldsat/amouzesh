@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,12 +41,13 @@ public class SendCategoryActivity extends BaseActivity {
     private Toolbar my_toolbar;
     private TextView titleTxt;
     private EditText edt1;
-    private LinearLayout saveBtn;
+    private LinearLayout saveBtn,teacherswitchlayout;
     private HashMap<String, Object> params = new HashMap<>();
     private String selectedFilePath;
     private ImageView toggle_icon;
     private LinearLayout iconBtn;
     private CategoryGetAll.Data object;
+    private Switch aSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,9 @@ public class SendCategoryActivity extends BaseActivity {
         if (object != null) {
             edt1.setText(object.getName());
 
+            if (object.isIsOnlyForTeacher()) {
+                aSwitch.setChecked(true);
+            }
             params.put("id", object.getId());
 
             if (object.getUrl() != null && !object.getUrl().equals("null")) {
@@ -185,7 +190,8 @@ public class SendCategoryActivity extends BaseActivity {
 
                     params.put("Name", edt1.getText().toString().trim());
                     params.put("ApplicationUserId", settingsBll.getApplicationUserId());
-                    Log.i(TAG, "onClick: "+params.toString());
+                    params.put("IsOnlyForTeacher", aSwitch.isChecked());
+                    Log.i(TAG, "onClick: " + params.toString());
                     controller.uploadFileNew(SendCategoryActivity.this, "api/Category/Add", null, params, new IOnResponseListener() {
                         @Override
                         public void onResponse(String response) {
@@ -255,7 +261,15 @@ public class SendCategoryActivity extends BaseActivity {
         saveBtn = findViewById(R.id.sendBtn);
         toggle_icon = findViewById(R.id.sub_toggle_button_icon);
         iconBtn = findViewById(R.id.iconBtn);
+        aSwitch = findViewById(R.id.switch10);
+        teacherswitchlayout = findViewById(R.id.teacherswitchlayout);
 
+
+        if(settingsBll.getUserType()==0){
+            teacherswitchlayout.setVisibility(View.VISIBLE);
+        }else{
+            teacherswitchlayout.setVisibility(View.GONE);
+        }
     }
 
     private void bottomView() {
@@ -297,12 +311,12 @@ public class SendCategoryActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(SendCategoryActivity.this,BookmarkListActivity.class);
+            Intent intent = new Intent(SendCategoryActivity.this, BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation
         });
-        ConstraintLayout postLayout=findViewById(R.id.postlayout);
+        ConstraintLayout postLayout = findViewById(R.id.postlayout);
         if (settingsBll.getUserType() != 0 && settingsBll.getUserType() != 1) {
             postLayout.setVisibility(View.GONE);
         }

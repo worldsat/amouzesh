@@ -78,30 +78,41 @@ public class SendPostActivity extends BaseActivity {
     private RecyclerView recyclerViewlistCategory;
     private RecyclerView recyclerViewlisttakhsis;
     private RecyclerView recyclerViewlisttakhsisGroup;
+    private RecyclerView recyclerViewlisttakhsisGroupTeacher;
+    private RecyclerView recyclerViewlisttakhsisTeacher;
     private RecyclerView.Adapter adapterAttach;
     private RecyclerView.Adapter adapterDastresi;
     private RecyclerView.Adapter adapterCategory;
     private RecyclerView.Adapter adaptertakhsis;
     private RecyclerView.Adapter adaptertakhsisGroup;
+    private RecyclerView.Adapter adaptertakhsisGroupTeacher;
+    private RecyclerView.Adapter adaptertakhsisTeacher;
     private ArrayList<AttachFile> attachFiles = new ArrayList<>();
     private ArrayList<DropdownList> DastresiList = new ArrayList<>();
     private ArrayList<DropdownList> CategoryList = new ArrayList<>();
     private ArrayList<DropdownList> takhsisList = new ArrayList<>();
     private ArrayList<DropdownList> takhsisGroupList = new ArrayList<>();
+    private ArrayList<DropdownList> takhsisGroupTeacherList = new ArrayList<>();
+    private ArrayList<DropdownList> takhsisTeacherList = new ArrayList<>();
     private LinearLayout addAttachFile;
     private HashMap<String, Object> params = new HashMap<>();
     private LinearLayout sendBtn;
     private Switch pinnedSwitch;
+
     private EditText titlePostEdt;
     private Editor editor;
-    private LinearLayout categoryBtn, dastresiBtn, iconBtn, takhsisBtn, takhsisGroupBtn;
-    private ImageView toggle_category, toggle_dastresi, toggle_icon, toggle_takhsis, toggle_takhsis_group;
+    private LinearLayout categoryBtn, dastresiBtn, iconBtn, takhsisBtn, takhsisGroupBtn, takhsisGroupTeacherBtn, takhsisTeacherBtn;
+    private ImageView toggle_category, toggle_dastresi, toggle_icon, toggle_takhsis, toggle_takhsis_group, toggle_takhsis_group_Teacher, toggle_takhsis_Teacher;
     private EducationPostGetAll.Data object;
     private ProgressBar progressBarRowCategory;
     private ProgressBar progressBarRowtakhsis;
     private ProgressBar progressBarRowtakhsisGroup;
+    private ProgressBar progressBarRowtakhsisGroupTeacher;
+    private ProgressBar progressBarRowtakhsisTeacher;
     private ArrayList<Integer> takhisisSelectIds = new ArrayList<>();
     private ArrayList<Integer> takhisisGroupSelectIds = new ArrayList<>();
+    private ArrayList<Integer> takhisisGroupTeacherSelectIds = new ArrayList<>();
+    private ArrayList<Integer> takhisisTeacherSelectIds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,8 +131,10 @@ public class SendPostActivity extends BaseActivity {
         attachFiles.addAll(attach1());
         DastresiList = DastresiList();
         CategoryList = CategoryList(false);
-        takhsisList = takhsisList(false);
+        takhsisList = takhsisStudentList(false);
+        takhsisTeacherList = takhsisTeacherList(false);
         takhsisGroupList = TakhsisGroupList(false);
+        takhsisGroupTeacherList = TakhsisGroupTeacherList(false);
 
         getDataApi2(attachFiles, DastresiList, CategoryList, false);
 
@@ -130,6 +143,21 @@ public class SendPostActivity extends BaseActivity {
         bottomView();
         NavigationDrawer();
         setToolbar();
+
+        if (settingsBll.getUserType() != 0) {
+            takhsisTeacherBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(SendPostActivity.this, "شما به این قسمت دسترسی ندارید", Toast.LENGTH_SHORT).show();
+                }
+            });
+            takhsisGroupTeacherBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(SendPostActivity.this, "شما به این قسمت دسترسی ندارید", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void setToolbar() {
@@ -141,10 +169,13 @@ public class SendPostActivity extends BaseActivity {
         object = (EducationPostGetAll.Data) getIntent().getSerializableExtra("object");
         if (object != null) {
             titlePostEdt.setText(object.getTitle());
-            String escaped = unescapeHtml4("<html><body > <head></head>" + java.net.URLDecoder.decode(object.getDescription().replace("null", "-")) + "  </body><html>");
+            if (object.getDescription() != null) {
+                String escaped = unescapeHtml4("<html><body > <head></head>" + java.net.URLDecoder.decode(object.getDescription().replace("null", "-")) + "  </body><html>");
 
-            editor.render(escaped);
-            pinnedSwitch.setChecked(object.isPin());
+                editor.render(escaped);
+            }
+
+
             if (object.getMedias() != null) {
 
                 ArrayList<EducationPostGetAll.Data.Medias> res = object.getMedias();
@@ -186,6 +217,7 @@ public class SendPostActivity extends BaseActivity {
                 SettingsBll settingsBll = new SettingsBll(SendPostActivity.this);
                 params.put("Description", StringEscapeUtils.escapeHtml4(editor.getContentAsHTML()));
                 params.put("ApplicationUserId", settingsBll.getApplicationUserId());
+
 
                 Controller controller = new Controller(SendPostActivity.this);
 
@@ -229,6 +261,16 @@ public class SendPostActivity extends BaseActivity {
 
         recyclerViewlisttakhsis.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewlisttakhsis.setNestedScrollingEnabled(false);
+
+        recyclerViewlisttakhsisTeacher.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewlisttakhsisTeacher.setNestedScrollingEnabled(false);
+
+        recyclerViewlisttakhsisGroup.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewlisttakhsisGroup.setNestedScrollingEnabled(false);
+
+        recyclerViewlisttakhsisGroupTeacher.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewlisttakhsisGroupTeacher.setNestedScrollingEnabled(false);
+
         addAttachFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -347,6 +389,24 @@ public class SendPostActivity extends BaseActivity {
                 toggle_takhsis_group.setImageResource(R.drawable.ic_expand_more);
             }
         });
+        takhsisGroupTeacherBtn.setOnClickListener(v -> {
+            if (recyclerViewlisttakhsisGroupTeacher.getVisibility() == (View.VISIBLE)) {
+                recyclerViewlisttakhsisGroupTeacher.setVisibility(View.GONE);
+                toggle_takhsis_group_Teacher.setImageResource(R.drawable.ic_expand_less);
+            } else {
+                recyclerViewlisttakhsisGroupTeacher.setVisibility(View.VISIBLE);
+                toggle_takhsis_group_Teacher.setImageResource(R.drawable.ic_expand_more);
+            }
+        });
+        takhsisTeacherBtn.setOnClickListener(v -> {
+            if (recyclerViewlisttakhsisTeacher.getVisibility() == (View.VISIBLE)) {
+                recyclerViewlisttakhsisTeacher.setVisibility(View.GONE);
+                toggle_takhsis_Teacher.setImageResource(R.drawable.ic_expand_less);
+            } else {
+                recyclerViewlisttakhsisTeacher.setVisibility(View.VISIBLE);
+                toggle_takhsis_Teacher.setImageResource(R.drawable.ic_expand_more);
+            }
+        });
     }
 
     private ArrayList<AttachFile> attach1() {
@@ -442,7 +502,7 @@ public class SendPostActivity extends BaseActivity {
         return array_object;
     }
 
-    private ArrayList<DropdownList> takhsisList(boolean notify) {
+    private ArrayList<DropdownList> takhsisStudentList(boolean notify) {
 
         ArrayList<DropdownList> array_object = new ArrayList<>();
 //        array_object.add(new DropdownList("ریاضی", 0, true));
@@ -481,11 +541,11 @@ public class SendPostActivity extends BaseActivity {
                             }
 
                         } else {
-                            if (i == 0) {
-                                tick = false;
-                            } else {
-                                tick = false;
-                            }
+//                            if (i == 0) {
+//                                tick = false;
+//                            } else {
+//                                tick = false;
+//                            }
                         }
                         array_object.add(new DropdownList(getRelatedUsers.getData().getStudents().get(i).getFullName(), getRelatedUsers.getData().getStudents().get(i).getId(), tick));
                     }
@@ -497,7 +557,7 @@ public class SendPostActivity extends BaseActivity {
 //
 //                }
 
-                adaptertakhsis = new PostMiniListAdapter(array_object, null,null, new PostMiniListAdapter.SelectCallBack() {
+                adaptertakhsis = new PostMiniListAdapter(array_object, null, null, new PostMiniListAdapter.SelectCallBack() {
                     @Override
                     public void Id(int num, boolean allSelect) {
                         if (allSelect) {
@@ -549,6 +609,113 @@ public class SendPostActivity extends BaseActivity {
         return array_object;
     }
 
+    private ArrayList<DropdownList> takhsisTeacherList(boolean notify) {
+
+        ArrayList<DropdownList> array_object = new ArrayList<>();
+//        array_object.add(new DropdownList("ریاضی", 0, true));
+//        array_object.add(new DropdownList("علوم پایه", 1, false));
+//        array_object.add(new DropdownList("جغرافیا", 2, false));
+//        array_object.add(new DropdownList("زیست", 3, false));
+
+        String address = "api/User/GetRelatedUsers?Id=" + settingsBll().getApplicationUserId();
+
+        progressBarRowtakhsisTeacher.setVisibility(View.VISIBLE);
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                Log.i(TAG, "TeacherListToPost: " + resultStr);
+                GetRelatedUsers getRelatedUsers = gson().fromJson(resultStr, GetRelatedUsers.class);
+                if (takhsisTeacherList.size() > 0) {
+                    takhsisTeacherList.clear();
+                }
+                if (getRelatedUsers.getData().getTeachers().size() > 0) {
+                    array_object.add(new DropdownList("انتخاب همه", -1, false));
+                    boolean tick = false;
+                    for (int i = 0; i < getRelatedUsers.getData().getTeachers().size(); i++) {
+                        if (object != null) {
+                            for (int j = 0; j < object.getTeachers().size(); j++) {
+                                if (object.getTeachers().get(j).equals(getRelatedUsers.getData().getTeachers().get(i).getId())) {
+                                    tick = true;
+                                    takhisisTeacherSelectIds.add(object.getStudents().get(j));
+                                    params.put("TeacherListToPost", takhisisTeacherSelectIds.toString().replace(" ", "").replace("[", "").replace("]", ""));
+
+                                    break;
+
+                                } else {
+                                    tick = false;
+
+                                }
+                            }
+
+                        } else {
+//                            if (i == 0) {
+//                                tick = false;
+//                            } else {
+//                                tick = false;
+//                            }
+                        }
+                        array_object.add(new DropdownList(getRelatedUsers.getData().getTeachers().get(i).getFullName(), getRelatedUsers.getData().getTeachers().get(i).getIdHelper(), tick));
+                    }
+                }
+
+//                if (notify) {
+//                    CategoryList = array_object;
+//                    adapterCategory.notifyDataSetChanged();
+//
+//                }
+
+                adaptertakhsisTeacher = new PostMiniListAdapter(array_object, null, null, new PostMiniListAdapter.SelectCallBack() {
+                    @Override
+                    public void Id(int num, boolean allSelect) {
+                        if (allSelect) {
+                            ArrayList<Integer> allId = new ArrayList<>();
+                            for (int i = 0; i < array_object.size(); i++) {
+                                allId.add(array_object.get(i).getListId());
+                                array_object.get(i).setTick(true);
+                                takhisisSelectIds.add(array_object.get(i).getListId());
+                            }
+                            adaptertakhsis.notifyDataSetChanged();
+                            params.put("StudentListToPost", allId.toString().replace(" ", "").replace("[", "").replace("]", ""));
+                            Log.i(TAG, "Id: " + params.toString());
+                            return;
+                        }
+                        params.put("TeacherListToPost", num);
+
+                        if (takhisisTeacherSelectIds.contains(num)) {
+                            for (int i = 0; i < takhisisTeacherSelectIds.size(); i++) {
+                                if (takhisisTeacherSelectIds.get(i) == num) {
+                                    takhisisTeacherSelectIds.remove(i);
+                                    break;
+                                }
+                            }
+                        } else {
+                            takhisisTeacherSelectIds.add(num);
+                        }
+
+                        Log.i(TAG, "TeacherListToPost: " + takhisisTeacherSelectIds.toString().replace(" ", "").replace("[", "").replace("]", ""));
+                        if (takhisisTeacherSelectIds.size() > 0) {
+                            params.put("TeacherListToPost", takhisisTeacherSelectIds.toString().replace(" ", "").replace("[", "").replace("]", ""));
+                        } else {
+                            if (params.get("TeacherListToPost") != null) {
+                                params.remove("TeacherListToPost");
+                            }
+                        }
+                    }
+
+
+                });
+                recyclerViewlisttakhsisTeacher.setAdapter(adaptertakhsisTeacher);
+                progressBarRowtakhsisTeacher.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+        return array_object;
+    }
+
     private ArrayList<DropdownList> TakhsisGroupList(boolean notify) {
 
         ArrayList<DropdownList> array_object = new ArrayList<>();
@@ -563,7 +730,7 @@ public class SendPostActivity extends BaseActivity {
         controller().GetFromApi2(address, new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
-                Log.i(TAG, "takhsisGroup: " + resultStr);
+                Log.i(TAG, "GroupsIds: " + resultStr);
                 CustomGroup list = gson().fromJson(resultStr, CustomGroup.class);
                 if (takhsisGroupList.size() > 0) {
                     takhsisGroupList.clear();
@@ -572,20 +739,31 @@ public class SendPostActivity extends BaseActivity {
                     array_object.add(new DropdownList("انتخاب همه", -1, false));
                     boolean tick = false;
                     for (int i = 0; i < list.getData().size(); i++) {
-                        if (object != null) {
-                            if (object.getCategoryId() == list.getData().get(i).getId()) {
-                                tick = true;
+                        if (!list.getData().get(i).isIsForTeacher()) {
+                            if (object != null) {
+                                for (int j = 0; j < object.getCustomGroupsToEducationPosts().size(); j++) {
+                                    if (object.getCustomGroupsToEducationPosts().get(j).getIdX() == list.getData().get(i).getId() && object.getCustomGroupsToEducationPosts().get(j).isIsForStudent()) {
+                                        tick = true;
+                                        takhisisGroupSelectIds.add(object.getStudents().get(j));
+                                        params.put("GroupsIds", takhisisGroupSelectIds.toString().replace(" ", "").replace("[", "").replace("]", ""));
+
+                                        break;
+
+                                    } else {
+                                        tick = false;
+
+                                    }
+                                }
+
                             } else {
-                                tick = false;
+//                            if (i == 0) {
+//                                tick = true;
+//                            } else {
+//                                tick = false;
+//                            }
                             }
-                        } else {
-                            if (i == 0) {
-                                tick = true;
-                            } else {
-                                tick = false;
-                            }
+                            array_object.add(new DropdownList(list.getData().get(i).getName(), list.getData().get(i).getId(), tick));
                         }
-                        array_object.add(new DropdownList(list.getData().get(i).getName(), list.getData().get(i).getId(), tick));
                     }
                 }
 
@@ -595,7 +773,116 @@ public class SendPostActivity extends BaseActivity {
 //
 //                }
 
-                adaptertakhsisGroup = new PostMiniListAdapter(array_object, null,null, new PostMiniListAdapter.SelectCallBack() {
+                adaptertakhsisGroup = new PostMiniListAdapter(array_object, null, null, new PostMiniListAdapter.SelectCallBack() {
+                    @Override
+                    public void Id(int num, boolean allSelect) {
+                        if (allSelect) {
+                            ArrayList<Integer> allId = new ArrayList<>();
+                            for (int i = 0; i < array_object.size(); i++) {
+                                allId.add(array_object.get(i).getListId());
+                                array_object.get(i).setTick(true);
+                                takhisisSelectIds.add(array_object.get(i).getListId());
+                            }
+                            adaptertakhsisGroup.notifyDataSetChanged();
+                            params.put("GroupsIds", allId.toString().replace(" ", "").replace("[", "").replace("]", ""));
+                            Log.i(TAG, "Id: " + params.toString());
+                            return;
+                        }
+                        params.put("GroupsIds", num);
+
+                        if (takhisisSelectIds.contains(num)) {
+                            for (int i = 0; i < takhisisSelectIds.size(); i++) {
+                                if (takhisisSelectIds.get(i) == num) {
+                                    takhisisSelectIds.remove(i);
+                                    break;
+                                }
+                            }
+                        } else {
+                            takhisisSelectIds.add(num);
+                        }
+
+                        Log.i(TAG, "GroupsIds: " + takhisisSelectIds.toString().replace(" ", "").replace("[", "").replace("]", ""));
+                        if (takhisisSelectIds.size() > 0) {
+                            params.put("GroupsIds", takhisisSelectIds.toString().replace(" ", "").replace("[", "").replace("]", ""));
+                        } else {
+                            if (params.get("GroupsIds") != null) {
+                                params.remove("GroupsIds");
+                            }
+                        }
+                    }
+
+
+                });
+                recyclerViewlisttakhsisGroup.setAdapter(adaptertakhsisGroup);
+                progressBarRowtakhsisGroup.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+        return array_object;
+    }
+
+    private ArrayList<DropdownList> TakhsisGroupTeacherList(boolean notify) {
+
+        ArrayList<DropdownList> array_object = new ArrayList<>();
+//        array_object.add(new DropdownList("ریاضی", 0, true));
+//        array_object.add(new DropdownList("علوم پایه", 1, false));
+//        array_object.add(new DropdownList("جغرافیا", 2, false));
+//        array_object.add(new DropdownList("زیست", 3, false));
+
+        String address = "api/CustomGroup/GetAll?UserId=" + settingsBll().getApplicationUserId();
+
+        progressBarRowtakhsisGroupTeacher.setVisibility(View.VISIBLE);
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                Log.i(TAG, "TeacherGroupsIds: " + resultStr);
+                CustomGroup list = gson().fromJson(resultStr, CustomGroup.class);
+                if (takhsisGroupTeacherList.size() > 0) {
+                    takhsisGroupTeacherList.clear();
+                }
+                if (list.getData() != null && list.getData().size() > 0) {
+                    array_object.add(new DropdownList("انتخاب همه", -1, false));
+                    boolean tick = false;
+                    for (int i = 0; i < list.getData().size(); i++) {
+                        if (list.getData().get(i).isIsForTeacher()) {
+                            if (object != null) {
+                                for (int j = 0; j < object.getCustomGroupsToEducationPosts().size(); j++) {
+                                    if (object.getCustomGroupsToEducationPosts().get(j).getIdX() == list.getData().get(i).getId() && !object.getCustomGroupsToEducationPosts().get(j).isIsForStudent()) {
+                                        tick = true;
+                                        takhisisGroupSelectIds.add(object.getStudents().get(j));
+                                        params.put("GroupsIds", takhisisGroupSelectIds.toString().replace(" ", "").replace("[", "").replace("]", ""));
+
+                                        break;
+
+                                    } else {
+                                        tick = false;
+
+                                    }
+                                }
+
+                            }  else {
+//                            if (i == 0) {
+//                                tick = true;
+//                            } else {
+//                                tick = false;
+//                            }
+                            }
+                            array_object.add(new DropdownList(list.getData().get(i).getName(), list.getData().get(i).getId(), tick));
+                        }
+                    }
+                }
+
+//                if (notify) {
+//                    CategoryList = array_object;
+//                    adapterCategory.notifyDataSetChanged();
+//
+//                }
+
+                adaptertakhsisGroupTeacher = new PostMiniListAdapter(array_object, null, null, new PostMiniListAdapter.SelectCallBack() {
                     @Override
                     public void Id(int num, boolean allSelect) {
                         if (allSelect) {
@@ -605,38 +892,38 @@ public class SendPostActivity extends BaseActivity {
                                 array_object.get(i).setTick(true);
 
                             }
-                            adaptertakhsisGroup.notifyDataSetChanged();
-                            params.put("StudentListToPost", allId.toString().replace(" ", ""));
-                            Log.i(TAG, "Id: " + params.toString());
+                            adaptertakhsisGroupTeacher.notifyDataSetChanged();
+                            params.put("TeacherGroupsIds", allId.toString().replace(" ", ""));
+                            Log.i(TAG, "TeacherGroupsIds: " + params.toString());
                             return;
                         }
-                        params.put("StudentListToPost", num);
+                        params.put("TeacherGroupsIds", num);
 
-                        if (takhisisGroupSelectIds.contains(num)) {
-                            for (int i = 0; i < takhisisGroupSelectIds.size(); i++) {
-                                if (takhisisGroupSelectIds.get(i) == num) {
-                                    takhisisGroupSelectIds.remove(i);
+                        if (takhisisGroupTeacherSelectIds.contains(num)) {
+                            for (int i = 0; i < takhisisGroupTeacherSelectIds.size(); i++) {
+                                if (takhisisGroupTeacherSelectIds.get(i) == num) {
+                                    takhisisGroupTeacherSelectIds.remove(i);
                                     break;
                                 }
                             }
                         } else {
-                            takhisisGroupSelectIds.add(num);
+                            takhisisGroupTeacherSelectIds.add(num);
                         }
 
-                        Log.i(TAG, "takhsisGroup: " + takhisisGroupSelectIds.toString().replace(" ", ""));
-                        if (takhisisGroupSelectIds.size() > 0) {
-                            params.put("StudentListToPost", takhisisGroupSelectIds.toString().replace(" ", ""));
+                        Log.i(TAG, "TeacherGroupsIds: " + takhisisGroupTeacherSelectIds.toString().replace(" ", ""));
+                        if (takhisisGroupTeacherSelectIds.size() > 0) {
+                            params.put("TeacherGroupsIds", takhisisGroupTeacherSelectIds.toString().replace(" ", ""));
                         } else {
-                            if (params.get("StudentListToPost") != null) {
-                                params.remove("StudentListToPost");
+                            if (params.get("TeacherGroupsIds") != null) {
+                                params.remove("TeacherGroupsIds");
                             }
                         }
                     }
 
 
                 });
-                recyclerViewlisttakhsisGroup.setAdapter(adaptertakhsisGroup);
-                progressBarRowtakhsisGroup.setVisibility(View.GONE);
+                recyclerViewlisttakhsisGroupTeacher.setAdapter(adaptertakhsisGroupTeacher);
+                progressBarRowtakhsisGroupTeacher.setVisibility(View.GONE);
             }
 
             @Override
@@ -657,6 +944,8 @@ public class SendPostActivity extends BaseActivity {
         recyclerViewlistCategory = findViewById(R.id.viewPostion);
         recyclerViewlisttakhsis = findViewById(R.id.viewtakhsis);
         recyclerViewlisttakhsisGroup = findViewById(R.id.viewtakhsisgroup);
+        recyclerViewlisttakhsisGroupTeacher = findViewById(R.id.viewtakhsisgroupTeacher);
+        recyclerViewlisttakhsisTeacher = findViewById(R.id.viewtakhsisTeacher);
         sendBtn = findViewById(R.id.sendBtn);
         pinnedSwitch = findViewById(R.id.switch10);
         titlePostEdt = findViewById(R.id.titlePostEdt);
@@ -664,15 +953,22 @@ public class SendPostActivity extends BaseActivity {
         dastresiBtn = findViewById(R.id.dastresiBtn);
         takhsisBtn = findViewById(R.id.takhsisBtn);
         takhsisGroupBtn = findViewById(R.id.takhsisGroupBtn);
+        takhsisGroupTeacherBtn = findViewById(R.id.takhsisGroupTeacherBtn);
+        takhsisTeacherBtn = findViewById(R.id.takhsisTeacherBtn);
         toggle_category = findViewById(R.id.sub_toggle_button_category);
         toggle_dastresi = findViewById(R.id.sub_toggle_button_dastresi);
         toggle_takhsis = findViewById(R.id.sub_toggle_button_takhsis);
         toggle_icon = findViewById(R.id.sub_toggle_button_icon);
         toggle_takhsis_group = findViewById(R.id.sub_toggle_button_takhsis_groups);
+        toggle_takhsis_group_Teacher = findViewById(R.id.sub_toggle_button_takhsis_groups_teacher);
+        toggle_takhsis_Teacher = findViewById(R.id.sub_toggle_button_takhsis_Teacher);
         iconBtn = findViewById(R.id.iconBtn);
         progressBarRowCategory = findViewById(R.id.progressBarRow1);
         progressBarRowtakhsis = findViewById(R.id.progressBarRow2);
         progressBarRowtakhsisGroup = findViewById(R.id.progressBarRow3);
+        progressBarRowtakhsisGroupTeacher = findViewById(R.id.progressBarRow4);
+        progressBarRowtakhsisTeacher = findViewById(R.id.progressBarRow5);
+
     }
 
     private void NavigationDrawer() {
@@ -1024,7 +1320,7 @@ public class SendPostActivity extends BaseActivity {
             overridePendingTransition(0, 0); //0 for no animation
         });
         btn5.setOnClickListener(v -> {
-            Intent intent = new Intent(SendPostActivity.this,BookmarkListActivity.class);
+            Intent intent = new Intent(SendPostActivity.this, BookmarkListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             overridePendingTransition(0, 0); //0 for no animation

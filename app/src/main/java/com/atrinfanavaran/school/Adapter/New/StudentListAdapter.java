@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.atrinfanavaran.school.Activity.New.ListStudentNameActivity;
+import com.atrinfanavaran.school.Activity.New.ListTeacherNameActivity;
 import com.atrinfanavaran.school.Activity.New.SendStudentGroupNameActivity;
 import com.atrinfanavaran.school.Domain.New.CustomGroup;
 import com.atrinfanavaran.school.Domain.New.ManageDomain;
@@ -30,13 +31,13 @@ import java.util.ArrayList;
 
 public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.ViewHolder> {
 
-    private final ArrayList<CustomGroup.data> array_object;
+    private final ArrayList<CustomGroup.Data> array_object;
     private Context context;
 
     private Handler mHandler = new Handler();
     private int mFileDuration;
 
-    public StudentListAdapter(ArrayList<CustomGroup.data> result) {
+    public StudentListAdapter(ArrayList<CustomGroup.Data> result) {
         this.array_object = result;
 
 
@@ -71,19 +72,34 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
         holder.UnSelectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ListStudentNameActivity.class);
-                intent.putExtra("object", array_object.get(position));
-                intent.putExtra("Action", "UnSelect");
-                context.startActivity(intent);
+                if (array_object.get(position).isIsForTeacher()) {
+                    Intent intent = new Intent(context, ListTeacherNameActivity.class);
+                    intent.putExtra("object", array_object.get(position));
+                    intent.putExtra("Action", "UnSelect");
+                    context.startActivity(intent);
+                } else {
+                    Intent intent = new Intent(context, ListStudentNameActivity.class);
+                    intent.putExtra("object", array_object.get(position));
+                    intent.putExtra("Action", "UnSelect");
+                    context.startActivity(intent);
+                }
+
             }
         });
         holder.SelectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ListStudentNameActivity.class);
-                intent.putExtra("object", array_object.get(position));
-                intent.putExtra("Action", "Select");
-                context.startActivity(intent);
+                if (array_object.get(position).isIsForTeacher()) {
+                    Intent intent = new Intent(context, ListTeacherNameActivity.class);
+                    intent.putExtra("object", array_object.get(position));
+                    intent.putExtra("Action", "Select");
+                    context.startActivity(intent);
+                } else {
+                    Intent intent = new Intent(context, ListStudentNameActivity.class);
+                    intent.putExtra("object", array_object.get(position));
+                    intent.putExtra("Action", "Select");
+                    context.startActivity(intent);
+                }
             }
         });
     }
