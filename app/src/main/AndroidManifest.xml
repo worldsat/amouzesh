@@ -36,7 +36,6 @@
         <activity android:name=".Activity.New.ListTeacher2Activity" />
         <activity android:name=".Activity.New.ProfileActivity" />
         <activity android:name=".Activity.New.BookmarkListActivity" />
-        <activity android:name=".Activity.New.ListTeacherActivity" />
         <activity android:name=".Activity.New.ListAsatidActivity" />
         <activity android:name=".Activity.New.ListCategoryActivity"></activity>
         <activity android:name=".Activity.New.ListBannerActivity" />

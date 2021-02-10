@@ -80,7 +80,7 @@ public class GetRelatedTeachersFromCustomGroup {
 
         private int idHelper;
         private String fullName;
-        private int mobile;
+
         private String address;
         private String nationalCode;
         private String apiToken;
@@ -120,13 +120,7 @@ public class GetRelatedTeachersFromCustomGroup {
             this.fullName = fullName;
         }
 
-        public int getMobile() {
-            return mobile;
-        }
 
-        public void setMobile(int mobile) {
-            this.mobile = mobile;
-        }
 
         public String getAddress() {
             return address;

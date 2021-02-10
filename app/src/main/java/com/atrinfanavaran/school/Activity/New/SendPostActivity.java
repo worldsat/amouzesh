@@ -623,12 +623,15 @@ public class SendPostActivity extends BaseActivity {
         controller().GetFromApi2(address, new CallbackGetString() {
             @Override
             public void onSuccess(String resultStr) {
+                try {
+
+
                 Log.i(TAG, "TeacherListToPost: " + resultStr);
                 GetRelatedUsers getRelatedUsers = gson().fromJson(resultStr, GetRelatedUsers.class);
                 if (takhsisTeacherList.size() > 0) {
                     takhsisTeacherList.clear();
                 }
-                if (getRelatedUsers.getData().getTeachers().size() > 0) {
+                if (getRelatedUsers.getData().getTeachers()!=null && getRelatedUsers.getData().getTeachers().size() > 0) {
                     array_object.add(new DropdownList("انتخاب همه", -1, false));
                     boolean tick = false;
                     for (int i = 0; i < getRelatedUsers.getData().getTeachers().size(); i++) {
@@ -675,10 +678,12 @@ public class SendPostActivity extends BaseActivity {
                                 takhisisSelectIds.add(array_object.get(i).getListId());
                             }
                             adaptertakhsis.notifyDataSetChanged();
-                            params.put("StudentListToPost", allId.toString().replace(" ", "").replace("[", "").replace("]", ""));
+                            params.put("TeacherListToPost", allId.toString().replace(" ", "").replace("[", "").replace("]", ""));
                             Log.i(TAG, "Id: " + params.toString());
                             return;
                         }
+                        int id;
+
                         params.put("TeacherListToPost", num);
 
                         if (takhisisTeacherSelectIds.contains(num)) {
@@ -706,6 +711,9 @@ public class SendPostActivity extends BaseActivity {
                 });
                 recyclerViewlisttakhsisTeacher.setAdapter(adaptertakhsisTeacher);
                 progressBarRowtakhsisTeacher.setVisibility(View.GONE);
+                }catch (Exception e){
+                    Toast.makeText(SendPostActivity.this, ""+e, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

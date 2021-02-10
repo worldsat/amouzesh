@@ -87,7 +87,7 @@ public class BannerGetAll {
         private int bannerStatus;
         private boolean pin;
         private boolean isOnlyForTeacher;
-        private ArrayList<?> postsInBanner;
+        private ArrayList<Integer> postsInBanner;
 
         public int getId() {
             return id;
@@ -217,11 +217,11 @@ public class BannerGetAll {
             this.isOnlyForTeacher = isOnlyForTeacher;
         }
 
-        public ArrayList<?> getPostsInBanner() {
+        public ArrayList<Integer> getPostsInBanner() {
             return postsInBanner;
         }
 
-        public void setPostsInBanner(ArrayList<?> postsInBanner) {
+        public void setPostsInBanner(ArrayList<Integer> postsInBanner) {
             this.postsInBanner = postsInBanner;
         }
 

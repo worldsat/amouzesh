@@ -119,7 +119,7 @@ public class SendTeacherGroupNameActivity extends BaseActivity {
                                 Toast.makeText(SendTeacherGroupNameActivity.this, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
                                 if (manageDomain.isSuccess()) {
                                     finish();
-                                    Intent intent = new Intent(SendTeacherGroupNameActivity.this, ListTeacherActivity.class);
+                                    Intent intent = new Intent(SendTeacherGroupNameActivity.this, ListTeacher2Activity.class);
                                     startActivity(intent);
                                 }
 

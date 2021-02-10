@@ -70,7 +70,7 @@ public class Main3Activity extends BaseActivity {
     }
 
     private void getNotification() {
-        if (settingsBll.getUserType() == 2) {
+//        if (settingsBll.getUserType() == 2) {
             String address = "api/Announcement/GetForMainPage?Id=" + settingsBll().getApplicationUserId();
             recyclerviewviewnotif.setVisibility(View.GONE);
             recyclerviewviewnotif.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -88,6 +88,7 @@ public class Main3Activity extends BaseActivity {
 
                         adapternotif = new AnnouncementGetForStudentListAdapter(announcementGetForStudent.getData());
                         recyclerviewviewnotif.setAdapter(adapternotif);
+                        recyclerviewviewnotif.setVisibility(View.VISIBLE);
                         progressBarnotif.setVisibility(View.GONE);
                     } catch (Exception e) {
                         Toast.makeText(Main3Activity.this, "" + e, Toast.LENGTH_SHORT).show();
@@ -100,7 +101,7 @@ public class Main3Activity extends BaseActivity {
                     Toast.makeText(Main3Activity.this, error, Toast.LENGTH_SHORT).show();
                 }
             });
-        }
+//        }
     }
 
     private void getCategory() {
@@ -226,7 +227,7 @@ public class Main3Activity extends BaseActivity {
                                                 } else if (result.getData().get(finalI).getPostsInBanner().size() != 0) {
                                                     Intent i1 = new Intent(Main3Activity.this, ListPostActivity.class);
                                                     Log.i(TAG, "onSuccess: "+result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", ""));
-                                                    i1.putExtra("Id",result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", ""));
+                                                    i1.putExtra("Id",result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", "").replace(".0",""));
 
                                                     i1.putExtra("kind", "PostsInBanner");
                                                     startActivity(i1);
@@ -274,7 +275,7 @@ public class Main3Activity extends BaseActivity {
                                                 } else if (result.getData().get(finalI).getPostsInBanner().size() != 0) {
                                                     Intent i1 = new Intent(Main3Activity.this, ListPostActivity.class);
                                                     Log.i(TAG, "onSuccess: "+result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", ""));
-                                                    i1.putExtra("Id",result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", ""));
+                                                    i1.putExtra("Id",result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", "").replace(".0",""));
 
                                                     i1.putExtra("kind", "PostsInBanner");
                                                     startActivity(i1);

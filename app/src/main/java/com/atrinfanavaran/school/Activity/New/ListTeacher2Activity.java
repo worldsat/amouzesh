@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.atrinfanavaran.school.Adapter.New.StudentListAdapter;
+import com.atrinfanavaran.school.Adapter.New.TeacherListAdapter;
 import com.atrinfanavaran.school.Domain.New.CustomGroup;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
@@ -94,7 +95,7 @@ public class ListTeacher2Activity extends BaseActivity {
                             }
                             listTeacher.setData(list2);
                         }
-                        adapter = new StudentListAdapter(listTeacher.getData());
+                        adapter = new TeacherListAdapter(listTeacher.getData());
                         recyclerViewlistPost.setAdapter(adapter);
                     } else {
                         warningTxt.setVisibility(View.VISIBLE);
