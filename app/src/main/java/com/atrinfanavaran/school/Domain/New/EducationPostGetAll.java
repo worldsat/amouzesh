@@ -89,7 +89,7 @@ public class EducationPostGetAll implements Serializable {
         private int status;
         private ArrayList<Medias> medias;
         private ArrayList<Integer> students;
-        private ArrayList<String> teachers;
+        private ArrayList<Integer> teachers;
         private List<CustomGroupsToEducationPosts> customGroupsToEducationPosts;
 
         public List<CustomGroupsToEducationPosts> getCustomGroupsToEducationPosts() {
@@ -271,11 +271,11 @@ public class EducationPostGetAll implements Serializable {
             this.students = teachers;
         }
 
-        public ArrayList<String> getTeachers() {
+        public ArrayList<Integer> getTeachers() {
             return teachers;
         }
 
-        public void setTeachers(ArrayList<String> teachers) {
+        public void setTeachers(ArrayList<Integer> teachers) {
             this.teachers = teachers;
         }
 

@@ -64,7 +64,7 @@ public class TeacherNameListSelectedAdapter extends RecyclerView.Adapter<Teacher
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //                alertQuestion(context, holder, isChecked);
 
-                selectCallBack.Id(array_object.get(position).getStudentsId(),false);
+                selectCallBack.Id(array_object.get(position).getApplicationUserId(),false);
             }
         });
     }

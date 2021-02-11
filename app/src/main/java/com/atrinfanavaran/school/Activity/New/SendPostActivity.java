@@ -637,9 +637,9 @@ public class SendPostActivity extends BaseActivity {
                     for (int i = 0; i < getRelatedUsers.getData().getTeachers().size(); i++) {
                         if (object != null) {
                             for (int j = 0; j < object.getTeachers().size(); j++) {
-                                if (object.getTeachers().get(j).equals(getRelatedUsers.getData().getTeachers().get(i).getId())) {
+                                if (object.getTeachers().get(j).equals(getRelatedUsers.getData().getTeachers().get(i).getIdHelper())) {
                                     tick = true;
-                                    takhisisTeacherSelectIds.add(object.getStudents().get(j));
+                                    takhisisTeacherSelectIds.add(object.getTeachers().get(j));
                                     params.put("TeacherListToPost", takhisisTeacherSelectIds.toString().replace(" ", "").replace("[", "").replace("]", ""));
 
                                     break;

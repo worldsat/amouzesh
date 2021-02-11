@@ -281,7 +281,7 @@ public class ListTeacherNameActivity extends BaseActivity {
                     Toast.makeText(ListTeacherNameActivity.this, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
                     if (manageDomain.isSuccess()) {
                         finish();
-                        Intent intent = new Intent(ListTeacherNameActivity.this, ListStudentActivity.class);
+                        Intent intent = new Intent(ListTeacherNameActivity.this, ListTeacher2Activity.class);
                         startActivity(intent);
                     }
 
@@ -319,7 +319,7 @@ public class ListTeacherNameActivity extends BaseActivity {
                     Toast.makeText(ListTeacherNameActivity.this, manageDomain.getMessage(), Toast.LENGTH_SHORT).show();
                     if (manageDomain.isSuccess()) {
                         finish();
-                        Intent intent = new Intent(ListTeacherNameActivity.this, ListStudentActivity.class);
+                        Intent intent = new Intent(ListTeacherNameActivity.this, ListTeacher2Activity.class);
                         startActivity(intent);
                     }
 

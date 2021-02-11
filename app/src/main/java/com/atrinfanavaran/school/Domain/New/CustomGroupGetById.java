@@ -124,7 +124,7 @@ public class CustomGroupGetById {
              */
 
             private int id;
-            private String applicationUserId;
+            private int applicationUserId;
             private String applicationUser;
             private int studentsId;
             private String students;
@@ -147,11 +147,11 @@ public class CustomGroupGetById {
                 this.id = id;
             }
 
-            public String getApplicationUserId() {
+            public int getApplicationUserId() {
                 return applicationUserId;
             }
 
-            public void setApplicationUserId(String applicationUserId) {
+            public void setApplicationUserId(int applicationUserId) {
                 this.applicationUserId = applicationUserId;
             }
 

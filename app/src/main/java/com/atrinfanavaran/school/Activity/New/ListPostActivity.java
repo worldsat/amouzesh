@@ -87,9 +87,9 @@ public class ListPostActivity extends BaseActivity {
         if (CategoryId != 0) {
             address = "api/EducationPost/GetByCategory?Id=" + CategoryId;
         } else if(kind!=null && kind.equals("categoryId")) {
-            address = "api/EducationPost/GetCollectionPosts?Id=" + data;
-        } else if(kind!=null && kind.equals("PostsInBanner")) {
             address = "api/EducationPost/GetRelatedPostsByCategory?Id=" + data;
+        } else if(kind!=null && kind.equals("PostsInBanner")) {
+            address = "api/EducationPost/GetCollectionPosts?Id=" + data;
         }else{
             address = "api/EducationPost/GetAll?Id=" + settingsBll().getApplicationUserId();
         }
