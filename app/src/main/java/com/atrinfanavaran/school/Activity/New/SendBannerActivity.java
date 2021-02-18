@@ -187,6 +187,7 @@ public class SendBannerActivity extends BaseActivity {
             params.put("id", object.getId());
             params.put("BannerPlace", object.getBannerPlace());
             params.put("AvailableDate", object.getAvailableDate());
+            params.put("file","null");
         }
     }
 

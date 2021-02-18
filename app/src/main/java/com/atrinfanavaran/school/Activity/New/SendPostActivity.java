@@ -145,12 +145,15 @@ public class SendPostActivity extends BaseActivity {
         setToolbar();
 
         if (settingsBll.getUserType() != 0) {
+            takhsisTeacherBtn.setVisibility(View.GONE);
             takhsisTeacherBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(SendPostActivity.this, "شما به این قسمت دسترسی ندارید", Toast.LENGTH_SHORT).show();
                 }
             });
+
+            takhsisGroupTeacherBtn.setVisibility(View.GONE);
             takhsisGroupTeacherBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

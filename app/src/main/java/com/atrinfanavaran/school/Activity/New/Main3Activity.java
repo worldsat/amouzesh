@@ -216,6 +216,7 @@ public class Main3Activity extends BaseActivity {
 
                                     DefaultSliderView DefaultSliderView = new DefaultSliderView(getActivity());
                                     int finalI = i;
+
                                     DefaultSliderView
                                             .setOnSliderClickListener(slider -> {
 
@@ -236,6 +237,7 @@ public class Main3Activity extends BaseActivity {
                                             })
                                             .image(settingsBll().getUrlAddress() + "/" + result.getData().get(i).getUrl())
                                             .setScaleType(BaseSliderView.ScaleType.Fit)
+
                                             .setOnImageLoadListener(new BaseSliderView.ImageLoadListener() {
                                                 @Override
                                                 public void onStart(BaseSliderView target) {
