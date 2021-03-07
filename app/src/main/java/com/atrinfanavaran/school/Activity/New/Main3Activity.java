@@ -22,9 +22,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.atrinfanavaran.school.Adapter.New.AnnouncementGetForStudentListAdapter;
 import com.atrinfanavaran.school.Adapter.New.CategorySmallAdapter;
+import com.atrinfanavaran.school.Adapter.New.PostSmallAdapter;
 import com.atrinfanavaran.school.Domain.New.AnnouncementGetForStudent;
 import com.atrinfanavaran.school.Domain.New.BannerGetAll;
 import com.atrinfanavaran.school.Domain.New.CategoryGetAll;
+import com.atrinfanavaran.school.Domain.New.EducationPostGetAll;
 import com.atrinfanavaran.school.Fragment.NavigationDrawerFragment;
 import com.atrinfanavaran.school.Kernel.Activity.BaseActivity;
 import com.atrinfanavaran.school.Kernel.Controller.Interface.CallbackGetString;
@@ -47,11 +49,14 @@ public class Main3Activity extends BaseActivity {
     private Toolbar my_toolbar;
     private SliderLayout banner1, banner2;
     private RecyclerView recyclerviewCategorySmall;
+    private RecyclerView recyclerviewPostSmall;
     private RecyclerView recyclerviewviewnotif;
     private ProgressBar progressBarCategory;
     private ProgressBar progressBarnotif;
+    private ProgressBar progressBarPost;
     private RecyclerView.Adapter adapterCategory;
     private RecyclerView.Adapter adapternotif;
+    private RecyclerView.Adapter adapterPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,40 +72,41 @@ public class Main3Activity extends BaseActivity {
         RunPermissionDownload();
         getCategory();
         getNotification();
+        getLastPost();
     }
 
     private void getNotification() {
 //        if (settingsBll.getUserType() == 2) {
-            String address = "api/Announcement/GetForMainPage?Id=" + settingsBll().getApplicationUserId();
-            recyclerviewviewnotif.setVisibility(View.GONE);
-            recyclerviewviewnotif.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-            recyclerviewviewnotif.setNestedScrollingEnabled(false);
-            progressBarnotif.setVisibility(View.VISIBLE);
-            controller().GetFromApi2(address, new CallbackGetString() {
-                @Override
-                public void onSuccess(String resultStr) {
-                    try {
+        String address = "api/Announcement/GetForMainPage?Id=" + settingsBll().getApplicationUserId();
+        recyclerviewviewnotif.setVisibility(View.GONE);
+        recyclerviewviewnotif.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerviewviewnotif.setNestedScrollingEnabled(false);
+        progressBarnotif.setVisibility(View.VISIBLE);
+        controller().GetFromApi2(address, new CallbackGetString() {
+            @Override
+            public void onSuccess(String resultStr) {
+                try {
 
 
-                        Log.i(TAG, "notif: " + resultStr);
-                        AnnouncementGetForStudent announcementGetForStudent = gson().fromJson(resultStr, AnnouncementGetForStudent.class);
+                    Log.i(TAG, "notif: " + resultStr);
+                    AnnouncementGetForStudent announcementGetForStudent = gson().fromJson(resultStr, AnnouncementGetForStudent.class);
 
 
-                        adapternotif = new AnnouncementGetForStudentListAdapter(announcementGetForStudent.getData());
-                        recyclerviewviewnotif.setAdapter(adapternotif);
-                        recyclerviewviewnotif.setVisibility(View.VISIBLE);
-                        progressBarnotif.setVisibility(View.GONE);
-                    } catch (Exception e) {
-                        Toast.makeText(Main3Activity.this, "" + e, Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onError(String error) {
+                    adapternotif = new AnnouncementGetForStudentListAdapter(announcementGetForStudent.getData());
+                    recyclerviewviewnotif.setAdapter(adapternotif);
+                    recyclerviewviewnotif.setVisibility(View.VISIBLE);
                     progressBarnotif.setVisibility(View.GONE);
-                    Toast.makeText(Main3Activity.this, error, Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(Main3Activity.this, "" + e, Toast.LENGTH_SHORT).show();
                 }
-            });
+            }
+
+            @Override
+            public void onError(String error) {
+                progressBarnotif.setVisibility(View.GONE);
+                Toast.makeText(Main3Activity.this, error, Toast.LENGTH_SHORT).show();
+            }
+        });
 //        }
     }
 
@@ -121,7 +127,7 @@ public class Main3Activity extends BaseActivity {
                     adapterCategory = new CategorySmallAdapter(categoryGetAll.getData());
                     recyclerviewCategorySmall.setAdapter(adapterCategory);
                     progressBarCategory.setVisibility(View.GONE);
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(Main3Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -135,6 +141,37 @@ public class Main3Activity extends BaseActivity {
 
     }
 
+    private void getLastPost() {
+
+        if (settingsBll.getUserType() == 2 || settingsBll.getUserType() == 1) {
+            String address = "api/User/GetRecentlyPosts?Id=" + settingsBll().getApplicationUserId();
+            recyclerviewPostSmall.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            recyclerviewPostSmall.setNestedScrollingEnabled(false);
+            progressBarPost.setVisibility(View.VISIBLE);
+            controller().GetFromApi2(address, new CallbackGetString() {
+                @Override
+                public void onSuccess(String resultStr) {
+                    Log.i(TAG, "category: " + resultStr);
+                    try {
+                        EducationPostGetAll educationPostGetAll = gson().fromJson(resultStr, EducationPostGetAll.class);
+
+                        adapterPost = new PostSmallAdapter(educationPostGetAll.getData());
+                        recyclerviewPostSmall.setAdapter(adapterPost);
+                        progressBarPost.setVisibility(View.GONE);
+                    } catch (Exception e) {
+                        Toast.makeText(Main3Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    progressBarPost.setVisibility(View.GONE);
+                    Toast.makeText(Main3Activity.this, error, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+    }
 
     private void RunPermissionDownload() {
 
@@ -227,8 +264,8 @@ public class Main3Activity extends BaseActivity {
                                                     startActivity(i1);
                                                 } else if (result.getData().get(finalI).getPostsInBanner().size() != 0) {
                                                     Intent i1 = new Intent(Main3Activity.this, ListPostActivity.class);
-                                                    Log.i(TAG, "onSuccess: "+result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", ""));
-                                                    i1.putExtra("Id",result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", "").replace(".0",""));
+                                                    Log.i(TAG, "onSuccess: " + result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", ""));
+                                                    i1.putExtra("Id", result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", "").replace(".0", ""));
 
                                                     i1.putExtra("kind", "PostsInBanner");
                                                     startActivity(i1);
@@ -276,8 +313,8 @@ public class Main3Activity extends BaseActivity {
                                                     startActivity(i1);
                                                 } else if (result.getData().get(finalI).getPostsInBanner().size() != 0) {
                                                     Intent i1 = new Intent(Main3Activity.this, ListPostActivity.class);
-                                                    Log.i(TAG, "onSuccess: "+result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", ""));
-                                                    i1.putExtra("Id",result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", "").replace(".0",""));
+                                                    Log.i(TAG, "onSuccess: " + result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", ""));
+                                                    i1.putExtra("Id", result.getData().get(finalI).getPostsInBanner().toString().replace("]", "").replace("[", "").replace(".0", ""));
 
                                                     i1.putExtra("kind", "PostsInBanner");
                                                     startActivity(i1);
@@ -285,17 +322,17 @@ public class Main3Activity extends BaseActivity {
                                             })
                                             .image(settingsBll().getUrlAddress() + "/" + result.getData().get(i).getUrl())
                                             .setScaleType(BaseSliderView.ScaleType.Fit)
-                                    .setOnImageLoadListener(new BaseSliderView.ImageLoadListener() {
-                                        @Override
-                                        public void onStart(BaseSliderView target) {
+                                            .setOnImageLoadListener(new BaseSliderView.ImageLoadListener() {
+                                                @Override
+                                                public void onStart(BaseSliderView target) {
 
-                                        }
+                                                }
 
-                                        @Override
-                                        public void onEnd(boolean result, BaseSliderView target) {
+                                                @Override
+                                                public void onEnd(boolean result, BaseSliderView target) {
 
-                                        }
-                                    });
+                                                }
+                                            });
                                     banner2.addSlider(DefaultSliderView);
 
 
@@ -343,8 +380,10 @@ public class Main3Activity extends BaseActivity {
     private void initView() {
         recyclerviewCategorySmall = findViewById(R.id.viewCategorySmall);
         recyclerviewviewnotif = findViewById(R.id.viewnotif);
+        recyclerviewPostSmall = findViewById(R.id.viewPostSmall);
         progressBarCategory = findViewById(R.id.progressBarRow5);
         progressBarnotif = findViewById(R.id.progressBarRow7);
+        progressBarPost = findViewById(R.id.progressBarRow6);
 
         banner1 = findViewById(R.id.banner1);
         banner2 = findViewById(R.id.banner2);
